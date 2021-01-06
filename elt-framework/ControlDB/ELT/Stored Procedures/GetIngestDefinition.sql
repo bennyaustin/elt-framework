@@ -1,0 +1,230 @@
+﻿CREATE PROCEDURE [ELT].[GetIngestDefinition]
+	@SourceSystemName varchar(20),
+	@StreamName VARCHAR(100) = '%', --Default =All Streams
+	@MaxIngestInstance INT = 10
+	
+AS
+BEGIN
+	
+		DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdate()) at time zone 'AUS Eastern Standard Time');
+
+with 
+	cte
+as
+
+(	--Normal Run
+			SELECT 
+				 [IngestID]
+				,[SourceSystemName]
+				,[StreamName]
+				,[Backend]
+				,[EntityName]
+				,[DeltaName]
+				
+				--Delta Dates
+				,[LastDeltaDate]
+				,[DataFromTimestamp] = 
+								CASE 
+									WHEN ([EntityName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL) THEN [LastDeltaDate]
+									ELSE CAST('1900-01-01' AS DateTime)
+								END
+				,[DataToTimestamp] = 
+							CASE 
+								WHEN ([EntityName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL AND [MaxIntervalMinutes] IS NOT NULL AND datediff_big(minute,[LastDeltaDate],@localdate) > [MaxIntervalMinutes]) THEN DateAdd(minute,[MaxIntervalMinutes],[LastDeltaDate])
+								WHEN ([EntityName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL AND [MaxIntervalMinutes] IS NOT NULL AND datediff_big(minute,[LastDeltaDate],@localdate) <= [MaxIntervalMinutes]) THEN CONVERT(VARCHAR(30),@localdate,120)
+								ELSE CONVERT(VARCHAR(30),@localdate,120) 
+							END
+
+				--Delta Numbers
+				,[LastDeltaNumber]
+				,[DataFromNumber] = 
+							CASE 
+								WHEN ([EntityName] IS NOT NULL AND [LastDeltaNumber] IS NOT NULL) THEN [LastDeltaNumber]
+					  END
+				,[DataToNumber] = 
+								CASE 
+									WHEN ([EntityName] IS NOT NULL AND [LastDeltaNumber] IS NOT NULL) THEN ([LastDeltaNumber] + [MaxIntervalNumber])
+					   END
+
+				,[DataFormat]
+				,[SourceStructure]
+				,[MaxIntervalMinutes]
+				,[MaxIntervalNumber]
+				,[ELT].[uf_GetTabularTranslatorMappingJson]([DataMapping]) AS [DataMapping]
+				,[RunSequence]
+				,[ActiveFlag]
+				,[L1TransformationReqdFlag]
+				,[L2TransformationReqdFlag]
+				,[DelayL1TransformationFlag]
+				,[DelayL2TransformationFlag]
+				,[DestinationRawFileSystem]
+		
+			--Derived Fields
+				,[DestinationRawFolder] = 
+					REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE([DestinationRawFolder] COLLATE SQL_Latin1_General_CP1_CS_AS
+					,'YYYY',CAST(Year(COALESCE([LastDeltaDate],@localdate)) as varchar(4)))
+					,'MM',Right('0'+ CAST(Month(COALESCE([LastDeltaDate],@localdate)) AS varchar(2)),2))
+					,'DD',Right('0'+Cast(Day(COALESCE([LastDeltaDate],@localdate)) as varchar(2)),2))
+					,'HH',Right('0'+ CAST(DatePart(hh,COALESCE([LastDeltaDate],@localdate)) as varchar(2)),2))
+					,'MI',Right('0'+ CAST(DatePart(mi,COALESCE([LastDeltaDate],@localdate)) as varchar(2)),2))
+					,'SS',Right('0'+ CAST(DatePart(ss,COALESCE([LastDeltaDate],@localdate)) as varchar(2)),2))
+			
+				,[DestinationRawFile] = 
+					REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE([DestinationRawFile] COLLATE SQL_Latin1_General_CP1_CS_AS
+					,'YYYY',CAST(Year(COALESCE([LastDeltaDate],@localdate)) AS varchar(4)))
+					,'MM',Right('0'+ CAST(Month(COALESCE([LastDeltaDate],@localdate)) AS varchar(2)),2))
+					,'DD',Right('0'+Cast(Day(COALESCE([LastDeltaDate],@localdate)) as varchar(2)),2))
+					,'HH',Right('0'+ CAST(DatePart(hh,COALESCE([LastDeltaDate],@localdate)) AS varchar(2)),2))
+					,'MI',Right('0'+ CAST(DatePart(mi,COALESCE([LastDeltaDate],@localdate)) AS varchar(2)),2))
+					,'SS',Right('0'+ CAST(DatePart(ss,COALESCE([LastDeltaDate],@localdate)) AS varchar(2)),2))			
+
+
+			--Query
+				,SourceSQL = 
+					CASE
+					 --DEFAULT ANSI SQL for Delta Table
+						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL
+							THEN 
+								CASE 
+									WHEN datediff_big(minute,[LastDeltaDate],@localdate) > [MaxIntervalMinutes]
+										THEN 
+											'SELECT * FROM ' + [EntityName] + ' WHERE ' 
+											+ [DeltaName] + ' > ' + ''''+CONVERT(VARCHAR(30),[LastDeltaDate],121) +''''+ ' AND ' + [DeltaName] + '<=' +  ''''+ CONVERT(VARCHAR(30), DATEADD(minute,[MaxIntervalMinutes],[LastDeltaDate]),121) +''''
+									ELSE 
+										'SELECT * FROM ' + [EntityName] + ' WHERE ' 
+										+ [DeltaName] + ' > ' + ''''+ CONVERT(VARCHAR(30),[LastDeltaDate],121) +''''+ ' AND ' + [DeltaName] + '<='  + ''''+ CONVERT(VARCHAR(30), @localdate,120) +''''
+								END
+					 --DEFAULT ANSI SQL for Full Table
+						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NULL
+							THEN 
+								'SELECT * FROM ' + [EntityName]
+					--Running Number
+						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaNumber] IS NOT NULL
+							THEN 'SELECT * FROM ' + [EntityName] + ' WHERE ' 
+												+ [DeltaName] + ' > ' + ''''+CONVERT(VARCHAR,[LastDeltaNumber]) +'''' + [DeltaName] + ' <= ' + ''''+CONVERT(VARCHAR,([LastDeltaNumber] + [MaxIntervalNumber])) +''''
+						ELSE NULL
+					 END
+			
+			--Stats Query
+				,StatSQL = 
+					CASE 
+						--DEFAULT ANSI SQL For Delta Table
+						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL
+								THEN 
+									CASE 
+										WHEN datediff_big(minute,[LastDeltaDate],@localdate) > [MaxIntervalMinutes] 
+											THEN 
+												'SELECT MIN('+[DeltaName]+') AS DataFromTimestamp, MAX('+[DeltaName]+') AS DataToTimestamp, count(1) as SourceCount FROM ' + [EntityName] + ' WHERE ' 
+												+ [DeltaName] + ' > ' + ''''+CONVERT(varchar(30),LastDeltaDate,121)+''''+ ' AND ' + [DeltaName] + ' <= ' + ''''+CONVERT(varchar(30), DATEADD(minute,[MaxIntervalMinutes],[LastDeltaDate]),121)+''''
+										ELSE 
+											'SELECT MIN('+[DeltaName]+') AS DataFromTimestamp, MAX('+[DeltaName]+') AS DataToTimestamp, count(1) as SourceCount FROM ' + [EntityName] + ' WHERE ' 
+											+ [DeltaName] + ' > ' + ''''+CONVERT(varchar(30),[LastDeltaDate],121) +''''+ ' AND ' + [DeltaName] + ' <= ' + ''''+ CONVERT(varchar(30),(@localdate),120)+''''
+										END
+						--Common No Delta
+							WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NULL
+								THEN 'SELECT ''1900-01-01 00:00:00'' AS DataFromTimestamp, '''+CONVERT(VARCHAR(30),ELT.uf_GetAestDateTime(),120)+''' AS DataToTimestamp,  COUNT(*) AS SourceCount FROM ' + [EntityName]
+						--Running Number
+							WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaNumber] IS NOT NULL
+									THEN 'SELECT MIN('+[DeltaName]+') AS DataFromTimestamp,' + ' MAX('+[DeltaName]+') AS DataToTimestamp,'+ 'COUNT(*) AS SourceCount FROM ' + [EntityName]
+													+ [DeltaName] + ' > ' + ''''+CONVERT(VARCHAR,[LastDeltaNumber])+'''' + ' AND ' + [DeltaName] + ' <= ' + ''''+CONVERT(VARCHAR,([LastDeltaNumber] + [MaxIntervalNumber]))+''''
+							ELSE NULL
+					 END
+
+				, CAST(0 AS BIT) AS [ReloadFlag]
+				, NULL AS [ADFPipelineRunID]
+			FROM 
+				[ELT].[IngestDefinition]
+			WHERE 
+				[SourceSystemName]=@SourceSystemName
+				AND [StreamName] LIKE COALESCE(@StreamName, [StreamName])
+				AND [ActiveFlag]=1
+
+--ReRun
+UNION
+		SELECT 
+				[ID].[IngestID]
+				,[SourceSystemName]
+				,[StreamName]
+				,[Backend]
+				,[EntityName]
+				,[DeltaName]
+				,[LastDeltaDate]
+				,II.[DataFromTimestamp]
+				,II.[DataToTimestamp]
+				,ID.[LastDeltaNumber]
+				,II.[DataFromNumber]
+				,II.[DataToNumber]
+				,[DataFormat]
+				,[SourceStructure]
+				,ID.[MaxIntervalMinutes]
+				,ID.[MaxIntervalNumber]
+				,[ELT].[uf_GetTabularTranslatorMappingJson](ID.[DataMapping]) AS [DataMapping]
+				,ID.[RunSequence]
+				,[ActiveFlag]
+				,[L1TransformationReqdFlag]
+				,[L2TransformationReqdFlag]
+				,[DelayL1TransformationFlag]
+				,[DelayL2TransformationFlag]
+				,II.[DestinationRawFileSystem]
+				,II.[DestinationRawFolder]
+				,II.[DestinationRawFile] 		
+			
+				--Derived Fields
+				,SourceSQL = 
+					CASE
+						--DEFAULT ANSI SQL for Delta Table
+						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL 
+							THEN 'SELECT * FROM ' + [EntityName] + ' WHERE ' 
+									+ [DeltaName] + ' > ' + ''''+ CONVERT(varchar(30),II.[DataFromTimestamp],121)+''''+ ' AND ' + [DeltaName] + ' <= ' + ''''+ CONVERT(varchar(30),II.[DataToTimestamp],121)+''''
+						--Common No Delta
+						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NULL
+							THEN 'SELECT * FROM ' + [EntityName]
+						--Running Number
+						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaNumber] IS NOT NULL
+								THEN 'SELECT * FROM ' + [EntityName] + ' WHERE ' 
+												+ [DeltaName] + ' > ' + ''''+CONVERT(VARCHAR,II.[DataFromNumber])+'''' + ' AND ' + [DeltaName] + ' <= ' + ''''+CONVERT(VARCHAR,II.[DataToNumber])+''''
+						
+						ELSE NULL
+					END
+
+				,StatSQL = 
+					CASE 
+					--DEFAULT ANSI SQL for Delta Table
+						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL THEN
+									'SELECT MIN('+[DeltaName]+') AS DataFromTimestamp, MAX('+[DeltaName]+') AS DataToTimestamp, count(1) as SourceCount FROM ' 
+									+ [EntityName] + ' WHERE ' + [DeltaName] + '>' + ''''+CONVERT(varchar(30),II.DataFromTimestamp,121)+''''+ ' AND ' + [DeltaName] + '<='+ ''''+CONVERT(varchar(30),II.[DataToTimestamp],121)+''''
+					--Common No Delta
+						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NULL AND [LastDeltaDate] IS NOT NULL 
+							THEN 'SELECT MIN('+[DeltaName]+') AS DataFromTimestamp,' + ' MAX('+[DeltaName]+') AS DataToTimestamp,'+ 'COUNT(*) AS SourceCount FROM ' + [EntityName]
+					--Common No Delta
+						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NULL
+							THEN 'SELECT SELECT ''1900-01-01 00:00:00'' AS DataFromTimestamp, '''+CONVERT(VARCHAR(30),ELT.uf_GetAestDateTime(),120)+''' AS DataToTimestamp, COUNT(*) AS SourceCount FROM ' + [EntityName]
+					--Running Number
+						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaNumber] IS NOT NULL
+								THEN 'SELECT MIN('+[DeltaName]+') AS DataFromTimestamp,' + ' MAX('+[DeltaName]+') AS DataToTimestamp,'+ 'COUNT(*) AS SourceCount FROM ' + [EntityName]
+												+ [DeltaName] + ' > ' + ''''+CONVERT(VARCHAR,II.[DataFromNumber]) +'''' + ' AND ' + [DeltaName] + ' <= ' + ''''+CONVERT(VARCHAR,II.[DataToNumber])+''''
+						ELSE NULL 	
+					END
+
+				,II.[ReloadFlag]
+				, II.[ADFIngestPipelineRunID]
+			FROM 
+				[ELT].[IngestDefinition] ID
+					INNER JOIN [ELT].[IngestInstance] AS II
+						ON II.[IngestID]= ID.[IngestID] 
+						AND II.[ReloadFlag]=1
+						AND (II.[IngestStatus] is NULL OR II.[IngestStatus] != 'Running')  --Fetch new instances and ignore instances that are currently running
+			WHERE 
+				ID.[SourceSystemName]=@SourceSystemName
+				AND ID.[StreamName] LIKE COALESCE(@StreamName, [StreamName])
+				AND ID.[ActiveFlag]=1 
+				AND ISNULL(II.RetryCount,0) <= ID.MaxRetries
+				
+	)
+	SELECT 
+		TOP (@MaxIngestInstance) *  
+	FROM CTE
+	ORDER BY 
+		[RunSequence] ASC, [DataFromTimestamp] DESC, [DataToTimestamp] DESC
+
+END

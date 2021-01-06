@@ -1,0 +1,31 @@
+﻿CREATE TABLE [ELT].[L1TransformDefinition]
+(
+	[L1TransformID] int not null identity,
+	[IngestID] int not null,
+	[NotebookPath] varchar(200) null,
+	[NotebookName] varchar(100) null,
+	[CustomParameters] varchar(max) null,
+	[InputRawFileSystem] varchar(50) not null,
+	[InputRawFileFolder] varchar(200) not null,
+	[InputRawFile] varchar(200) not null,
+	[InputRawFileDelimiter] char(1) null,
+	[InputFileHeaderFlag] bit null,
+	[OutputL1CurateFileSystem] varchar(50) not null,
+	[OutputL1CuratedFolder] varchar(200) not null,
+	[OutputL1CuratedFile] varchar(200) not null,
+	[OutputL1CuratedFileDelimiter] char(1) null,
+	[OutputL1CuratedFileFormat] varchar(10) null,
+	[OutputL1CuratedFileWriteMode] varchar(20) null,
+	--Output SQL DW Table
+	[OutputDWStagingTable] varchar(200) null,
+	[LookupColumns] varchar(4000) null,
+	[OutputDWTable] varchar(200) null,
+	[OutputDWTableWriteMode] varchar(20) null,
+	[MaxRetries] int null,
+	[DeltaName] varchar(50) null,
+	[ActiveFlag] bit not null,
+	[CreatedBy] varchar(50) not null,
+	[CreatedTimestamp] datetime not null,
+	[ModifiedBy] varchar(50) null,
+	[ModifiedTimestamp] datetime null
+)
