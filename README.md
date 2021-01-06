@@ -1,0 +1,2 @@
+# elt-framework
+ELT framework is a metadata based reusable and extendable orchestration framework. It  simplifies ingestion and transformation pipelines while providing consistency among different workloads for an Azure modern data platform. This framework is applicable to a modern data platform built using Azure PaaS and specifically for batch ELT. The key component of ELT Framework is a SQL Server Control database which is used in alongside Azure PaaS services like Data Factory pipelines, Databricks Notebooks and Logic apps. 
