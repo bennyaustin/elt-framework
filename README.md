@@ -14,3 +14,5 @@ The ELT Framework supports the following features:
 * Switch on, switch off pipelines and transformations on demand.
 * Extendable.
 * Capabilty to integrate with Azure PaaS services like Diagnostic Logging.
+
+An extensive documentation of the ELT Framewwork is available in **[Wiki](https://github.com/bennyaustin/elt-framework/wiki)**
