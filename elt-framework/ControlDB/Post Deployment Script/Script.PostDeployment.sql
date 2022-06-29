@@ -11,3 +11,5 @@ Post-Deployment Script Template
 */
 
 --:r .\Script1.PostDeployment.sql
+
+:r .\datasources\RestAPI.sql
