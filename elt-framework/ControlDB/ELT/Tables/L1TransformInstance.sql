@@ -32,8 +32,8 @@
 	[ReRunL1TransformFlag] bit null,
 	[IngestADFPipelineRunID] uniqueidentifier null,
 	[L1TransformADFPipelineRunID] uniqueidentifier null,
-	[CreatedBy] varchar(50) not null,
+	[CreatedBy] nvarchar(128) not null,
 	[CreatedTimestamp] datetime not null,
-	[ModifiedBy] varchar(50) null,
+	[ModifiedBy] nvarchar(128) null,
 	[ModifiedTimestamp] datetime null
 )

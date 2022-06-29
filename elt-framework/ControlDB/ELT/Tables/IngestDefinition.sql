@@ -31,9 +31,9 @@
 	[L2TransformationReqdFlag] bit not null,
 	[DelayL1TransformationFlag] bit not null,
 	[DelayL2TransformationFlag] bit not null,
-	[CreatedBy] varchar(50) not null,
+	[CreatedBy] nvarchar(128) not null,
 	[CreatedTimestamp] datetime not null,
-	[ModifiedBy] varchar(50) null,
+	[ModifiedBy] nvarchar(128) null,
 	[ModifiedTimestamp] datetime null,
 )
 
