@@ -82,6 +82,9 @@ as
 			--Query
 				,SourceSQL = 
 					CASE
+					-- Customized for simple Purview ATLAS API
+					   WHEN Backend = 'ATLAS REST API' THEN EntityName 
+
 					 --DEFAULT ANSI SQL for Delta Table
 						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL
 							THEN 
@@ -107,7 +110,11 @@ as
 			
 			--Stats Query
 				,StatSQL = 
+					
 					CASE 
+						-- Customized for simple Purview ATLAS API
+					   WHEN Backend = 'ATLAS REST API' THEN EntityName 
+
 						--DEFAULT ANSI SQL For Delta Table
 						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL
 								THEN 
@@ -172,6 +179,8 @@ UNION
 				--Derived Fields
 				,SourceSQL = 
 					CASE
+						-- Customized for simple Purview ATLAS API
+					    WHEN Backend = 'ATLAS REST API' THEN EntityName 
 						--DEFAULT ANSI SQL for Delta Table
 						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL 
 							THEN 'SELECT * FROM ' + [EntityName] + ' WHERE ' 
@@ -189,6 +198,9 @@ UNION
 
 				,StatSQL = 
 					CASE 
+					-- Customized for simple Purview ATLAS API
+					   WHEN Backend = 'ATLAS REST API' THEN EntityName 
+
 					--DEFAULT ANSI SQL for Delta Table
 						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL THEN
 									'SELECT MIN('+[DeltaName]+') AS DataFromTimestamp, MAX('+[DeltaName]+') AS DataToTimestamp, count(1) as SourceCount FROM ' 
