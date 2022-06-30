@@ -33,6 +33,7 @@ CREATE TABLE #RestAPI
 
 --Insert Into Temp Table
 INSERT INTO #RestAPI
+--datasources
 SELECT 'Purview' AS	[SourceSystemName],
 	'datasources' AS [StreamName],
 	'Microsoft Purview APIs' AS [SourceSystemDescription],
@@ -217,6 +218,136 @@ SELECT 'Purview' AS	[SourceSystemName],
 	'purview/datasources/YYYY-MM'  AS [DestinationRawFolder] ,
 	'datasources_YYYYMMDD.parquet' AS [DestinationRawFile],
 	1 AS [RunSequence],
+	3 AS [MaxRetries],
+	1 AS [ActiveFlag],
+	1 AS [L1TransformationReqdFlag],
+	1 AS [L2TransformationReqdFlag],
+	1 AS [DelayL1TransformationFlag],
+	1 AS [DelayL2TransformationFlag]
+
+UNION
+--Collections
+SELECT 'Purview' AS	[SourceSystemName],
+	'collections' AS [StreamName],
+	'Microsoft Purview APIs' AS [SourceSystemDescription],
+	'ATLAS REST API' AS [Backend],
+	'/collections?api-version=2019-11-01-preview' AS [EntityName],
+	NULL AS [DeltaName],
+	NULL AS [LastDeltaDate],
+	NULL AS [LastDeltaNumber],
+	NULL AS [LastDeltaString],
+	NULL AS [MaxIntervalMinutes],
+	NULL AS [MaxIntervalNumber],
+	'{
+    "type": "TabularTranslator",
+    "mappings": [
+        {
+            "source": {
+                "path": "[''name'']"
+            },
+            "sink": {
+                "name": "name",
+                "type": "String"
+            }
+        },
+        {
+            "source": {
+                "path": "[''friendlyName'']"
+            },
+            "sink": {
+                "name": "friendlyName",
+                "type": "String"
+            }
+        },
+        {
+            "source": {
+                "path": "[''description'']"
+            },
+            "sink": {
+                "name": "description",
+                "type": "String"
+            }
+        },
+        {
+            "source": {
+                "path": "[''systemData''][''createdBy'']"
+            },
+            "sink": {
+                "name": "createdBy",
+                "type": "String"
+            }
+        },
+        {
+            "source": {
+                "path": "[''systemData''][''createdByType'']"
+            },
+            "sink": {
+                "name": "createdByType",
+                "type": "String"
+            }
+        },
+        {
+            "source": {
+                "path": "[''systemData''][''createdAt'']"
+            },
+            "sink": {
+                "name": "createdAt",
+                "type": "DateTime"
+            }
+        },
+        {
+            "source": {
+                "path": "[''systemData''][''lastModifiedByType'']"
+            },
+            "sink": {
+                "name": "lastModifiedByType",
+                "type": "String"
+            }
+        },
+        {
+            "source": {
+                "path": "[''systemData''][''lastModifiedAt'']"
+            },
+            "sink": {
+                "name": "lastModifiedAt",
+                "type": "DateTime"
+            }
+        },
+        {
+            "source": {
+                "path": "[''collectionProvisioningState'']"
+            },
+            "sink": {
+                "name": "collectionProvisioningState",
+                "type": "String"
+            }
+        },
+        {
+            "source": {
+                "path": "[''parentCollection''][''type'']"
+            },
+            "sink": {
+                "name": "parentCollectionType",
+                "type": "String"
+            }
+        },
+        {
+            "source": {
+                "path": "[''parentCollection''][''referenceName'']"
+            },
+            "sink": {
+                "name": "parentCollectionReferenceName",
+                "type": "String"
+            }
+        }
+    ],
+    "collectionReference": "$[''value'']",
+    "mapComplexValuesToString": true
+    }' AS [DataMapping],
+	'raw-bronze' AS [DestinationRawFileSystem],
+	'purview/collections/YYYY-MM'  AS [DestinationRawFolder] ,
+	'collections_YYYYMMDD.parquet' AS [DestinationRawFile],
+	2 AS [RunSequence],
 	3 AS [MaxRetries],
 	1 AS [ActiveFlag],
 	1 AS [L1TransformationReqdFlag],
