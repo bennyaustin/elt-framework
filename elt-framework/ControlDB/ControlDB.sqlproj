@@ -73,6 +73,7 @@
     <Folder Include="Post Deployment Script" />
     <Folder Include="Pre Deployment Script" />
     <Folder Include="Post Deployment Script\datasources" />
+    <Folder Include="Post Deployment Script\datasources\RestAPI" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="ELT\ELT.sql" />
@@ -158,7 +159,10 @@
     <Build Include="ELT\Stored Procedures\UpdateTransformInstance_L2.sql" />
     <Build Include="ELT\Functions\uf_GetAestDateTime.sql" />
     <Build Include="ELT\Functions\uf_GetTabularTranslatorMappingJson.sql" />
-    <None Include="Post Deployment Script\datasources\RestAPI.sql">
+    <None Include="Post Deployment Script\datasources\RestAPI\PurviewRestAPI.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Post Deployment Script\datasources\RestAPI\AzureRestAPI.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
