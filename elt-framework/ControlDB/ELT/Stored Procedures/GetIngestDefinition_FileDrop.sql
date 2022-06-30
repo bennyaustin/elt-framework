@@ -42,7 +42,7 @@ BEGIN
 			, II.[DestinationRawFileSystem]
 			, II.[DestinationRawFolder]
 			, II.[DestinationRawFile]
-			,[ELT].[uf_GetTabularTranslatorMappingJson](ID.[DataMapping]) AS [DataMapping]
+			, ID.[DataMapping]
 			, CAST(1 AS BIT) AS [ReloadFlag]
 			, ID.[L1TransformationReqdFlag]
 			, ID.[L2TransformationReqdFlag]
@@ -100,7 +100,7 @@ BEGIN
 				,'HH',Right('0'+ CAST(DatePart(hh,@localdate) AS varchar(2)),2))
 				,'MI',Right('0'+ CAST(DatePart(mi,@localdate) AS varchar(2)),2))
 				,'SS',Right('0'+ CAST(DatePart(ss,@localdate) AS varchar(2)),2))
-			,[ELT].[uf_GetTabularTranslatorMappingJson]([DataMapping]) AS [DataMapping]
+			, [DataMapping]
 			, CAST(0 AS BIT) AS [ReloadFlag]
 			, [L1TransformationReqdFlag]
 			, [L2TransformationReqdFlag]

@@ -50,7 +50,7 @@ as
 				,[SourceStructure]
 				,[MaxIntervalMinutes]
 				,[MaxIntervalNumber]
-				,[ELT].[uf_GetTabularTranslatorMappingJson]([DataMapping]) AS [DataMapping]
+				,[DataMapping]
 				,[RunSequence]
 				,[ActiveFlag]
 				,[L1TransformationReqdFlag]
@@ -83,7 +83,7 @@ as
 				,SourceSQL = 
 					CASE
 					-- Customized for simple Purview ATLAS API
-					   WHEN Backend = 'ATLAS REST API' THEN EntityName 
+					   WHEN Backend IN ('ATLAS REST API','AZURE REST API') THEN EntityName 
 
 					 --DEFAULT ANSI SQL for Delta Table
 						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL
@@ -113,7 +113,7 @@ as
 					
 					CASE 
 						-- Customized for simple Purview ATLAS API
-					   WHEN Backend = 'ATLAS REST API' THEN EntityName 
+					   WHEN Backend IN ('ATLAS REST API','AZURE REST API') THEN EntityName 
 
 						--DEFAULT ANSI SQL For Delta Table
 						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL
@@ -165,7 +165,7 @@ UNION
 				,[SourceStructure]
 				,ID.[MaxIntervalMinutes]
 				,ID.[MaxIntervalNumber]
-				,[ELT].[uf_GetTabularTranslatorMappingJson](ID.[DataMapping]) AS [DataMapping]
+				,ID.[DataMapping]
 				,ID.[RunSequence]
 				,[ActiveFlag]
 				,[L1TransformationReqdFlag]
@@ -180,7 +180,7 @@ UNION
 				,SourceSQL = 
 					CASE
 						-- Customized for simple Purview ATLAS API
-					    WHEN Backend = 'ATLAS REST API' THEN EntityName 
+					    WHEN Backend IN ('ATLAS REST API','AZURE REST API') THEN EntityName 
 						--DEFAULT ANSI SQL for Delta Table
 						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL 
 							THEN 'SELECT * FROM ' + [EntityName] + ' WHERE ' 
@@ -199,7 +199,7 @@ UNION
 				,StatSQL = 
 					CASE 
 					-- Customized for simple Purview ATLAS API
-					   WHEN Backend = 'ATLAS REST API' THEN EntityName 
+					   WHEN Backend IN ('ATLAS REST API','AZURE REST API') THEN EntityName 
 
 					--DEFAULT ANSI SQL for Delta Table
 						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL THEN

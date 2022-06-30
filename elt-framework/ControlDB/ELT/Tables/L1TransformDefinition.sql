@@ -24,8 +24,8 @@
 	[MaxRetries] int null,
 	[DeltaName] varchar(50) null,
 	[ActiveFlag] bit not null,
-	[CreatedBy] varchar(50) not null,
+	[CreatedBy] nvarchar(128) not null,
 	[CreatedTimestamp] datetime not null,
-	[ModifiedBy] varchar(50) null,
+	[ModifiedBy] nvarchar(128) null,
 	[ModifiedTimestamp] datetime null
 )
