@@ -74,6 +74,9 @@
     <Folder Include="Pre Deployment Script" />
     <Folder Include="Post Deployment Script\datasources" />
     <Folder Include="Post Deployment Script\datasources\RestAPI" />
+    <Folder Include="Post Deployment Script\datasources\RestAPI\IngestDefinition" />
+    <Folder Include="Post Deployment Script\datasources\RestAPI\L1TransformDefinition" />
+    <Folder Include="Post Deployment Script\datasources\RestAPI\L2TransformDefinition" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="ELT\ELT.sql" />
@@ -159,16 +162,18 @@
     <Build Include="ELT\Stored Procedures\UpdateTransformInstance_L2.sql" />
     <Build Include="ELT\Functions\uf_GetAestDateTime.sql" />
     <Build Include="ELT\Functions\uf_GetTabularTranslatorMappingJson.sql" />
-    <None Include="Post Deployment Script\datasources\RestAPI\PurviewRestAPI.sql">
+    <None Include="Post Deployment Script\datasources\RestAPI\IngestDefinition\AzureRestAPI.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Post Deployment Script\datasources\RestAPI\AzureRestAPI.sql">
+    <None Include="Post Deployment Script\datasources\RestAPI\IngestDefinition\PurviewRestAPI.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Post Deployment Script\datasources\RestAPI\L1TransformDefinition\L1T_AzureRestAPI.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Pre Deployment Script\DBRoles.PreDeployment.sql" />
     <None Include="Pre Deployment Script\Script.PreDeployment.sql" />
+    <None Include="Post Deployment Script\datasources\RestAPI\L1TransformDefinition\L1T_PurviewRestAPI.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Post Deployment Script\Script.PostDeployment.sql">
