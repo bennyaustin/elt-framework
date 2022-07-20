@@ -17,3 +17,4 @@ Post-Deployment Script Template
 
 --L1TransformDefinition
 :r .\datasources\RestAPI\L1TransformDefinition\L1T_PurviewRestAPI.sql
+:r .\datasources\RestAPI\L1TransformDefinition\L1T_AzureRestAPI.sql
