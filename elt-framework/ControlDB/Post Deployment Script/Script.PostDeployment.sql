@@ -11,6 +11,9 @@ Post-Deployment Script Template
 */
 
 --:r .\Script1.PostDeployment.sql
+--IngestDefinition
+:r .\datasources\RestAPI\IngestDefinition\PurviewRestAPI.sql
+:r .\datasources\RestAPI\IngestDefinition\AzureRestAPI.sql
 
-:r .\datasources\RestAPI\PurviewRestAPI.sql
-:r .\datasources\RestAPI\AzureRestAPI.sql
+--L1TransformDefinition
+:r .\datasources\RestAPI\L1TransformDefinition\L1T_PurviewRestAPI.sql
