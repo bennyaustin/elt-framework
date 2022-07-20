@@ -36,7 +36,7 @@ CREATE TABLE #RestAPI
 --Insert Into Temp Table
 INSERT INTO #RestAPI
 	SELECT  [IngestID]
-	,'Transform Pipelines' AS [NotebookPath]
+	,'L1Transform' AS [NotebookPath]
 	,'L2Transform-Generic-Synapse' AS [NotebookName]
 	, NULL AS [CustomParameters]
 	,[DestinationRawFileSystem] AS [InputRawFileSystem]
