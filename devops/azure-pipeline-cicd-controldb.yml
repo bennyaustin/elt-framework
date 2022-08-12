@@ -17,6 +17,6 @@ steps:
   inputs:
     solution: '**\ControlDB.sln'
 
-- publish: $(System.DefaultWorkingDirectory)/bin/db
+- publish: $(System.DefaultWorkingDirectory)
   artifact: dacpac
   displayName: Publish Dacpac
