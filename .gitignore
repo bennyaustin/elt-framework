@@ -11,3 +11,5 @@
 /elt-framework/ControlDB/obj/Debug
 /elt-framework/ControlDB/.vs/ControlDB/v16
 /elt-framework/ControlDB/bin/Debug/Post Deployment Script
+*.lock
+/elt-framework/ControlDB/.vs/ControlDB/FileContentIndex/c6ca429c-bb19-4d63-b940-b2db6eec25b9.vsidx
