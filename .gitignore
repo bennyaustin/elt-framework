@@ -8,8 +8,8 @@
 *.user
 *.dbmdl
 *.jfm
+*.vsidx
 /elt-framework/ControlDB/obj/Debug
 /elt-framework/ControlDB/.vs/ControlDB/v16
 /elt-framework/ControlDB/bin/Debug/Post Deployment Script
-/elt-framework/ControlDB/.vs/ControlDB/FileContentIndex/ce3beb39-c4ca-4aef-9e30-c30cc9e3c1d6.vsidx
-/elt-framework/ControlDB/.vs/ControlDB/FileContentIndex/d8364f55-e789-4d1e-9736-2bd65f402b31.vsidx
+
