@@ -27,3 +27,14 @@ steps:
     KeyVaultName: ba-keyvault1 
     SecretsFilter: ba-sqlserver1-sqlusername,ba-sqlserver1-password
     RunAsPreJob: true
+- task: SqlAzureDacpacDeployment@1
+  inputs:
+    ConnectedServiceNameARM: ba-devops-spn
+    AuthenticationType: server
+    ServerName: ba-sqlserver1.database.windows.net,1433
+    DatabaseName: ControlDB
+    SqlUsername: $(ba-sqlserver1-sqlusername)
+    SqlPassword: $(ba-sqlserver1-password)
+    DacpacFile: dacpac
+    IpDetectionMethod: AutoDetect
+    DeleteFirewallRule: true
