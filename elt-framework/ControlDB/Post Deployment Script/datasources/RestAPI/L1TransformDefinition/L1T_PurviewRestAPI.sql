@@ -150,3 +150,5 @@ WHEN NOT MATCHED BY TARGET THEN
 			src.[ActiveFlag],
             USER_NAME(),
 	        GETDATE());
+
+GO
