@@ -25,5 +25,5 @@ steps:
   inputs:
     connectedServiceName: ba-devops-spn
     KeyVaultName: ba-keyvault1 
-    SecretsFilter: ba-sqlserver1-sqlusername
+    SecretsFilter: ba-sqlserver1-sqlusername,ba-sqlserver1-password
     RunAsPreJob: true
