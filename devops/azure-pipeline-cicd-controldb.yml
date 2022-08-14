@@ -20,3 +20,10 @@ steps:
 - publish: $(System.DefaultWorkingDirectory)
   artifact: dacpac
   displayName: Publish Dacpac
+
+- task: AzureKeyVault@2
+  inputs:
+    connectedServiceName: ba-devops-spn
+    KeyVaultName: ba-keyvault1 
+    SecretsFilter: ba-sqlserver1-sqlusername
+    RunAsPreJob: true
