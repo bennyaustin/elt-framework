@@ -1,0 +1,9 @@
+C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Debug\ControlDB.dacpac
+C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Debug\Post Deployment Script\Script.PostDeployment.sql
+C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Debug\ControlDB.dll
+C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Debug\ControlDB.pdb
+C:\Git Repos\elt-framework\elt-framework\ControlDB\obj\Debug\ControlDB.sqlproj.AssemblyReference.cache
+C:\Git Repos\elt-framework\elt-framework\ControlDB\obj\Debug\ControlDB.dll
+C:\Git Repos\elt-framework\elt-framework\ControlDB\obj\Debug\ControlDB.pdb
+C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Debug\Post Deployment Script\datasources\RestAPI\IngestDefinition\AzureRestAPI.sql
+C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Debug\Post Deployment Script\datasources\RestAPI\IngestDefinition\PurviewRestAPI.sql
