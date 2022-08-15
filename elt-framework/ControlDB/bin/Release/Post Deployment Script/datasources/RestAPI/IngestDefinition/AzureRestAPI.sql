@@ -2,10 +2,10 @@
 ELT Configuration for REST API Data Sources
 */
 
-IF OBJECT_ID('tempdb..#RestAPI') IS NOT NULL DROP TABLE #RestAPI;
+IF OBJECT_ID('tempdb..#AzureRestAPI_Ingest') IS NOT NULL DROP TABLE #AzureRestAPI_Ingest;
 
 --Create Temp table with same structure as IngestDefinition
-CREATE TABLE #RestAPI
+CREATE TABLE #AzureRestAPI_Ingest
 (
 	[SourceSystemName] [varchar](50) NOT NULL,
 	[StreamName] [varchar](100) NULL,
@@ -32,7 +32,7 @@ CREATE TABLE #RestAPI
 );
 
 --Insert Into Temp Table
-INSERT INTO #RestAPI
+INSERT INTO #AzureRestAPI_Ingest
 --Operations
 SELECT 'Azure' AS	[SourceSystemName],
 	'operations' AS [StreamName],
@@ -112,7 +112,7 @@ SELECT 'Azure' AS	[SourceSystemName],
 --Merge with Temp table for re-runnability
 
 MERGE INTO [ELT].[IngestDefinition] AS tgt
-USING #RestAPI AS src
+USING #AzureRestAPI_Ingest AS src
 ON src.[SourceSystemName]=tgt.[SourceSystemName] AND src.[StreamName] =tgt.[StreamName]
 WHEN MATCHED THEN
     UPDATE SET tgt.[SourceSystemDescription] = src.[SourceSystemDescription],
