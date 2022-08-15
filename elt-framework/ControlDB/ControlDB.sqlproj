@@ -168,12 +168,16 @@
     <None Include="Post Deployment Script\datasources\RestAPI\IngestDefinition\PurviewRestAPI.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Post Deployment Script\datasources\RestAPI\L1TransformDefinition\L1T_AzureRestAPI.sql" />
+    <None Include="Post Deployment Script\datasources\RestAPI\L1TransformDefinition\L1T_AzureRestAPI.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Pre Deployment Script\DBRoles.PreDeployment.sql" />
     <None Include="Pre Deployment Script\Script.PreDeployment.sql" />
-    <None Include="Post Deployment Script\datasources\RestAPI\L1TransformDefinition\L1T_PurviewRestAPI.sql" />
+    <None Include="Post Deployment Script\datasources\RestAPI\L1TransformDefinition\L1T_PurviewRestAPI.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Post Deployment Script\Script.PostDeployment.sql">

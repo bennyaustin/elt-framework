@@ -5,9 +5,9 @@ Declare @SourceSystem VARCHAR(50), @StreamName VARCHAR(100)
 SET @SourceSystem='Azure'
 SET @StreamName ='%'
 
-IF OBJECT_ID('tempdb..#RestAPI') IS NOT NULL DROP TABLE #RestAPI;
+IF OBJECT_ID('tempdb..#AzureRestAPI_L1') IS NOT NULL DROP TABLE #AzureRestAPI_L1;
 --Create Temp table with same structure as L1TransformDefinition
-CREATE TABLE #RestAPI
+CREATE TABLE #AzureRestAPI_L1
 (
 	[IngestID] int not null,
 	[NotebookPath] varchar(200) null,
@@ -23,7 +23,7 @@ CREATE TABLE #RestAPI
 	[OutputL1CuratedFile] varchar(200) not null,
 	[OutputL1CuratedFileDelimiter] char(1) null,
 	[OutputL1CuratedFileFormat] varchar(10) null,
-	[OutputL1CuratedFileWriteMode] varchar(20) null,
+	[OutputL1CuratedFileWriteMode] varchar(20) null,C:\Git Repos\elt-framework\elt-framework\ControlDB\ELT\ELT.sql
 	[OutputDWStagingTable] varchar(200) null,
 	[LookupColumns] varchar(4000) null,
 	[OutputDWTable] varchar(200) null,
@@ -34,7 +34,7 @@ CREATE TABLE #RestAPI
 );
 
 --Insert Into Temp Table
-INSERT INTO #RestAPI
+INSERT INTO #AzureRestAPI_L1
 	SELECT  [IngestID]
 	,'L1Transform' AS [NotebookPath]
 	,'L2Transform-Generic-Synapse' AS [NotebookName]
@@ -64,10 +64,10 @@ INSERT INTO #RestAPI
 	AND [StreamName] like @StreamName;
 
 
-	--Merge with Temp table for re-runnability
+--Merge with Temp table for re-runnability
 
 MERGE INTO [ELT].[L1TransformDefinition] AS tgt
-USING #RestAPI AS src
+USING #AzureRestAPI_L1 AS src
 ON src.[InputRawFileSystem] = tgt.[InputRawFileSystem]
  AND src.[InputRawFileFolder] = tgt.[InputRawFileFolder]
  AND src.[InputRawFile] = tgt.[InputRawFile]
