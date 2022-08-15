@@ -35,6 +35,6 @@ steps:
     DatabaseName: ControlDB
     SqlUsername: $(ba-sqlserver1-sqlusername)
     SqlPassword: $(ba-sqlserver1-password)
-    DacpacFile: elt-framework\ControlDB\bin\Debug\ControlDB.dacpac
+    DacpacFile: elt-framework\ControlDB\bin\Release\ControlDB.dacpac
     IpDetectionMethod: AutoDetect
     DeleteFirewallRule: true
