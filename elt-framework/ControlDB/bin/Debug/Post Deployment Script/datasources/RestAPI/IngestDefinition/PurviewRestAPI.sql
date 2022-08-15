@@ -2,10 +2,10 @@
 ELT Configuration for REST API Data Sources
 */
 
-IF OBJECT_ID('tempdb..#PurviewRestAPI_Ingest') IS NOT NULL DROP TABLE #PurviewRestAPI_Ingest;
+IF OBJECT_ID('tempdb..#RestAPI') IS NOT NULL DROP TABLE #RestAPI;
 
 --Create Temp table with same structure as IngestDefinition
-CREATE TABLE #PurviewRestAPI_Ingest
+CREATE TABLE #RestAPI
 (
 	[SourceSystemName] [varchar](50) NOT NULL,
 	[StreamName] [varchar](100) NULL,
@@ -32,7 +32,7 @@ CREATE TABLE #PurviewRestAPI_Ingest
 );
 
 --Insert Into Temp Table
-INSERT INTO #PurviewRestAPI_Ingest
+INSERT INTO #RestAPI
 --datasources
 SELECT 'Purview' AS	[SourceSystemName],
 	'datasources' AS [StreamName],
@@ -360,7 +360,7 @@ SELECT 'Purview' AS	[SourceSystemName],
 --Merge with Temp table for re-runnability
 
 MERGE INTO [ELT].[IngestDefinition] AS tgt
-USING #PurviewRestAPI_Ingest AS src
+USING #RestAPI AS src
 ON src.[SourceSystemName]=tgt.[SourceSystemName] AND src.[StreamName] =tgt.[StreamName]
 WHEN MATCHED THEN
     UPDATE SET tgt.[SourceSystemDescription] = src.[SourceSystemDescription],
@@ -434,5 +434,3 @@ WHEN NOT MATCHED BY TARGET THEN
 	        src.[DelayL2TransformationFlag],
             USER_NAME(),
 	        GETDATE());
-
-GO

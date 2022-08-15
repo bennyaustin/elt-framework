@@ -2,12 +2,12 @@
 ELT Configuration for REST API Data Sources
 */
 Declare @SourceSystem VARCHAR(50), @StreamName VARCHAR(100)
-SET @SourceSystem='Azure'
+SET @SourceSystem='Purview'
 SET @StreamName ='%'
 
-IF OBJECT_ID('tempdb..#AzureRestAPI_L1') IS NOT NULL DROP TABLE #AzureRestAPI_L1;
+IF OBJECT_ID('tempdb..#PurviewRestAPI_L1') IS NOT NULL DROP TABLE #PurviewRestAPI_L1;
 --Create Temp table with same structure as L1TransformDefinition
-CREATE TABLE #AzureRestAPI_L1
+CREATE TABLE #PurviewRestAPI_L1
 (
 	[IngestID] int not null,
 	[NotebookPath] varchar(200) null,
@@ -34,7 +34,7 @@ CREATE TABLE #AzureRestAPI_L1
 );
 
 --Insert Into Temp Table
-INSERT INTO #AzureRestAPI_L1
+INSERT INTO #PurviewRestAPI_L1
 	SELECT  [IngestID]
 	,'L1Transform' AS [NotebookPath]
 	,'L2Transform-Generic-Synapse' AS [NotebookName]
@@ -51,13 +51,15 @@ INSERT INTO #AzureRestAPI_L1
 	, 'parquet' AS [OutputL1CuratedFileFormat]
 	, 'overwrite' AS [OutputL1CuratedFileWriteMode]
 	, 'stg.merge_' + [SourceSystemName] +'_'+ StreamName AS [OutputDWStagingTable] 
-	, CASE WHEN StreamName = 'operations' THEN '[''name'']'
-			ELSE NULL
+	, CASE WHEN StreamName = 'datasources' THEN '[''resourceName'']'
+			WHEN StreamName = 'collections' THEN '[''name'']'
 		END AS [LookupColumns]
 	, SourceSystemName + '.' + StreamName AS [OutputDWTable]
 	, 'append' AS [OutputDWTableWriteMode]
 	,3 AS [MaxRetries]
-	,  NULL AS [DeltaName]
+	,  CASE WHEN StreamName = 'datasources' THEN 'lastModifiedAt'
+			WHEN StreamName = 'collections' THEN 'lastModifiedAt'
+		END AS [DeltaName]
 	, 1 AS [ActiveFlag]
 	FROM  [ELT].[IngestDefinition]
 	WHERE [SourceSystemName]=@SourceSystem
@@ -67,7 +69,7 @@ INSERT INTO #AzureRestAPI_L1
 --Merge with Temp table for re-runnability
 
 MERGE INTO [ELT].[L1TransformDefinition] AS tgt
-USING #AzureRestAPI_L1 AS src
+USING #PurviewRestAPI_L1 AS src
 ON src.[InputRawFileSystem] = tgt.[InputRawFileSystem]
  AND src.[InputRawFileFolder] = tgt.[InputRawFileFolder]
  AND src.[InputRawFile] = tgt.[InputRawFile]

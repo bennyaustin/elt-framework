@@ -15,10 +15,10 @@ Post-Deployment Script Template
 ELT Configuration for REST API Data Sources
 */
 
-IF OBJECT_ID('tempdb..#RestAPI') IS NOT NULL DROP TABLE #RestAPI;
+IF OBJECT_ID('tempdb..#PurviewRestAPI_Ingest') IS NOT NULL DROP TABLE #PurviewRestAPI_Ingest;
 
 --Create Temp table with same structure as IngestDefinition
-CREATE TABLE #RestAPI
+CREATE TABLE #PurviewRestAPI_Ingest
 (
 	[SourceSystemName] [varchar](50) NOT NULL,
 	[StreamName] [varchar](100) NULL,
@@ -45,7 +45,7 @@ CREATE TABLE #RestAPI
 );
 
 --Insert Into Temp Table
-INSERT INTO #RestAPI
+INSERT INTO #PurviewRestAPI_Ingest
 --datasources
 SELECT 'Purview' AS	[SourceSystemName],
 	'datasources' AS [StreamName],
@@ -373,7 +373,7 @@ SELECT 'Purview' AS	[SourceSystemName],
 --Merge with Temp table for re-runnability
 
 MERGE INTO [ELT].[IngestDefinition] AS tgt
-USING #RestAPI AS src
+USING #PurviewRestAPI_Ingest AS src
 ON src.[SourceSystemName]=tgt.[SourceSystemName] AND src.[StreamName] =tgt.[StreamName]
 WHEN MATCHED THEN
     UPDATE SET tgt.[SourceSystemDescription] = src.[SourceSystemDescription],
@@ -453,10 +453,10 @@ GO
 ELT Configuration for REST API Data Sources
 */
 
-IF OBJECT_ID('tempdb..#RestAPI') IS NOT NULL DROP TABLE #RestAPI;
+IF OBJECT_ID('tempdb..#AzureRestAPI_Ingest') IS NOT NULL DROP TABLE #AzureRestAPI_Ingest;
 
 --Create Temp table with same structure as IngestDefinition
-CREATE TABLE #RestAPI
+CREATE TABLE #AzureRestAPI_Ingest
 (
 	[SourceSystemName] [varchar](50) NOT NULL,
 	[StreamName] [varchar](100) NULL,
@@ -483,7 +483,7 @@ CREATE TABLE #RestAPI
 );
 
 --Insert Into Temp Table
-INSERT INTO #RestAPI
+INSERT INTO #AzureRestAPI_Ingest
 --Operations
 SELECT 'Azure' AS	[SourceSystemName],
 	'operations' AS [StreamName],
@@ -563,7 +563,7 @@ SELECT 'Azure' AS	[SourceSystemName],
 --Merge with Temp table for re-runnability
 
 MERGE INTO [ELT].[IngestDefinition] AS tgt
-USING #RestAPI AS src
+USING #AzureRestAPI_Ingest AS src
 ON src.[SourceSystemName]=tgt.[SourceSystemName] AND src.[StreamName] =tgt.[StreamName]
 WHEN MATCHED THEN
     UPDATE SET tgt.[SourceSystemDescription] = src.[SourceSystemDescription],
@@ -647,9 +647,9 @@ Declare @SourceSystem VARCHAR(50), @StreamName VARCHAR(100)
 SET @SourceSystem='Purview'
 SET @StreamName ='%'
 
-IF OBJECT_ID('tempdb..#RestAPI') IS NOT NULL DROP TABLE #RestAPI;
+IF OBJECT_ID('tempdb..#PurviewRestAPI_L1') IS NOT NULL DROP TABLE #PurviewRestAPI_L1;
 --Create Temp table with same structure as L1TransformDefinition
-CREATE TABLE #RestAPI
+CREATE TABLE #PurviewRestAPI_L1
 (
 	[IngestID] int not null,
 	[NotebookPath] varchar(200) null,
@@ -676,7 +676,7 @@ CREATE TABLE #RestAPI
 );
 
 --Insert Into Temp Table
-INSERT INTO #RestAPI
+INSERT INTO #PurviewRestAPI_L1
 	SELECT  [IngestID]
 	,'L1Transform' AS [NotebookPath]
 	,'L2Transform-Generic-Synapse' AS [NotebookName]
@@ -708,10 +708,10 @@ INSERT INTO #RestAPI
 	AND [StreamName] like @StreamName;
 
 
-	--Merge with Temp table for re-runnability
+--Merge with Temp table for re-runnability
 
 MERGE INTO [ELT].[L1TransformDefinition] AS tgt
-USING #RestAPI AS src
+USING #PurviewRestAPI_L1 AS src
 ON src.[InputRawFileSystem] = tgt.[InputRawFileSystem]
  AND src.[InputRawFileFolder] = tgt.[InputRawFileFolder]
  AND src.[InputRawFile] = tgt.[InputRawFile]
@@ -801,9 +801,9 @@ Declare @SourceSystem VARCHAR(50), @StreamName VARCHAR(100)
 SET @SourceSystem='Azure'
 SET @StreamName ='%'
 
-IF OBJECT_ID('tempdb..#RestAPI') IS NOT NULL DROP TABLE #RestAPI;
+IF OBJECT_ID('tempdb..#AzureRestAPI_L1') IS NOT NULL DROP TABLE #AzureRestAPI_L1;
 --Create Temp table with same structure as L1TransformDefinition
-CREATE TABLE #RestAPI
+CREATE TABLE #AzureRestAPI_L1
 (
 	[IngestID] int not null,
 	[NotebookPath] varchar(200) null,
@@ -830,7 +830,7 @@ CREATE TABLE #RestAPI
 );
 
 --Insert Into Temp Table
-INSERT INTO #RestAPI
+INSERT INTO #AzureRestAPI_L1
 	SELECT  [IngestID]
 	,'L1Transform' AS [NotebookPath]
 	,'L2Transform-Generic-Synapse' AS [NotebookName]
@@ -860,10 +860,10 @@ INSERT INTO #RestAPI
 	AND [StreamName] like @StreamName;
 
 
-	--Merge with Temp table for re-runnability
+--Merge with Temp table for re-runnability
 
 MERGE INTO [ELT].[L1TransformDefinition] AS tgt
-USING #RestAPI AS src
+USING #AzureRestAPI_L1 AS src
 ON src.[InputRawFileSystem] = tgt.[InputRawFileSystem]
  AND src.[InputRawFileFolder] = tgt.[InputRawFileFolder]
  AND src.[InputRawFile] = tgt.[InputRawFile]
