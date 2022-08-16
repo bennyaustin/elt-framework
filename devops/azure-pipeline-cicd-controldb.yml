@@ -41,4 +41,4 @@ steps:
     DacpacFile: elt-framework\ControlDB\bin\Release\ControlDB.dacpac
     IpDetectionMethod: AutoDetect
     DeleteFirewallRule: true
-    AdditionalArguments: /p:DropPermissionsNotInSource=false
+    AdditionalArguments: /p:DropPermissionsNotInSource=false /p:DropRoleMembersNotInSource=false /p:DropObjectsNotInSource=true /p:IgnoreColumnOrder=true /p:IgnorePermissions=true
