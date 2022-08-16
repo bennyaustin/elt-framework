@@ -26,7 +26,7 @@ steps:
   - template: azure-pipeline-parameters-db-prod.yml
 
 - task: VSBuild@1
-  displayName: Build database project
+  displayName: Build database project ${{parameters.dbSolutionName}}
   inputs:
     solution: '**\ControlDB.sln'
 
