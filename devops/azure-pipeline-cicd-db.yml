@@ -19,6 +19,12 @@ pool:
   vmImage: windows-latest
 
 steps:
+- ${{ if eq(parameters.targetEnvironment,'nonprod')}}:
+  - template: azure-pipeline-parameters-db-nonprod.yml
+
+- ${{ if eq(parameters.targetEnvironment,'prod')}}:
+  - template: azure-pipeline-parameters-db-prod.yml
+
 - task: VSBuild@1
   displayName: Build database project
   inputs:
