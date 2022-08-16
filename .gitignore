@@ -9,7 +9,3 @@
 *.dbmdl
 *.jfm
 *.vsidx
-/elt-framework/ControlDB/obj/Debug
-/elt-framework/ControlDB/.vs/ControlDB/v16
-/elt-framework/ControlDB/bin/Debug/Post Deployment Script
-
