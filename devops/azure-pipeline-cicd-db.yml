@@ -5,6 +5,12 @@
 trigger:
 - main
 
+parameters:
+- name: targetEnvironment
+  displayName: Target Environment Name. Allowed values - prod/nonprod
+  type: string
+  default: nonprod
+
 pool:
   name: Azure Pipelines
   demands:
