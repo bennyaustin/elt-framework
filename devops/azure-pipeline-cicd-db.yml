@@ -11,6 +11,9 @@ parameters:
   type: string
   default: nonprod
 
+extends:
+  template: azure-pipeline-parameters-db-nonprod.yml
+
 pool:
   name: Azure Pipelines
   demands:
