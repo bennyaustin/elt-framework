@@ -18,6 +18,7 @@ stages:
       - template: templates/build-sqldb.yml
         parameters:
           solutionName:  ControlDB
+          buildPath:  elt-framework\ControlDB\bin\Release
       # - job:  Build
       #   steps:
       #   - task: VSBuild@1
