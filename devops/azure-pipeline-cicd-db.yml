@@ -18,7 +18,7 @@ stages:
       - template: templates/build-sqldb.yml
         parameters:
           solutionName:  ControlDB
-          buildPath:  elt-framework\ControlDB\bin\Release\ControlDB.dacpac
+          buildPath:  elt-framework\ControlDB
       # - job:  Build
       #   steps:
       #   - task: VSBuild@1
