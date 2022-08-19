@@ -13,7 +13,7 @@ pool:
   vmImage: windows-latest
 
 stages:
-  - stage:
+  - stage: ci
     displayName: Build Stage
     jobs:
       - template: templates/build-sqldb.yml
@@ -22,36 +22,45 @@ stages:
           buildPath:  elt-framework\ControlDB\bin\Release
 
   - stage: cd_nonprod
+    displayName: Deploy Stage - Non Prod
     jobs:
-      - job:  Deploy
-        steps:
-          - task: AzureKeyVault@2
-            displayName: Get keyvault secrets
-            inputs:
-              connectedServiceName: ba-devops-spn
-              KeyVaultName: ba-keyvault1 
-              SecretsFilter: ba-sqlserver1-sqlusername,ba-sqlserver1-password
-              RunAsPreJob: true
+    - template: templates/deploy-sqldb.yml
+      parameters:
+        serviceConnectionName:  ba-devops-spn
+        keyvaultName:  ba-keyvault1 
+        buildArtifactName:  dacpac
+        targetDatabaseServer:  ba-sqlserver1.database.windows.net,1433
+        targetDatabase:  ControlDB
+    # jobs:
+    #   - job:  Deploy
+    #     steps:
+    #       - task: AzureKeyVault@2
+    #         displayName: Get keyvault secrets
+    #         inputs:
+    #           connectedServiceName: ba-devops-spn
+    #           KeyVaultName: ba-keyvault1 
+    #           SecretsFilter: ba-sqlserver1-sqlusername,ba-sqlserver1-password
+    #           RunAsPreJob: true
 
-          - task: DownloadPipelineArtifact@2
-            inputs: 
-              source: current
-              artifactName: dacpac
-              path: $(System.DefaultWorkingDirectory)
+    #       - task: DownloadPipelineArtifact@2
+    #         inputs: 
+    #           source: current
+    #           artifactName: dacpac
+    #           path: $(System.DefaultWorkingDirectory)
 
-          - task: SqlAzureDacpacDeployment@1
-            displayName: Deploy database
-            inputs:
-              ConnectedServiceNameARM: ba-devops-spn
-              AuthenticationType: server
-              ServerName: ba-sqlserver1.database.windows.net,1433
-              DatabaseName: ControlDB
-              SqlUsername: $(ba-sqlserver1-sqlusername)
-              SqlPassword: $(ba-sqlserver1-password)
-              DacpacFile: ControlDB.dacpac
-              IpDetectionMethod: AutoDetect
-              DeleteFirewallRule: true
-              AdditionalArguments: /p:DropPermissionsNotInSource=false /p:DropRoleMembersNotInSource=false /p:DropObjectsNotInSource=true /p:IgnoreColumnOrder=true /p:IgnorePermissions=true
+    #       - task: SqlAzureDacpacDeployment@1
+    #         displayName: Deploy database
+    #         inputs:
+    #           ConnectedServiceNameARM: ba-devops-spn
+    #           AuthenticationType: server
+    #           ServerName: ba-sqlserver1.database.windows.net,1433
+    #           DatabaseName: ControlDB
+    #           SqlUsername: $(ba-sqlserver1-sqlusername)
+    #           SqlPassword: $(ba-sqlserver1-password)
+    #           DacpacFile: ControlDB.dacpac
+    #           IpDetectionMethod: AutoDetect
+    #           DeleteFirewallRule: true
+    #           AdditionalArguments: /p:DropPermissionsNotInSource=false /p:DropRoleMembersNotInSource=false /p:DropObjectsNotInSource=true /p:IgnoreColumnOrder=true /p:IgnorePermissions=true
 
 
 
