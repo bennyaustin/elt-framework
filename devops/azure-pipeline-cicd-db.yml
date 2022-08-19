@@ -15,16 +15,19 @@ pool:
 stages:
   - stage: ci
     jobs:
-      - job:  Build
-        steps:
-        - task: VSBuild@1
-          displayName: Build database project
-          inputs:
-            solution: '**\ControlDB.sln'
+      - template: templates/build-sqldb.yml
+        parameters:
+          solutionName:  ControlDB
+      # - job:  Build
+      #   steps:
+      #   - task: VSBuild@1
+      #     displayName: Build database project
+      #     inputs:
+      #       solution: '**\ControlDB.sln'
 
-        - publish: $(System.DefaultWorkingDirectory)
-          artifact: dacpac
-          displayName: Publish Dacpac
+      #   - publish: $(System.DefaultWorkingDirectory)
+      #     artifact: dacpac
+      #     displayName: Publish Dacpac
 
   # - stage: cd_nonprod
   #   jobs:
