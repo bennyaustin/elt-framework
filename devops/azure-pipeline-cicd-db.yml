@@ -5,14 +5,15 @@
 trigger:
 - main
 
+pool:
+  name: Azure Pipelines
+  demands:
+  - msbuild
+  - visualstudio
+  vmImage: windows-latest
+
 stages:
   - stage: ci
-    pool:
-      name: Azure Pipelines
-      demands:
-      - msbuild
-      - visualstudio
-      vmImage: windows-latest
     jobs:
       - job:  Build
         steps:
@@ -26,12 +27,6 @@ stages:
           displayName: Publish Dacpac
 
   - stage: cd_nonprod
-    pool:
-      name: Azure Pipelines
-      demands:
-      - msbuild
-      - visualstudio
-      vmImage: windows-latest
     jobs:
       - job:  Deploy
         steps:
