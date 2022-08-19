@@ -1,5 +1,5 @@
 parameters:
-  serviceConnectionName:  <eeplace with Service Connection Name to Azure>
+  serviceConnectionName:  <replace with Service Connection Name to Azure>
   keyvaultName:  <replace with Keyvault for secrets>
   buildArtifactName: <replace with name of artifact published by the build stage>
   targetDatabaseServer:  <replace with database server where the code needs to be deployed>
