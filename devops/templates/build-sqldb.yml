@@ -1,0 +1,16 @@
+parameters:
+  solutionName:  Name of Visual Studio Database solution
+
+
+jobs:
+- job:  
+  displayName: Build and Publish dacpac 
+  steps:
+  - task: VSBuild@1
+    displayName: Build database solution ${{parameters.solutionName}}
+    inputs:
+      solution: '**\ControlDB.sln'
+
+  - publish: $(System.DefaultWorkingDirectory)
+    artifact: dacpac
+    displayName: Publish Dacpac
