@@ -32,4 +32,16 @@ stages:
         targetDatabaseServer:  ba-sqlserver1.database.windows.net,1433
         targetDatabase:  ControlDB
 
+  - stage: cd_prod
+    displayName: Deploy Stage - Prod
+    jobs:
+    - template: templates/deploy-sqldb.yml
+      parameters:
+        serviceConnectionName:  ba-devops-spn
+        keyvaultName:  ba-keyvault1 
+        buildArtifactName:  dacpac
+        targetDatabaseServer:  ba-sqlserver1.database.windows.net,1433
+        targetDatabase:  ControlDB
+
+
 
