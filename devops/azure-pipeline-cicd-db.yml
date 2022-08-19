@@ -35,6 +35,7 @@ stages:
 
           - download: current
             artifact: dacpac
+            target:  $(System.DefaultWorkingDirectory)
 
           - task: SqlAzureDacpacDeployment@1
             displayName: Deploy database
