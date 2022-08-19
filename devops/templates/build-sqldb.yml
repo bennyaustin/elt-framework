@@ -1,6 +1,6 @@
 parameters:
-  solutionName:  Visual Studio Database solution Name
-  buildPath: Folder where build files are available for e.g repo/folder/bin/release
+  solutionName:  <replace with Visual Studio Database solution name>
+  buildPath: <replace with folder where build files are created for e.g repo/folder/bin/release>
 
 
 jobs:
