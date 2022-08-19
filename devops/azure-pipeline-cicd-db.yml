@@ -23,6 +23,8 @@ stages:
 
   - stage: cd_nonprod
     displayName: Deploy Stage - Non Prod
+    dependsOn: ci
+    condition: succeeded()
     jobs:
     - template: templates/deploy-sqldb.yml
       parameters:
@@ -34,6 +36,9 @@ stages:
 
   - stage: cd_prod
     displayName: Deploy Stage - Prod
+    dependsOn: ci
+    condition: succeeded()
+
     jobs:
     - template: templates/deploy-sqldb.yml
       parameters:
