@@ -5,13 +5,13 @@ parameters:
 
 jobs:
 - job:  
-  displayName: Build and Publish dacpac 
+  displayName: Build SQL DB Job 
   steps:
   - task: VSBuild@1
-    displayName: Build database solution - ${{parameters.solutionName}}
+    displayName: Build db solution ${{parameters.solutionName}}
     inputs:
       solution: '**\${{parameters.solutionName}}.sln'
 
   - publish: $(System.DefaultWorkingDirectory)/${{parameters.buildPath}}
     artifact: dacpac
-    displayName: Publish Dacpac - ${{parameters.solutionName}}
+    displayName: Publish ${{parameters.solutionName}} dacpac

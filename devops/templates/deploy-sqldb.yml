@@ -8,10 +8,10 @@ parameters:
 
 jobs:
   - job:  Deploy
-    displayName:  Downlaod and deploy SQL database
+    displayName:  Deploy SQL DB Job
     steps:
       - task: AzureKeyVault@2
-        displayName: Get keyvault secrets
+        displayName: Get secrets
         inputs:
           connectedServiceName: ${{parameters.serviceConnectionName}}
           KeyVaultName: ${{parameters.keyvaultName}} 
@@ -19,7 +19,7 @@ jobs:
           RunAsPreJob: true
 
       - task: DownloadPipelineArtifact@2
-        displayName: Download artifact - ${{parameters.buildArtifactName}}
+        displayName: Download dacpac
         inputs: 
           source: current
           artifactName: ${{parameters.buildArtifactName}}
