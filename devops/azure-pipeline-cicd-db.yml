@@ -48,7 +48,7 @@ stages:
               DatabaseName: ControlDB
               SqlUsername: $(ba-sqlserver1-sqlusername)
               SqlPassword: $(ba-sqlserver1-password)
-              DacpacFile: dacpac\ControlDB.dacpac
+              DacpacFile: ControlDB.dacpac
               IpDetectionMethod: AutoDetect
               DeleteFirewallRule: true
               AdditionalArguments: /p:DropPermissionsNotInSource=false /p:DropRoleMembersNotInSource=false /p:DropObjectsNotInSource=true /p:IgnoreColumnOrder=true /p:IgnorePermissions=true
