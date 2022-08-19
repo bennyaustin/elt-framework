@@ -1,5 +1,6 @@
 parameters:
   solutionName:  Name of Visual Studio Database solution
+  buildPath: repo/folder/release/dbproject.dacpac
 
 
 jobs:
@@ -11,6 +12,6 @@ jobs:
     inputs:
       solution: '**\${{parameters.solutionName}}.sln'
 
-  - publish: $(System.DefaultWorkingDirectory)
+  - publish: $(System.DefaultWorkingDirectory)/${{parameters.buildPath}}
     artifact: dacpac
     displayName: Publish Dacpac - ${{parameters.solutionName}}
