@@ -1,6 +1,6 @@
 parameters:
-  solutionName:  Name of Visual Studio Database solution
-  buildPath: repo/folder/release/dbproject.dacpac
+  solutionName:  Visual Studio Database solution Name
+  buildPath: Folder where the dacpac will be built for instance repo/folder/bin/release/dbproject.dacpac
 
 
 jobs:
