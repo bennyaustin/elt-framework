@@ -1,0 +1,41 @@
+parameters:
+  serviceConnectionName:  <replace with Service Connection Name to Azure>
+  keyvaultName:  <replace with Keyvault for secrets>
+  buildArtifactName: <replace with name of artifact published by the build stage>
+  targetDatabaseServer:  <replace with database server where the code needs to be deployed>
+  targetDatabase:  <replace with database name where the code needs to be deployed>
+
+
+jobs:
+  - job:  Deploy
+    displayName:  Deploy SQL DB Job
+    steps:
+      - task: AzureKeyVault@2
+        displayName: Get secrets
+        inputs:
+          connectedServiceName: ${{parameters.serviceConnectionName}}
+          KeyVaultName: ${{parameters.keyvaultName}} 
+          SecretsFilter: ba-sqlserver1-sqlusername,ba-sqlserver1-password
+          RunAsPreJob: true
+
+      - task: DownloadPipelineArtifact@2
+        displayName: Download dacpac
+        inputs: 
+          source: current
+          artifactName: ${{parameters.buildArtifactName}}
+          path: $(System.DefaultWorkingDirectory)
+
+      - task: SqlAzureDacpacDeployment@1
+        displayName: Deploy database - ${{parameters.targetDatabase}}
+        inputs:
+          ConnectedServiceNameARM: ${{parameters.serviceConnectionName}}
+          AuthenticationType: server
+          ServerName: ${{parameters.targetDatabaseServer}}
+          DatabaseName: ${{parameters.targetDatabase}}
+          SqlUsername: $(ba-sqlserver1-sqlusername)
+          SqlPassword: $(ba-sqlserver1-password)
+          DacpacFile: ${{parameters.targetDatabase}}.dacpac
+          IpDetectionMethod: AutoDetect
+          DeleteFirewallRule: true
+          AdditionalArguments: /p:DropPermissionsNotInSource=false /p:DropRoleMembersNotInSource=false /p:DropObjectsNotInSource=true /p:IgnoreColumnOrder=true /p:IgnorePermissions=true
+

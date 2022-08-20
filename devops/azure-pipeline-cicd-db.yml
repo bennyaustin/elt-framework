@@ -1,0 +1,51 @@
+# Pipeline to build and deploy controlDB for ELT Framework https://github.com/bennyaustin/elt-framework
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  name: Azure Pipelines
+  demands:
+  - msbuild
+  - visualstudio
+  vmImage: windows-latest
+
+stages:
+  - stage: ci
+    displayName: Build Stage
+    jobs:
+      - template: templates/build-sqldb.yml
+        parameters:
+          solutionName:  ControlDB
+          buildPath:  elt-framework\ControlDB\bin\Release
+
+  - stage: cd_nonprod
+    displayName: Deploy Stage - Non Prod
+    dependsOn: ci
+    condition: succeeded()
+    jobs:
+    - template: templates/deploy-sqldb.yml
+      parameters:
+        serviceConnectionName:  ba-devops-spn
+        keyvaultName:  ba-keyvault1 
+        buildArtifactName:  dacpac
+        targetDatabaseServer:  ba-sqlserver1.database.windows.net,1433
+        targetDatabase:  ControlDB
+
+  - stage: cd_prod
+    displayName: Deploy Stage - Prod
+    dependsOn: ci
+    condition: succeeded()
+    jobs:
+    - template: templates/deploy-sqldb.yml
+      parameters:
+        serviceConnectionName:  ba-devops-spn
+        keyvaultName:  ba-keyvault1 
+        buildArtifactName:  dacpac
+        targetDatabaseServer:  ba-sqlserver1.database.windows.net,1433
+        targetDatabase:  ControlDB
+
+
+

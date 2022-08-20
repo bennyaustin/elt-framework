@@ -1,0 +1,17 @@
+parameters:
+  solutionName:  <replace with Visual Studio Database solution name>
+  buildPath: <replace with folder where build files are created for e.g repo/folder/bin/release>
+
+
+jobs:
+- job:  
+  displayName: Build SQL DB Job 
+  steps:
+  - task: VSBuild@1
+    displayName: Build db solution ${{parameters.solutionName}}
+    inputs:
+      solution: '**\${{parameters.solutionName}}.sln'
+
+  - publish: $(System.DefaultWorkingDirectory)/${{parameters.buildPath}}
+    artifact: dacpac
+    displayName: Publish ${{parameters.solutionName}} dacpac
