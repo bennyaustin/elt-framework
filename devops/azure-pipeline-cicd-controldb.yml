@@ -14,6 +14,7 @@ pool:
 
 steps:
 - task: VSBuild@1
+  displayName: Build database project
   inputs:
     solution: '**\ControlDB.sln'
 
@@ -22,12 +23,14 @@ steps:
   displayName: Publish Dacpac
 
 - task: AzureKeyVault@2
+  displayName: Get keyvault secrets
   inputs:
     connectedServiceName: ba-devops-spn
     KeyVaultName: ba-keyvault1 
     SecretsFilter: ba-sqlserver1-sqlusername,ba-sqlserver1-password
     RunAsPreJob: true
 - task: SqlAzureDacpacDeployment@1
+  displayName: Deploy database
   inputs:
     ConnectedServiceNameARM: ba-devops-spn
     AuthenticationType: server
@@ -38,4 +41,4 @@ steps:
     DacpacFile: elt-framework\ControlDB\bin\Release\ControlDB.dacpac
     IpDetectionMethod: AutoDetect
     DeleteFirewallRule: true
-    AdditionalArguments: /p:DropPermissionsNotInSource=false
+    AdditionalArguments: /p:DropPermissionsNotInSource=false /p:DropRoleMembersNotInSource=false /p:DropObjectsNotInSource=true /p:IgnoreColumnOrder=true /p:IgnorePermissions=true
