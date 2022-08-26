@@ -1,0 +1,42 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+ demands:
+ - msbuild
+ - visualstudio
+ vmImage: windows-latest
+
+steps:
+- task: VSBuild@1
+  inputs:
+    solution: '**\ControlDB.sln'
+
+- publish: $(System.DefaultWorkingDirectory)
+  artifact: dacpac
+
+- task: AzureKeyVault@2
+  inputs:
+    connectedServiceName: ba-devops-spn
+    KeyVaultName: ba-keyvault1 
+    SecretsFilter:  ba-sqlserver1-sqlusername,ba-sqlserver1-password
+    RunAsPreJob: true
+
+- task: SqlAzureDacpacDeployment@1
+  inputs:
+    ConnectedServiceNameARM: ba-devops-spn
+    AuthenticationType: server
+    ServerName: ba-sqlserver1.database.windows.net,1433
+    DatabaseName: ControlDB
+    SqlUsername: $(ba-sqlserver1-sqlusername)
+    SqlPassword: $(ba-sqlserver1-password)
+    DacpacFile: elt-framework\ControlDB\bin\Release\ControlDB.dacpac
+    IpDetectionMethod: AutoDetect
+    DeleteFirewallRule: true
+    AdditionalArguments: /p:DropPermissionsNotInSource=false /p:DropRoleMembersNotInSource=false /p:DropObjectsNotInSource=true /p:IgnoreColumnOrder=true /p:IgnorePermissions=true
+
