@@ -1,6 +1,6 @@
-﻿CREATE FUNCTION [ELT].[uf_GetColumnList]
+﻿CREATE FUNCTION [ELT].[uf_GetIngestionColumnList]
 (
-	@IngestId INT
+	@IngestID INT
 )
 	
 RETURNS varchar(max)
@@ -15,13 +15,13 @@ AS BEGIN
 							SELECT ', ' + SourceName
 						      FROM     
 								[ELT].[ColumnMapping]
-							WHERE IngestId = @IngestId
+							WHERE IngestID = @IngestID
 							and ActiveFlag = 1
 							ORDER BY TargetOrdinalPosition ASC
 						       FOR XML PATH('')
 						       ),1,1,'') as Columns
 						FROM [ELT].[ColumnMapping]
-						WHERE IngestId = @IngestId
+						WHERE IngestID = @IngestID
 						and ActiveFlag = 1
 						GROUP BY SourceName
 					)

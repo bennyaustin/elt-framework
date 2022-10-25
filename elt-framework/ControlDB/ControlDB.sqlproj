@@ -181,7 +181,7 @@
     <Build Include="ELT\Constraints\DC_Attribute_ModifiedBy.sql" />
     <Build Include="ELT\Constraints\DC_Attribute_ModifiedTimestamp.sql" />
     <Build Include="ELT\Functions\uf_GetSalesforceQuery.sql" />
-    <Build Include="ELT\Functions\uf_GetColumnList.sql" />
+    <Build Include="ELT\Functions\uf_GetIngestionColumnList.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Pre Deployment Script\DBRoles.PreDeployment.sql" />
