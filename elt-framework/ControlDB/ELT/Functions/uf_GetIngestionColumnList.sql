@@ -12,7 +12,7 @@ AS BEGIN
 					SELECT
 						DISTINCT 
 						stuff((
-							SELECT ', ' + SourceName
+							SELECT ', ' + SourceName + ' as ' + TargetName
 						      FROM     
 								[ELT].[ColumnMapping]
 							WHERE IngestID = @IngestID
