@@ -3,8 +3,8 @@
 CREATE TABLE [ELT].[ColumnMapping](
 	[MappingID] int NOT NULL IDENTITY,
 	[IngestID] int NULL,
-	[L1TransformId] int NULL,
-	[L2TransformId] int NULL,
+	[L1TransformID] int NULL,
+	[L2TransformID] int NULL,
 	[SourceName] nvarchar(150) NOT NULL,
 	[TargetName] nvarchar(150) NOT NULL,
 	[Description] nvarchar(250) NULL,
