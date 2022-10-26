@@ -171,6 +171,18 @@
     <None Include="Post Deployment Script\datasources\RestAPI\L1TransformDefinition\L1T_AzureRestAPI.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Build Include="ELT\Tables\ColumnMapping.sql" />
+    <Build Include="ELT\Keys\PK_Attribute.sql" />
+    <Build Include="ELT\Keys\FK_Attribute_IngestID.sql" />
+    <Build Include="ELT\Keys\FK_Attribute_L1TransformID.sql" />
+    <Build Include="ELT\Keys\FK_Attribute_L2TransformID.sql" />
+    <Build Include="ELT\Constraints\DC_Attribute_CreatedBy.sql" />
+    <Build Include="ELT\Constraints\DC_Attribute_CreatedTimestamp.sql" />
+    <Build Include="ELT\Constraints\DC_Attribute_ModifiedBy.sql" />
+    <Build Include="ELT\Constraints\DC_Attribute_ModifiedTimestamp.sql" />
+    <Build Include="ELT\Functions\uf_GetSalesforceQuery.sql" />
+    <Build Include="ELT\Functions\uf_GetIngestionColumnList.sql" />
+    <Build Include="ELT\Functions\uf_GetColumnMapping.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Pre Deployment Script\DBRoles.PreDeployment.sql" />

@@ -12,7 +12,7 @@
 		</CustomData>
 		<CustomData Category="Reference" Type="Assembly">
 			<Metadata Name="LogicalName" Value="ControlDB.dll" />
-			<Metadata Name="FileName" Value="C:\GIT REPOS\ELT-FRAMEWORK\ELT-FRAMEWORK\CONTROLDB\OBJ\RELEASE\CONTROLDB.DLL" />
+			<Metadata Name="FileName" Value="C:\USERS\RORYM\SOURCE\REPOS\BENNYAUSTIN\ELT-FRAMEWORK\ELT-FRAMEWORK\CONTROLDB\OBJ\RELEASE\CONTROLDB.DLL" />
 			<Metadata Name="AssemblyName" Value="ControlDB" />
 			<Metadata Name="PermissionSet" Value="SAFE" />
 			<Metadata Name="Owner" Value="" />
@@ -20,7 +20,7 @@
 			<Metadata Name="IsVisible" Value="True" />
 			<Metadata Name="IsModelAware" Value="True" />
 			<Metadata Name="SkipCreationIfEmpty" Value="True" />
-			<Metadata Name="AssemblySymbolsName" Value="C:\Git Repos\elt-framework\elt-framework\ControlDB\obj\Release\ControlDB.pdb" />
+			<Metadata Name="AssemblySymbolsName" Value="C:\Users\rorym\Source\Repos\bennyaustin\elt-framework\elt-framework\ControlDB\obj\Release\ControlDB.pdb" />
 		</CustomData>
 		<CustomData Category="SqlCmdVariables" Type="SqlCmdVariable" />
 	</Header>
@@ -346,6 +346,299 @@
 			<Relationship Name="DefiningTable">
 				<Entry>
 					<References Name="[ELT].[L2TransformInstance]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlTable" Name="[ELT].[ColumnMapping]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[ELT].[ColumnMapping].[MappingID]">
+						<Property Name="IsNullable" Value="False" />
+						<Property Name="IsIdentity" Value="True" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[ELT].[ColumnMapping].[IngestID]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[ELT].[ColumnMapping].[L1TransformID]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[ELT].[ColumnMapping].[L2TransformID]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[ELT].[ColumnMapping].[SourceName]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="150" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[ELT].[ColumnMapping].[TargetName]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="150" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[ELT].[ColumnMapping].[Description]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="250" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[ELT].[ColumnMapping].[TargetOrdinalPosition]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[ELT].[ColumnMapping].[ActiveFlag]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[bit]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[ELT].[ColumnMapping].[CreatedBy]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="128" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[ELT].[ColumnMapping].[CreatedTimestamp]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[ELT].[ColumnMapping].[ModifiedBy]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="128" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[ELT].[ColumnMapping].[ModifiedTimestamp]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References Name="[ELT]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlDefaultConstraint" Name="[ELT].[DC_Attribute_CreatedBy]">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(suser_sname())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[ELT].[ColumnMapping]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[CreatedBy]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlDefaultConstraint" Name="[ELT].[DC_Attribute_CreatedTimestamp]">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(CONVERT([datetime],(CONVERT([datetimeoffset],getdate()) AT TIME ZONE 'AUS Eastern Standard Time')))]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[ELT].[ColumnMapping]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ExpressionDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[datetime]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[datetimeoffset]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[CreatedTimestamp]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlDefaultConstraint" Name="[ELT].[DC_Attribute_ModifiedBy]">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(suser_sname())]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[ELT].[ColumnMapping]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[ModifiedBy]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlDefaultConstraint" Name="[ELT].[DC_Attribute_ModifiedTimestamp]">
+			<Property Name="DefaultExpressionScript">
+				<Value><![CDATA[(CONVERT([datetime],(CONVERT([datetimeoffset],getdate()) AT TIME ZONE 'AUS Eastern Standard Time')))]]></Value>
+			</Property>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[ELT].[ColumnMapping]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ExpressionDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[datetime]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[datetimeoffset]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForColumn">
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[ModifiedTimestamp]" />
 				</Entry>
 			</Relationship>
 		</Element>
@@ -679,6 +972,72 @@
 			<Relationship Name="ForColumn">
 				<Entry>
 					<References Name="[ELT].[L2TransformDefinition].[RunSequence]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlForeignKeyConstraint" Name="[ELT].[FK_Attribute_IngestID]">
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[IngestID]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[ELT].[ColumnMapping]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[ELT].[IngestDefinition].[IngestID]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[ELT].[IngestDefinition]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlForeignKeyConstraint" Name="[ELT].[FK_Attribute_L1TransformID]">
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[L1TransformID]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[ELT].[ColumnMapping]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[ELT].[L1TransformDefinition].[L1TransformID]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[ELT].[L1TransformDefinition]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlForeignKeyConstraint" Name="[ELT].[FK_Attribute_L2TransformID]">
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[L2TransformID]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[ELT].[ColumnMapping]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[ELT].[L2TransformDefinition].[L2TransformID]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[ELT].[L2TransformDefinition]" />
 				</Entry>
 			</Relationship>
 		</Element>
@@ -9078,6 +9437,24 @@ END]]></Value>
 				</Entry>
 			</Relationship>
 		</Element>
+		<Element Type="SqlPrimaryKeyConstraint" Name="[ELT].[PK_Attribute]">
+			<Relationship Name="ColumnSpecifications">
+				<Entry>
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
+								<References Name="[ELT].[ColumnMapping].[MappingID]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[ELT].[ColumnMapping]" />
+				</Entry>
+			</Relationship>
+		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[ELT].[PK_IngestDefinition]">
 			<Relationship Name="ColumnSpecifications">
 				<Entry>
@@ -9225,6 +9602,602 @@ END]]></Value>
 						<Relationship Name="Type">
 							<Entry>
 								<References ExternalSource="BuiltIns" Name="[datetime]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlScalarFunction" Name="[ELT].[uf_GetColumnMapping]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[SourceName]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[TargetName]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[IngestID]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[uf_GetColumnMapping].[@IngestID]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[L1TransformID]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[uf_GetColumnMapping].[@L1TransformID]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[L2TransformID]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[uf_GetColumnMapping].[@L2TransformID]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[ActiveFlag]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DynamicObjects">
+				<Entry>
+					<Element Type="SqlDynamicColumnSource" Name="[ELT].[uf_GetColumnMapping].[CTE1].[cte]">
+						<Relationship Name="Columns">
+							<Entry>
+								<Element Type="SqlComputedColumn" Name="[ELT].[uf_GetColumnMapping].[CTE1].[cte].[Mapping]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="FunctionBody">
+				<Entry>
+					<Element Type="SqlScriptFunctionImplementation">
+						<Property Name="BodyScript">
+							<Value><![CDATA[ BEGIN
+	DECLARE @mapping NVARCHAR(MAX)
+		BEGIN
+			WITH 
+				cte
+			AS
+			(
+				select 	
+					Mapping = CASE 
+								WHEN SourceName IS NULL THEN NULL
+								ELSE '{"source":{"name":"' + SourceName + '"},"sink":{"name":"' + TargetName + '"}},'
+							END
+				from
+					[ELT].[ColumnMapping]
+				WHERE
+					IngestID = @IngestID
+					or L1TransformID =  @L1TransformID
+					or L2TransformID =  @L2TransformID
+					and ActiveFlag = 1
+			)
+			
+			SELECT 
+				@mapping = CASE 
+							WHEN STRING_AGG (Mapping, '') IS NULL THEN NULL
+							ELSE COALESCE(concat('{"type":"TabularTranslator","mappings":[', SUBSTRING(STRING_AGG (Mapping, ''),1,LEN(STRING_AGG (Mapping, ''))-1),  ']}'), NULL)
+						END
+			FROM cte;
+		END
+				
+ -- Return the result of the function
+	Return @mapping
+
+END]]></Value>
+						</Property>
+						<Annotation Type="SysCommentsObjectAnnotation">
+							<Property Name="Length" Value="961" />
+							<Property Name="StartLine" Value="1" />
+							<Property Name="StartColumn" Value="1" />
+							<Property Name="HeaderContents" Value="CREATE FUNCTION [ELT].[uf_GetColumnMapping]&#xD;&#xA;(&#xD;&#xA;&#x9;@IngestID int NULL,&#xD;&#xA;&#x9;@L1TransformID int NULL,&#xD;&#xA;&#x9;@L2TransformID int NULL&#xD;&#xA;&#x9;)&#xD;&#xA;RETURNS varchar(max)&#xD;&#xA;AS" />
+						</Annotation>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[ELT].[uf_GetColumnMapping].[@IngestID]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[ELT].[uf_GetColumnMapping].[@L1TransformID]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[ELT].[uf_GetColumnMapping].[@L2TransformID]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References Name="[ELT]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Type">
+				<Entry>
+					<Element Type="SqlTypeSpecifier">
+						<Property Name="IsMax" Value="True" />
+						<Relationship Name="Type">
+							<Entry>
+								<References ExternalSource="BuiltIns" Name="[varchar]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlScalarFunction" Name="[ELT].[uf_GetIngestionColumnList]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[SourceName]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[TargetName]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[IngestID]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[uf_GetIngestionColumnList].[@IngestID]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[ActiveFlag]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[TargetOrdinalPosition]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[IngestID]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[ActiveFlag]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[SourceName]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="FunctionBody">
+				<Entry>
+					<Element Type="SqlScriptFunctionImplementation">
+						<Property Name="BodyScript">
+							<Value><![CDATA[ BEGIN
+	DECLARE @Columns NVARCHAR(MAX)
+
+	--Columns
+	SET @Columns = (
+					SELECT
+						DISTINCT 
+						stuff((
+							SELECT ', ' + SourceName + ' as ' + TargetName
+						      FROM     
+								[ELT].[ColumnMapping]
+							WHERE IngestID = @IngestID
+							and ActiveFlag = 1
+							ORDER BY TargetOrdinalPosition ASC
+						       FOR XML PATH('')
+						       ),1,1,'') as Columns
+						FROM [ELT].[ColumnMapping]
+						WHERE IngestID = @IngestID
+						and ActiveFlag = 1
+						GROUP BY SourceName
+					)
+	SET @Columns = COALESCE(@Columns, ' * ')
+				
+ -- Return the columns of the function
+	RETURN @Columns
+END]]></Value>
+						</Property>
+						<Annotation Type="SysCommentsObjectAnnotation">
+							<Property Name="Length" Value="738" />
+							<Property Name="StartLine" Value="1" />
+							<Property Name="StartColumn" Value="1" />
+							<Property Name="HeaderContents" Value="CREATE FUNCTION [ELT].[uf_GetIngestionColumnList]&#xD;&#xA;(&#xD;&#xA;&#x9;@IngestID INT&#xD;&#xA;)&#xD;&#xA;&#x9;&#xD;&#xA;RETURNS varchar(max)&#xD;&#xA;AS" />
+						</Annotation>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[ELT].[uf_GetIngestionColumnList].[@IngestID]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References Name="[ELT]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Type">
+				<Entry>
+					<Element Type="SqlTypeSpecifier">
+						<Property Name="IsMax" Value="True" />
+						<Relationship Name="Type">
+							<Entry>
+								<References ExternalSource="BuiltIns" Name="[varchar]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlScalarFunction" Name="[ELT].[uf_GetSalesforceQuery]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[varchar]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[datetime2]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[varchar]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[varchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[uf_GetSalesforceQuery].[@FromDate]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[datetime]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[uf_GetSalesforceQuery].[@ToDate]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[uf_GetSalesforceQuery].[@MaxIntervalMinutes]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[datetime]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[SourceName]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[IngestID]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[uf_GetSalesforceQuery].[@IngestID]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[ActiveFlag]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[TargetOrdinalPosition]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[IngestID]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[ActiveFlag]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[ColumnMapping].[SourceName]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[uf_GetSalesforceQuery].[@QueryType]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[uf_GetSalesforceQuery].[@EntityName]" />
+				</Entry>
+				<Entry>
+					<References Name="[ELT].[uf_GetSalesforceQuery].[@DeltaName]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[datetime]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[datetime]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[datetime]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="FunctionBody">
+				<Entry>
+					<Element Type="SqlScriptFunctionImplementation">
+						<Property Name="BodyScript">
+							<Value><![CDATA[
+BEGIN
+	Declare @Query varchar(MAX)
+	DECLARE @MappingExists INT
+	DECLARE @Columns NVARCHAR(MAX)
+	Declare @From datetime2
+	DECLARE @FromStr varchar(27), @ToStr varchar(27)
+
+	SET @From = (CASE 
+					WHEN @FromDate is NULL THEN '1900-01-01 00:00:00'
+					ELSE @FromDate
+				END)
+
+	--Datetime Strings
+	SET @ToStr = FORMAT(CAST((
+								CASE 
+									WHEN @ToDate IS NOT NULL 
+										THEN @ToDate
+								WHEN @ToDate is NULL AND @MaxIntervalMinutes IS NULL 
+									THEN GETDATE()
+								WHEN @ToDate is NULL AND @MaxIntervalMinutes IS NOT NULL AND DATEADD(DAY,@MaxIntervalMinutes/1440,@From) > GETDATE() 
+									THEN GETDATE()
+								WHEN @ToDate is NULL AND @MaxIntervalMinutes IS NOT NULL AND DATEADD(DAY,@MaxIntervalMinutes/1440,@From) <= GETDATE() 
+									THEN DATEADD(DAY,@MaxIntervalMinutes/1440,@From)
+								ELSE GETDATE()
+								END
+							) 
+								as datetime), 'yyyy-MM-ddTHH:mm:ssZ')
+
+	SET @FromStr = (CASE 
+					WHEN @FromDate is NULL THEN '1900-01-01T00:00:00Z'
+					ELSE FORMAT(CAST(@FromDate as datetime), 'yyyy-MM-ddTHH:mm:ssZ')
+				END)
+
+	--Set Columns
+	SET @Columns = (		
+						SELECT
+							DISTINCT
+								STUFF((
+									SELECT 
+										', ' + SourceName
+								    FROM     
+										[ELT].[ColumnMapping]
+									WHERE IngestID = @IngestID
+										AND ActiveFlag = 1
+									ORDER BY TargetOrdinalPosition ASC
+								       FOR XML PATH('')
+								       ),1,1,'') AS ColumnList
+						FROM
+							[ELT].[ColumnMapping]
+						WHERE IngestID = @IngestID
+							and ActiveFlag = 1 
+						GROUP BY SourceName
+					)
+
+	--SourceQuery
+	IF @QueryType ='SourceQuery'
+		BEGIN
+			SET @Query = 
+						'SELECT ' + COALESCE(@Columns, ' * ')
+						+ ' FROM ' + @EntityName 
+						+ CASE 
+							WHEN @DeltaName IS NOT NULL
+								THEN ' WHERE ' 	+ @DeltaName + ' > ' + @FromStr + ' AND ' + @DeltaName + ' <= ' + @ToStr
+							ELSE ''
+						END
+		END
+
+	--StatQuery
+	IF @QueryType ='StatQuery'
+		BEGIN
+			SET @Query = CASE 
+							WHEN @DeltaName IS NOT NULL 
+								THEN 'SELECT MIN('+@DeltaName+') AS DataFromTimestamp,' + ' MAX('+@DeltaName+') AS DataToTimestamp,'+ 'COUNT(*) AS SourceCount' 
+							WHEN @DeltaName IS NULL
+								THEN 'SELECT ''1900-01-01T00:00:00Z'' AS DataFromTimestamp, '''+FORMAT(CAST(GETDATE() as datetime), 'yyyy-MM-ddTHH:mm:ssZ')+''' AS DataToTimestamp,  COUNT(*) AS SourceCount '
+							END
+							+ ' FROM ' + @EntityName 
+							+ CASE 
+								WHEN @DeltaName IS NOT NULL
+									THEN ' WHERE ' + @DeltaName + ' > ' + '''' + FORMAT(CAST(@FromStr as datetime), 'yyyy-MM-dd HH:mm:ss') + '''' +  ' AND ' + @DeltaName + ' <= ' + '''' + FORMAT(CAST(@ToStr as datetime), 'yyyy-MM-dd HH:mm:ss') + ''''
+								ELSE ''
+							END
+						END
+				
+ -- Return the result of the function
+	Return @Query
+
+END]]></Value>
+						</Property>
+						<Annotation Type="SysCommentsObjectAnnotation">
+							<Property Name="Length" Value="3135" />
+							<Property Name="StartLine" Value="1" />
+							<Property Name="StartColumn" Value="1" />
+							<Property Name="HeaderContents" Value="CREATE FUNCTION [ELT].[uf_GetSalesforceQuery]&#xD;&#xA;(&#xD;&#xA;&#x9;@QueryType varchar(20), --SourceQuery|StatQuery&#xD;&#xA;&#x9;@IngestID INT,&#xD;&#xA;&#x9;@EntityName varchar(100),&#xD;&#xA;&#x9;@DeltaName varchar(20),&#xD;&#xA;&#x9;@FromDate datetime2=NULL,&#xD;&#xA;&#x9;@ToDate datetime2=NULL,&#xD;&#xA;&#x9;@MaxIntervalMinutes int=NULL&#xD;&#xA;&#x9;)&#xD;&#xA;RETURNS varchar(MAX)&#xD;&#xA;&#x9;AS" />
+						</Annotation>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[ELT].[uf_GetSalesforceQuery].[@QueryType]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="20" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[ELT].[uf_GetSalesforceQuery].[@IngestID]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[ELT].[uf_GetSalesforceQuery].[@EntityName]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="100" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[ELT].[uf_GetSalesforceQuery].[@DeltaName]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="20" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[ELT].[uf_GetSalesforceQuery].[@FromDate]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA[NULL]]></Value>
+						</Property>
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Scale" Value="7" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime2]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[ELT].[uf_GetSalesforceQuery].[@ToDate]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA[NULL]]></Value>
+						</Property>
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Scale" Value="7" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime2]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[ELT].[uf_GetSalesforceQuery].[@MaxIntervalMinutes]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA[NULL]]></Value>
+						</Property>
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References Name="[ELT]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Type">
+				<Entry>
+					<Element Type="SqlTypeSpecifier">
+						<Property Name="IsMax" Value="True" />
+						<Relationship Name="Type">
+							<Entry>
+								<References ExternalSource="BuiltIns" Name="[varchar]" />
 							</Entry>
 						</Relationship>
 					</Element>
