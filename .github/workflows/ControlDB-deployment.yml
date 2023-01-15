@@ -4,5 +4,17 @@ jobs:
     release:      
       runs-on: windows-latest
       steps:
-        - uses: actions/checkout@v2
+        - name: Checkout code 
+          uses: actions/checkout@v3
+          
         - run: Get-ChildItem ${{github.workspace}} -Recurse
+        
+        - name: BUild and deploy ControlDB
+          uses: Azure/sql-action@v2
+          with:
+            # The connection string, including authentication information, for the Azure SQL Server database.
+            connection-string: 
+            path: ${{github.workspace}}\elt-framework\ControlDB\ControlDB.sqlproj
+            action: 'Publish'
+            # In case of .dacpac or .sqlproj file types, additional sqlpackage arguments that will be applied. In case of .sql file type, additional go-sqlcmd argument that will be applied.
+            arguments: '/p:DropPermissionsNotInSource=false /p:DropRoleMembersNotInSource=false /p:DropObjectsNotInSource=true /p:IgnoreColumnOrder=true /p:IgnorePermissions=true'
