@@ -13,6 +13,6 @@ jobs:
         - uses: Azure/sql-action@v2
           with:
             connection-string: ${{secrets.CONTROLDB_CONNECTIONSTRING}}
-            path: ${{github.workspace}}\elt-framework\ControlDB\ControlDB.sqlproj
+            path: ${{github.workspace}}\elt-framework\ControlDB\Database.sqlproj
             action: 'Publish'
             arguments: '/p:DropPermissionsNotInSource=false /p:DropRoleMembersNotInSource=false /p:DropObjectsNotInSource=true /p:IgnoreColumnOrder=true /p:IgnorePermissions=true'
