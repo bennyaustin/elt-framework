@@ -1,1 +1,8 @@
-
+name: ControlDB Deployment
+on: workflow_dispatch 
+jobs:
+    release:      
+      runs-on: windows-latest
+      steps:
+        - uses: actions/checkout@v2
+        - run: Get-ChildItem ${{github.workspace}} -Recurse
