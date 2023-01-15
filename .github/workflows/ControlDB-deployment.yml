@@ -9,7 +9,7 @@ jobs:
           
         - run: Get-ChildItem ${{github.workspace}} -Recurse
         
-        - name: BUild and deploy ControlDB
+        - name: Build and deploy ControlDB
           uses: Azure/sql-action@v2
           with:
             # The connection string, including authentication information, for the Azure SQL Server database.
