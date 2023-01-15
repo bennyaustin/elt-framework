@@ -13,7 +13,7 @@ jobs:
           uses: Azure/sql-action@v2
           with:
             # The connection string, including authentication information, for the Azure SQL Server database.
-            connection-string: ${{secrets.CONTROLDB_CONNECTIONTRING}}
+            connection-string: ${{secrets.CONTROLDB_CONNECTIONSTRING}}
             path: ${{github.workspace}}\elt-framework\ControlDB\ControlDB.sqlproj
             action: 'Publish'
             # In case of .dacpac or .sqlproj file types, additional sqlpackage arguments that will be applied. In case of .sql file type, additional go-sqlcmd argument that will be applied.
