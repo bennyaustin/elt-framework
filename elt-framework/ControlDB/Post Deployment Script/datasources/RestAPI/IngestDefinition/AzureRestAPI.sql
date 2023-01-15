@@ -3,7 +3,6 @@ ELT Configuration for REST API Data Sources
 */
 
 IF OBJECT_ID('tempdb..#AzureRestAPI_Ingest') IS NOT NULL DROP TABLE #AzureRestAPI_Ingest;
-GO
 
 --Create Temp table with same structure as IngestDefinition
 CREATE TABLE #AzureRestAPI_Ingest
@@ -31,7 +30,7 @@ CREATE TABLE #AzureRestAPI_Ingest
 	[DelayL1TransformationFlag] [bit] NOT NULL,
 	[DelayL2TransformationFlag] [bit] NOT NULL
 );
-GO
+
 
 --Insert Into Temp Table
 INSERT INTO #AzureRestAPI_Ingest
@@ -109,7 +108,6 @@ SELECT 'Azure' AS	[SourceSystemName],
 	1 AS [L2TransformationReqdFlag],
 	1 AS [DelayL1TransformationFlag],
 	1 AS [DelayL2TransformationFlag] ;
-GO
 
 --Merge with Temp table for re-runnability
 
@@ -188,4 +186,3 @@ WHEN NOT MATCHED BY TARGET THEN
 	        src.[DelayL2TransformationFlag],
             USER_NAME(),
 	        GETDATE());
-GO
