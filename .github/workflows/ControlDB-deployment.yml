@@ -4,5 +4,20 @@ jobs:
     release:      
       runs-on: windows-latest
       steps:
-        - uses: actions/checkout@v2
+        - name: Checkout code 
+          uses: actions/checkout@v3
+          
         - run: Get-ChildItem ${{github.workspace}} -Recurse
+        
+        - name: Azure login for firewall bypass
+        - uses: Azure/login@v1
+          with:
+            creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'        
+            
+        - name: Build and deploy ControlDB
+          uses: Azure/sql-action@v2
+          with:
+            connection-string: ${{secrets.CONTROLDB_CONNECTIONSTRING}}
+            path: ${{github.workspace}}\elt-framework\ControlDB\ControlDB.sqlproj
+            action: 'Publish'
+            arguments: '/p:DropPermissionsNotInSource=false /p:DropRoleMembersNotInSource=false /p:DropObjectsNotInSource=true /p:IgnoreColumnOrder=true /p:IgnorePermissions=true'
