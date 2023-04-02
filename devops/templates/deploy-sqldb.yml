@@ -32,8 +32,8 @@ jobs:
           AuthenticationType: server
           ServerName: ${{parameters.targetDatabaseServer}}
           DatabaseName: ${{parameters.targetDatabase}}
-          SqlUsername: $(ba-sqlserver1-sqlusername)
-          SqlPassword: $(ba-sqlserver1-password)
+          SqlUsername: $(sqlserver-ad-admin-username)
+          SqlPassword: $(sqlserver-admin-password)
           DacpacFile: ${{parameters.targetDatabase}}.dacpac
           IpDetectionMethod: AutoDetect
           DeleteFirewallRule: true

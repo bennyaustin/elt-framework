@@ -3,7 +3,12 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
+ branches:
+   include:
+     - main
+ paths:
+   include:
+     - elt-framework/ControlDB
 
 pool:
   name: Azure Pipelines
@@ -28,11 +33,11 @@ stages:
     jobs:
     - template: templates/deploy-sqldb.yml
       parameters:
-        serviceConnectionName:  ba-devops-spn
-        keyvaultName:  ba-keyvault1 
+        serviceConnectionName:  devops-contoso-spn
+        keyvaultName:  ba-kv01-kn3acb6lw3vr4 
         buildArtifactName:  dacpac
-        targetDatabaseServer:  ba-sqlserver1.database.windows.net,1433
-        targetDatabase:  ControlDB
+        targetDatabaseServer:  ba-sql01-kn3acb6lw3vr4.database.windows.net,1433
+        targetDatabase:  controlDB
 
   - stage: cd_prod
     displayName: Deploy Stage - Prod
@@ -41,11 +46,11 @@ stages:
     jobs:
     - template: templates/deploy-sqldb.yml
       parameters:
-        serviceConnectionName:  ba-devops-spn
-        keyvaultName:  ba-keyvault1 
+        serviceConnectionName:  devops-contoso-spn
+        keyvaultName:  ba-kv01-o5rium4bfcf6a 
         buildArtifactName:  dacpac
-        targetDatabaseServer:  ba-sqlserver1.database.windows.net,1433
-        targetDatabase:  ControlDB
+        targetDatabaseServer:  ba-sql01-o5rium4bfcf6a.database.windows.net,1433
+        targetDatabase:  controlDB
 
 
 
