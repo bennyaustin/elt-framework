@@ -15,7 +15,7 @@ jobs:
         inputs:
           connectedServiceName: ${{parameters.serviceConnectionName}}
           KeyVaultName: ${{parameters.keyvaultName}} 
-          SecretsFilter: ba-sqlserver1-sqlusername,ba-sqlserver1-password
+          SecretsFilter: sqlserver-admin-username,sqlserver-admin-password
           RunAsPreJob: true
 
       - task: DownloadPipelineArtifact@2
