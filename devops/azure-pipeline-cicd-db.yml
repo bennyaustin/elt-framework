@@ -3,7 +3,12 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
+ branches:
+   include:
+     - main
+ paths:
+   include:
+     - elt-framework/ControlDB
 
 pool:
   name: Azure Pipelines
