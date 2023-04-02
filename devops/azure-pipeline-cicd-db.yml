@@ -33,7 +33,7 @@ stages:
     jobs:
     - template: templates/deploy-sqldb.yml
       parameters:
-        serviceConnectionName:  ba-devops-spn
+        serviceConnectionName:  devops-contoso-spn
         keyvaultName:  ba-keyvault1 
         buildArtifactName:  dacpac
         targetDatabaseServer:  ba-sqlserver1.database.windows.net,1433
