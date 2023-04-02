@@ -32,7 +32,7 @@ jobs:
           AuthenticationType: server
           ServerName: ${{parameters.targetDatabaseServer}}
           DatabaseName: ${{parameters.targetDatabase}}
-          SqlUsername: $(sqlserver-ad-admin-username)
+          SqlUsername: $(sqlserver-admin-username)
           SqlPassword: $(sqlserver-admin-password)
           DacpacFile: ${{parameters.targetDatabase}}.dacpac
           IpDetectionMethod: AutoDetect

@@ -51,6 +51,3 @@ stages:
         buildArtifactName:  dacpac
         targetDatabaseServer:  ba-sql01-o5rium4bfcf6a.database.windows.net,1433
         targetDatabase:  controlDB
-
-
-
