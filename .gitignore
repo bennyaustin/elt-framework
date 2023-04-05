@@ -9,3 +9,6 @@
 *.dbmdl
 *.jfm
 *.vsidx
+*.lock
+/.gitignore
+/.gitignore
