@@ -37,7 +37,7 @@ CREATE TABLE #PurviewRestAPI_L1
 INSERT INTO #PurviewRestAPI_L1
 	SELECT  [IngestID]
 	,'L1Transform' AS [NotebookPath]
-	,'L2Transform-Generic-Synapse' AS [NotebookName]
+	,'L1Transform-Generic-Synapse' AS [NotebookName]
 	, NULL AS [CustomParameters]
 	,[DestinationRawFileSystem] AS [InputRawFileSystem]
 	,[DestinationRawFolder] AS [InputRawFileFolder]

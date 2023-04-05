@@ -3,6 +3,7 @@ C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Release\Post Deployment S
 C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Release\Post Deployment Script\datasources\RestAPI\IngestDefinition\PurviewRestAPI.sql
 C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Release\Post Deployment Script\datasources\RestAPI\L1TransformDefinition\L1T_AzureRestAPI.sql
 C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Release\Post Deployment Script\datasources\RestAPI\L1TransformDefinition\L1T_PurviewRestAPI.sql
+C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Release\Post Deployment Script\datasources\UploadFiles\IngestDefinition\CustomFormRecognizerModel.sql
 C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Release\Post Deployment Script\Script.PostDeployment.sql
 C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Release\ControlDB.dll
 C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Release\ControlDB.pdb

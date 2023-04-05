@@ -12,3 +12,5 @@
 *.lock
 /.gitignore
 /.gitignore
+*.suo
+*.cache

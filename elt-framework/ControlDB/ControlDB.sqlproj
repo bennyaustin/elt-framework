@@ -77,6 +77,9 @@
     <Folder Include="Post Deployment Script\datasources\RestAPI\IngestDefinition" />
     <Folder Include="Post Deployment Script\datasources\RestAPI\L1TransformDefinition" />
     <Folder Include="Post Deployment Script\datasources\RestAPI\L2TransformDefinition" />
+    <Folder Include="Post Deployment Script\datasources\UploadFiles" />
+    <Folder Include="Post Deployment Script\datasources\UploadFiles\IngestDefinition" />
+    <Folder Include="Post Deployment Script\datasources\UploadFiles\L1TransformDefinition" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="ELT\ELT.sql" />
@@ -190,6 +193,10 @@
     <None Include="Post Deployment Script\datasources\RestAPI\L1TransformDefinition\L1T_PurviewRestAPI.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Post Deployment Script\datasources\UploadFiles\IngestDefinition\CustomFormRecognizerModel.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Post Deployment Script\datasources\UploadFiles\L1TransformDefinition\L1T_CustomFormRecognizerModel.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Post Deployment Script\Script.PostDeployment.sql">

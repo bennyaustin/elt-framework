@@ -13,7 +13,9 @@ Post-Deployment Script Template
 --IngestDefinition
 :r .\datasources\RestAPI\IngestDefinition\PurviewRestAPI.sql
 :r .\datasources\RestAPI\IngestDefinition\AzureRestAPI.sql
+:r .\datasources\UploadFiles\IngestDefinition\CustomFormRecognizerModel.sql
 
 --L1TransformDefinition
 :r .\datasources\RestAPI\L1TransformDefinition\L1T_PurviewRestAPI.sql
 :r .\datasources\RestAPI\L1TransformDefinition\L1T_AzureRestAPI.sql
+:r .\datasources\UploadFiles\L1TransformDefinition\L1T_CustomFormRecognizerModel.sql
