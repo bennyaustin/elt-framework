@@ -20,6 +20,10 @@ CREATE TABLE #CFRM_L1
 	[OutputL1CuratedFile] varchar(200) not null,
 	[OutputL1CuratedFileFormat] varchar(10) null,
 	[OutputL1CuratedFileWriteMode] varchar(20) null,
+	[OutputDWStagingTable] varchar(200) null,
+	[LookupColumns] varchar(4000) null,
+	[OutputDWTable] varchar(200) null,
+	[OutputDWTableWriteMode] varchar(20) null,
 	[ActiveFlag] bit not null
 );
 
@@ -36,6 +40,10 @@ INSERT INTO #CFRM_L1
 	, 'standardized_'+ [DestinationRawFile] AS [OutputL1CuratedFile]
 	, 'json' AS [OutputL1CuratedFileFormat]
 	, 'overwrite' AS [OutputL1CuratedFileWriteMode]
+	, null as [OutputDWStagingTable]
+	, null as [LookupColumns]
+	, null as [OutputDWTable]
+	, null as [OutputDWTableWriteMode]
 	, 1 AS [ActiveFlag]
 	FROM  [ELT].[IngestDefinition]
 	WHERE [SourceSystemName]=@SourceSystem
@@ -53,6 +61,10 @@ INSERT INTO #CFRM_L1
 	, 'standardized_'+ [DestinationRawFile] AS [OutputL1CuratedFile]
 	, 'json' AS [OutputL1CuratedFileFormat]
 	, 'overwrite' AS [OutputL1CuratedFileWriteMode]
+	, '[stg].[merge_sec_form10q]' as [OutputDWStagingTable]
+	, '[''org_name'',''reporting_quarter'']' as [LookupColumns]
+	, '[sec].[form10q]' as [OutputDWTable]
+	, 'append' as [OutputDWTableWriteMode]
 	, 1 AS [ActiveFlag]
 	FROM  [ELT].[IngestDefinition]
 	WHERE [SourceSystemName]=@SourceSystem
