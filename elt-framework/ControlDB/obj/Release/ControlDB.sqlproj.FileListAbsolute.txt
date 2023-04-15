@@ -1,0 +1,15 @@
+C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Release\ControlDB.dacpac
+C:\Git Repos\elt-framework\elt-framework\ControlDB\obj\Release\Model.xml
+C:\Git Repos\elt-framework\elt-framework\ControlDB\obj\Release\refactor.xml
+C:\Git Repos\elt-framework\elt-framework\ControlDB\obj\Release\postdeploy.sql
+C:\Git Repos\elt-framework\elt-framework\ControlDB\obj\Release\predeploy.sql
+C:\Git Repos\elt-framework\elt-framework\ControlDB\obj\Release\ControlDB.dll
+C:\Git Repos\elt-framework\elt-framework\ControlDB\obj\Release\ControlDB.pdb
+C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Release\Post Deployment Script\datasources\RestAPI\IngestDefinition\AzureRestAPI.sql
+C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Release\Post Deployment Script\datasources\RestAPI\IngestDefinition\PurviewRestAPI.sql
+C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Release\Post Deployment Script\datasources\RestAPI\L1TransformDefinition\L1T_AzureRestAPI.sql
+C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Release\Post Deployment Script\datasources\RestAPI\L1TransformDefinition\L1T_PurviewRestAPI.sql
+C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Release\Post Deployment Script\datasources\UploadFiles\IngestDefinition\CustomFormRecognizerModel.sql
+C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Release\Post Deployment Script\Script.PostDeployment.sql
+C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Release\ControlDB.dll
+C:\Git Repos\elt-framework\elt-framework\ControlDB\bin\Release\ControlDB.pdb
