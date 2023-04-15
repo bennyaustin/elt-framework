@@ -39,7 +39,7 @@ INSERT INTO #CFRM_L1
 	, 1 AS [ActiveFlag]
 	FROM  [ELT].[IngestDefinition]
 	WHERE [SourceSystemName]=@SourceSystem
-	AND [StreamName] like @StreamName
+	AND [StreamName] ='analyze'
 
 	UNION
 	SELECT  [IngestID]
@@ -56,7 +56,7 @@ INSERT INTO #CFRM_L1
 	, 1 AS [ActiveFlag]
 	FROM  [ELT].[IngestDefinition]
 	WHERE [SourceSystemName]=@SourceSystem
-	AND [StreamName] like @StreamName
+	AND [StreamName] ='analyze-sec-form10q'
 --Merge with Temp table for re-runnability
 
 MERGE INTO [ELT].[L1TransformDefinition] AS tgt
