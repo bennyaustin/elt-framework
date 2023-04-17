@@ -43,7 +43,7 @@ SELECT 'AIML-OCR' AS	[SourceSystemName],
 	1 AS [ActiveFlag],
 	1 AS [L1TransformationReqdFlag],
 	0 AS [L2TransformationReqdFlag],
-	1 AS [DelayL1TransformationFlag],
+	0 AS [DelayL1TransformationFlag],
 	1 AS [DelayL2TransformationFlag]
 UNION
 SELECT 'AIML-OCR' AS	[SourceSystemName],
@@ -60,7 +60,7 @@ SELECT 'AIML-OCR' AS	[SourceSystemName],
 	1 AS [ActiveFlag],
 	1 AS [L1TransformationReqdFlag],
 	0 AS [L2TransformationReqdFlag],
-	1 AS [DelayL1TransformationFlag],
+	0 AS [DelayL1TransformationFlag],
 	1 AS [DelayL2TransformationFlag]
 
 --Merge with Temp table for re-runnability
