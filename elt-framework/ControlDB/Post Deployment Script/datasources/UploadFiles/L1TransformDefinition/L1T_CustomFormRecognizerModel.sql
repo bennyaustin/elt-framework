@@ -91,6 +91,10 @@ WHEN MATCHED THEN
 			tgt.[OutputL1CuratedFile] =src.[OutputL1CuratedFile],
 			tgt.[OutputL1CuratedFileFormat] =src.[OutputL1CuratedFileFormat],
 			tgt.[OutputL1CuratedFileWriteMode] =src.[OutputL1CuratedFileWriteMode],
+			tgt.[OutputDWStagingTable] = src.[OutputDWStagingTable],
+			tgt.[LookupColumns] = src.[LookupColumns],
+			tgt.[OutputDWTable] = src.[OutputDWTable],
+			tgt.[OutputDWTableWriteMode]=src.[OutputDWTableWriteMode],
 			tgt.[ActiveFlag] =src.[ActiveFlag],
             tgt.[ModifiedBy] = USER_NAME(),
             tgt.[ModifiedTimestamp] = GetDate()
