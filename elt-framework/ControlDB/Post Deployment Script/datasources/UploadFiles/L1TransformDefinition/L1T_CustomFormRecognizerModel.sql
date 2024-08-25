@@ -47,7 +47,7 @@ INSERT INTO #CFRM_L1
 	, 1 AS [ActiveFlag]
 	FROM  [ELT].[IngestDefinition]
 	WHERE [SourceSystemName]=@SourceSystem
-	AND [StreamName] ='analyze'
+	AND [StreamName] ='restatements'
 
 	UNION
 	SELECT  [IngestID]
@@ -68,7 +68,7 @@ INSERT INTO #CFRM_L1
 	, 1 AS [ActiveFlag]
 	FROM  [ELT].[IngestDefinition]
 	WHERE [SourceSystemName]=@SourceSystem
-	AND [StreamName] ='analyze-sec-form10q'
+	AND [StreamName] ='form10q'
 --Merge with Temp table for re-runnability
 
 MERGE INTO [ELT].[L1TransformDefinition] AS tgt
@@ -91,6 +91,10 @@ WHEN MATCHED THEN
 			tgt.[OutputL1CuratedFile] =src.[OutputL1CuratedFile],
 			tgt.[OutputL1CuratedFileFormat] =src.[OutputL1CuratedFileFormat],
 			tgt.[OutputL1CuratedFileWriteMode] =src.[OutputL1CuratedFileWriteMode],
+			tgt.[OutputDWStagingTable] = src.[OutputDWStagingTable],
+			tgt.[LookupColumns] = src.[LookupColumns],
+			tgt.[OutputDWTable] = src.[OutputDWTable],
+			tgt.[OutputDWTableWriteMode]=src.[OutputDWTableWriteMode],
 			tgt.[ActiveFlag] =src.[ActiveFlag],
             tgt.[ModifiedBy] = USER_NAME(),
             tgt.[ModifiedTimestamp] = GetDate()
