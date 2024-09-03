@@ -669,12 +669,12 @@ CREATE TABLE #CFRM_Ingest
 INSERT INTO #CFRM_Ingest
 --Operations
 SELECT 'AIML-OCR' AS	[SourceSystemName],
-	'analyze' AS [StreamName],
-	'Custom Form Recognizer Model output for Real Estate Agency' AS [SourceSystemDescription],
-	'Form Recognizer REST API' AS [Backend],
+	'restatements' AS [StreamName],
+	'Custom Document Intelligence Model output for Real Estate Statements' AS [SourceSystemDescription],
+	'Azure AI DocI REST API' AS [Backend],
 	'JSON' AS [DataFormat],
-	'inference' AS [SourceFileDropFileSystem],
-	'formrecognizer-re-json' AS [SourceFileDropFolder],
+	'doci' AS [SourceFileDropFileSystem],
+	'inference/re-statements' AS [SourceFileDropFolder],
 	'*.json' AS [SourceFileDropFile],
 	'raw-bronze' AS [DestinationRawFileSystem],
 	're-statements/YYYY/MM' AS [DestinationRawFolder],
@@ -686,16 +686,16 @@ SELECT 'AIML-OCR' AS	[SourceSystemName],
 	1 AS [DelayL2TransformationFlag]
 UNION
 SELECT 'AIML-OCR' AS	[SourceSystemName],
-	'analyze-sec-form10q' AS [StreamName],
-	'Custom Form Recognizer Model output for SEC Form 10-Q' AS [SourceSystemDescription],
-	'Form Recognizer REST API' AS [Backend],
+	'form10q' AS [StreamName],
+	'Custom Document Intelligence Model output for Form 10-Q' AS [SourceSystemDescription],
+	'Azure AI DocI REST API' AS [Backend],
 	'JSON' AS [DataFormat],
-	'inference' AS [SourceFileDropFileSystem],
-	'formrecognizer-sec-form10q-json' AS [SourceFileDropFolder],
+	'doci' AS [SourceFileDropFileSystem],
+	'inference/form10q' AS [SourceFileDropFolder],
 	'*.json' AS [SourceFileDropFile],
 	'raw-bronze' AS [DestinationRawFileSystem],
-	'sec-form10q/YYYY/MM' AS [DestinationRawFolder],
-	'YYYY-MM-DD_HHMISS_sec-form10q.json' AS [DestinationRawFile],
+	'form10q/YYYY/MM' AS [DestinationRawFolder],
+	'YYYY-MM-DD_HHMISS_form10q.json' AS [DestinationRawFile],
 	1 AS [ActiveFlag],
 	1 AS [L1TransformationReqdFlag],
 	0 AS [L2TransformationReqdFlag],
@@ -1118,7 +1118,7 @@ INSERT INTO #CFRM_L1
 	, 1 AS [ActiveFlag]
 	FROM  [ELT].[IngestDefinition]
 	WHERE [SourceSystemName]=@SourceSystem
-	AND [StreamName] ='analyze'
+	AND [StreamName] ='restatements'
 
 	UNION
 	SELECT  [IngestID]
@@ -1139,7 +1139,7 @@ INSERT INTO #CFRM_L1
 	, 1 AS [ActiveFlag]
 	FROM  [ELT].[IngestDefinition]
 	WHERE [SourceSystemName]=@SourceSystem
-	AND [StreamName] ='analyze-sec-form10q'
+	AND [StreamName] ='form10q'
 --Merge with Temp table for re-runnability
 
 MERGE INTO [ELT].[L1TransformDefinition] AS tgt
@@ -1162,6 +1162,10 @@ WHEN MATCHED THEN
 			tgt.[OutputL1CuratedFile] =src.[OutputL1CuratedFile],
 			tgt.[OutputL1CuratedFileFormat] =src.[OutputL1CuratedFileFormat],
 			tgt.[OutputL1CuratedFileWriteMode] =src.[OutputL1CuratedFileWriteMode],
+			tgt.[OutputDWStagingTable] = src.[OutputDWStagingTable],
+			tgt.[LookupColumns] = src.[LookupColumns],
+			tgt.[OutputDWTable] = src.[OutputDWTable],
+			tgt.[OutputDWTableWriteMode]=src.[OutputDWTableWriteMode],
 			tgt.[ActiveFlag] =src.[ActiveFlag],
             tgt.[ModifiedBy] = USER_NAME(),
             tgt.[ModifiedTimestamp] = GetDate()
