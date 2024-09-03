@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<DataSchemaModel FileFormatVersion="1.2" SchemaVersion="3.3" DspName="Microsoft.Data.Tools.Schema.Sql.SqlDbFabricDatabaseSchemaProvider" CollationLcid="1033" CollationCaseSensitive="False" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+<DataSchemaModel FileFormatVersion="1.2" SchemaVersion="3.3" DspName="Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider" CollationLcid="1033" CollationCaseSensitive="False" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
 	<Header>
 		<CustomData Category="AnsiNulls">
 			<Metadata Name="AnsiNulls" Value="True" />
