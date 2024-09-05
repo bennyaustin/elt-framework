@@ -13,7 +13,7 @@
 	[InputFileDelimiter] char(1) null,
 	[InputFileHeaderFlag] bit null,
 	[InputDWTable] varchar(200) null,
-	[DeltaName] varchar(50) null,
+	[WatermarkColName] varchar(50) null,
 	[DataFromTimestamp] dateTime2 null,
 	[DataToTimestamp] datetime2 null,
 	[DataFromNumber] int null,

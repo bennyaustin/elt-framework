@@ -20,7 +20,7 @@
 	@InputDWTable varchar(200) = null,
 
 	--Delta
-	@DeltaName varchar(50) = null,
+	@WatermarkColName varchar(50) = null,
 	@DataFromTimestamp Datetime2 =null,
 	@DataToTimestamp Datetime2 =null,
 	@DataFromNumber int =null,
@@ -89,7 +89,7 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 				,[InputFileDelimiter]
 				,[InputFileHeaderFlag]
 				,[InputDWTable]
-				,[DeltaName]
+				,[WatermarkColName]
 				,[OutputL2CurateFileSystem]
 				,[OutputL2CuratedFolder]
 				,[OutputL2CuratedFile]
@@ -123,7 +123,7 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 				@InputFileDelimiter,
 				@InputFileHeaderFlag,
 				@InputDWTable,
-				@DeltaName,
+				@WatermarkColName,
 				@OutputL2CurateFileSystem,
 				@OutputL2CuratedFolder,
 				@OutputL2CuratedFile,

@@ -29,7 +29,7 @@ CREATE TABLE #PurviewRestAPI_L1
 	[OutputDWTable] varchar(200) null,
 	[OutputDWTableWriteMode] varchar(20) null,
 	[MaxRetries] int null,
-	[DeltaName] varchar(50) null,
+	[WatermarkColName] varchar(50) null,
 	[ActiveFlag] bit not null
 );
 
@@ -59,7 +59,7 @@ INSERT INTO #PurviewRestAPI_L1
 	,3 AS [MaxRetries]
 	,  CASE WHEN StreamName = 'datasources' THEN 'lastModifiedAt'
 			WHEN StreamName = 'collections' THEN 'lastModifiedAt'
-		END AS [DeltaName]
+		END AS [WatermarkColName]
 	, 1 AS [ActiveFlag]
 	FROM  [ELT].[IngestDefinition]
 	WHERE [SourceSystemName]=@SourceSystem
@@ -97,7 +97,7 @@ WHEN MATCHED THEN
 			tgt.[OutputDWTable] =src.[OutputDWTable],
 			tgt.[OutputDWTableWriteMode] =src.[OutputDWTableWriteMode],
 			tgt.[MaxRetries] =src.[MaxRetries],
-			tgt.[DeltaName] =src.[DeltaName],
+			tgt.[WatermarkColName] =src.[WatermarkColName],
 			tgt.[ActiveFlag] =src.[ActiveFlag],
             tgt.[ModifiedBy] = USER_NAME(),
             tgt.[ModifiedTimestamp] = GetDate()
@@ -122,7 +122,7 @@ WHEN NOT MATCHED BY TARGET THEN
 			[OutputDWTable],
 			[OutputDWTableWriteMode],
 			[MaxRetries],
-			[DeltaName],
+			[WatermarkColName],
 			[ActiveFlag],
             [CreatedBy],
 	        [CreatedTimestamp] )
@@ -146,7 +146,7 @@ WHEN NOT MATCHED BY TARGET THEN
 			src.[OutputDWTable],
 			src.[OutputDWTableWriteMode],
 			src.[MaxRetries],
-			src.[DeltaName],
+			src.[WatermarkColName],
 			src.[ActiveFlag],
             USER_NAME(),
 	        GETDATE());

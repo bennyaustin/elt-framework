@@ -22,7 +22,7 @@
 	[OutputDWTable] varchar(200) null,
 	[OutputDWTableWriteMode] varchar(20) null,
 	[MaxRetries] int null,
-	[DeltaName] varchar(50) null,
+	[WatermarkColName] varchar(50) null,
 	[ActiveFlag] bit not null,
 	[CreatedBy] nvarchar(128) not null,
 	[CreatedTimestamp] datetime not null,

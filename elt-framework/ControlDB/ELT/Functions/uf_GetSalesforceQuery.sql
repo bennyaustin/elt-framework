@@ -3,7 +3,7 @@
 	@QueryType varchar(20), --SourceQuery|StatQuery
 	@IngestID INT,
 	@EntityName varchar(100),
-	@DeltaName varchar(20),
+	@WatermarkColName varchar(20),
 	@FromDate datetime2=NULL,
 	@ToDate datetime2=NULL,
 	@MaxIntervalMinutes int=NULL
@@ -71,8 +71,8 @@ BEGIN
 						'SELECT ' + COALESCE(@Columns, ' * ')
 						+ ' FROM ' + @EntityName 
 						+ CASE 
-							WHEN @DeltaName IS NOT NULL
-								THEN ' WHERE ' 	+ @DeltaName + ' > ' + @FromStr + ' AND ' + @DeltaName + ' <= ' + @ToStr
+							WHEN @WatermarkColName IS NOT NULL
+								THEN ' WHERE ' 	+ @WatermarkColName + ' > ' + @FromStr + ' AND ' + @WatermarkColName + ' <= ' + @ToStr
 							ELSE ''
 						END
 		END
@@ -81,15 +81,15 @@ BEGIN
 	IF @QueryType ='StatQuery'
 		BEGIN
 			SET @Query = CASE 
-							WHEN @DeltaName IS NOT NULL 
-								THEN 'SELECT MIN('+@DeltaName+') AS DataFromTimestamp,' + ' MAX('+@DeltaName+') AS DataToTimestamp,'+ 'COUNT(*) AS SourceCount' 
-							WHEN @DeltaName IS NULL
+							WHEN @WatermarkColName IS NOT NULL 
+								THEN 'SELECT MIN('+@WatermarkColName+') AS DataFromTimestamp,' + ' MAX('+@WatermarkColName+') AS DataToTimestamp,'+ 'COUNT(*) AS SourceCount' 
+							WHEN @WatermarkColName IS NULL
 								THEN 'SELECT ''1900-01-01T00:00:00Z'' AS DataFromTimestamp, '''+FORMAT(CAST(GETDATE() as datetime), 'yyyy-MM-ddTHH:mm:ssZ')+''' AS DataToTimestamp,  COUNT(*) AS SourceCount '
 							END
 							+ ' FROM ' + @EntityName 
 							+ CASE 
-								WHEN @DeltaName IS NOT NULL
-									THEN ' WHERE ' + @DeltaName + ' > ' + '''' + FORMAT(CAST(@FromStr as datetime), 'yyyy-MM-dd HH:mm:ss') + '''' +  ' AND ' + @DeltaName + ' <= ' + '''' + FORMAT(CAST(@ToStr as datetime), 'yyyy-MM-dd HH:mm:ss') + ''''
+								WHEN @WatermarkColName IS NOT NULL
+									THEN ' WHERE ' + @WatermarkColName + ' > ' + '''' + FORMAT(CAST(@FromStr as datetime), 'yyyy-MM-dd HH:mm:ss') + '''' +  ' AND ' + @WatermarkColName + ' <= ' + '''' + FORMAT(CAST(@ToStr as datetime), 'yyyy-MM-dd HH:mm:ss') + ''''
 								ELSE ''
 							END
 						END
