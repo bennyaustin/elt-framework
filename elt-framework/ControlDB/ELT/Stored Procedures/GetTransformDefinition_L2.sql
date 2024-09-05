@@ -32,7 +32,7 @@ AS
 			,TD.[InputDWTable]
 
 			--Deltas
-			,TD.[DeltaName]
+			,TD.[WatermarkColName]
 			,[DataFromTimestamp] = NULL
 			,[DataToTimestamp] = NULL
 			,[DataFromNumber] = NULL

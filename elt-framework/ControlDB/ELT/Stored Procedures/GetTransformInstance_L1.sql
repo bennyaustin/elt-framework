@@ -31,7 +31,7 @@ begin
 			, L1TI.[OutputDWTableWriteMode]
 			, L1TI.[ReRunL1TransformFlag]
 			, L1TD.[MaxRetries]
-			, L1TD.[DeltaName]
+			, L1TD.[WatermarkColName]
 			
 		FROM 
 			[ELT].[L1TransformInstance] as L1TI

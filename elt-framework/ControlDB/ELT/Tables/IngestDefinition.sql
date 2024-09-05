@@ -7,7 +7,7 @@
 	[Backend] varchar(30) null,
 	[DataFormat] varchar(10) null,
 	[EntityName] varchar(100) null,
-	[DeltaName] varchar(50) null,
+	[WatermarkColName] varchar(50) null,
 	[DeltaFormat] varchar(30) null,
 	[LastDeltaDate] datetime2 null,
 	[LastDeltaNumber] int null,

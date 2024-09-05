@@ -25,7 +25,7 @@ begin
 			, L2TI.[InputFileDelimiter]
 			, L2TI.[InputFileHeaderFlag]
 			, L2TI.[InputDWTable]
-			, L2TI.[DeltaName]
+			, L2TI.[WatermarkColName]
 			, L2TI.[DataFromTimestamp]
 			, L2TI.[DataToTimestamp]
 			, L2TI.[DataFromNumber]

@@ -19,7 +19,7 @@ as
 				,[StreamName]
 				,[Backend]
 				,[EntityName]
-				,[DeltaName]
+				,[WatermarkColName]
 				
 				--Delta Dates
 				,[LastDeltaDate]
@@ -86,25 +86,25 @@ as
 					   WHEN Backend IN ('ATLAS REST API','AZURE REST API') THEN EntityName 
 
 					 --DEFAULT ANSI SQL for Delta Table
-						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL
+						WHEN [EntityName] IS NOT NULL AND [WatermarkColName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL
 							THEN 
 								CASE 
 									WHEN datediff_big(minute,[LastDeltaDate],@localdate) > [MaxIntervalMinutes]
 										THEN 
 											'SELECT * FROM ' + [EntityName] + ' WHERE ' 
-											+ [DeltaName] + ' > ' + ''''+CONVERT(VARCHAR(30),[LastDeltaDate],121) +''''+ ' AND ' + [DeltaName] + '<=' +  ''''+ CONVERT(VARCHAR(30), DATEADD(minute,[MaxIntervalMinutes],[LastDeltaDate]),121) +''''
+											+ [WatermarkColName] + ' > ' + ''''+CONVERT(VARCHAR(30),[LastDeltaDate],121) +''''+ ' AND ' + [WatermarkColName] + '<=' +  ''''+ CONVERT(VARCHAR(30), DATEADD(minute,[MaxIntervalMinutes],[LastDeltaDate]),121) +''''
 									ELSE 
 										'SELECT * FROM ' + [EntityName] + ' WHERE ' 
-										+ [DeltaName] + ' > ' + ''''+ CONVERT(VARCHAR(30),[LastDeltaDate],121) +''''+ ' AND ' + [DeltaName] + '<='  + ''''+ CONVERT(VARCHAR(30), @localdate,120) +''''
+										+ [WatermarkColName] + ' > ' + ''''+ CONVERT(VARCHAR(30),[LastDeltaDate],121) +''''+ ' AND ' + [WatermarkColName] + '<='  + ''''+ CONVERT(VARCHAR(30), @localdate,120) +''''
 								END
 					 --DEFAULT ANSI SQL for Full Table
-						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NULL
+						WHEN [EntityName] IS NOT NULL AND [WatermarkColName] IS NULL
 							THEN 
 								'SELECT * FROM ' + [EntityName]
 					--Running Number
-						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaNumber] IS NOT NULL
+						WHEN [EntityName] IS NOT NULL AND [WatermarkColName] IS NOT NULL AND [LastDeltaNumber] IS NOT NULL
 							THEN 'SELECT * FROM ' + [EntityName] + ' WHERE ' 
-												+ [DeltaName] + ' > ' + ''''+CONVERT(VARCHAR,[LastDeltaNumber]) +'''' + [DeltaName] + ' <= ' + ''''+CONVERT(VARCHAR,([LastDeltaNumber] + [MaxIntervalNumber])) +''''
+												+ [WatermarkColName] + ' > ' + ''''+CONVERT(VARCHAR,[LastDeltaNumber]) +'''' + [WatermarkColName] + ' <= ' + ''''+CONVERT(VARCHAR,([LastDeltaNumber] + [MaxIntervalNumber])) +''''
 						ELSE NULL
 					 END
 			
@@ -116,24 +116,24 @@ as
 					   WHEN Backend IN ('ATLAS REST API','AZURE REST API') THEN EntityName 
 
 						--DEFAULT ANSI SQL For Delta Table
-						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL
+						WHEN [EntityName] IS NOT NULL AND [WatermarkColName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL
 								THEN 
 									CASE 
 										WHEN datediff_big(minute,[LastDeltaDate],@localdate) > [MaxIntervalMinutes] 
 											THEN 
-												'SELECT MIN('+[DeltaName]+') AS DataFromTimestamp, MAX('+[DeltaName]+') AS DataToTimestamp, count(1) as SourceCount FROM ' + [EntityName] + ' WHERE ' 
-												+ [DeltaName] + ' > ' + ''''+CONVERT(varchar(30),LastDeltaDate,121)+''''+ ' AND ' + [DeltaName] + ' <= ' + ''''+CONVERT(varchar(30), DATEADD(minute,[MaxIntervalMinutes],[LastDeltaDate]),121)+''''
+												'SELECT MIN('+[WatermarkColName]+') AS DataFromTimestamp, MAX('+[WatermarkColName]+') AS DataToTimestamp, count(1) as SourceCount FROM ' + [EntityName] + ' WHERE ' 
+												+ [WatermarkColName] + ' > ' + ''''+CONVERT(varchar(30),LastDeltaDate,121)+''''+ ' AND ' + [WatermarkColName] + ' <= ' + ''''+CONVERT(varchar(30), DATEADD(minute,[MaxIntervalMinutes],[LastDeltaDate]),121)+''''
 										ELSE 
-											'SELECT MIN('+[DeltaName]+') AS DataFromTimestamp, MAX('+[DeltaName]+') AS DataToTimestamp, count(1) as SourceCount FROM ' + [EntityName] + ' WHERE ' 
-											+ [DeltaName] + ' > ' + ''''+CONVERT(varchar(30),[LastDeltaDate],121) +''''+ ' AND ' + [DeltaName] + ' <= ' + ''''+ CONVERT(varchar(30),(@localdate),120)+''''
+											'SELECT MIN('+[WatermarkColName]+') AS DataFromTimestamp, MAX('+[WatermarkColName]+') AS DataToTimestamp, count(1) as SourceCount FROM ' + [EntityName] + ' WHERE ' 
+											+ [WatermarkColName] + ' > ' + ''''+CONVERT(varchar(30),[LastDeltaDate],121) +''''+ ' AND ' + [WatermarkColName] + ' <= ' + ''''+ CONVERT(varchar(30),(@localdate),120)+''''
 										END
 						--Common No Delta
-							WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NULL
+							WHEN [EntityName] IS NOT NULL AND [WatermarkColName] IS NULL
 								THEN 'SELECT ''1900-01-01 00:00:00'' AS DataFromTimestamp, '''+CONVERT(VARCHAR(30),ELT.uf_GetAestDateTime(),120)+''' AS DataToTimestamp,  COUNT(*) AS SourceCount FROM ' + [EntityName]
 						--Running Number
-							WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaNumber] IS NOT NULL
-									THEN 'SELECT MIN('+[DeltaName]+') AS DataFromTimestamp,' + ' MAX('+[DeltaName]+') AS DataToTimestamp,'+ 'COUNT(*) AS SourceCount FROM ' + [EntityName]
-													+ [DeltaName] + ' > ' + ''''+CONVERT(VARCHAR,[LastDeltaNumber])+'''' + ' AND ' + [DeltaName] + ' <= ' + ''''+CONVERT(VARCHAR,([LastDeltaNumber] + [MaxIntervalNumber]))+''''
+							WHEN [EntityName] IS NOT NULL AND [WatermarkColName] IS NOT NULL AND [LastDeltaNumber] IS NOT NULL
+									THEN 'SELECT MIN('+[WatermarkColName]+') AS DataFromTimestamp,' + ' MAX('+[WatermarkColName]+') AS DataToTimestamp,'+ 'COUNT(*) AS SourceCount FROM ' + [EntityName]
+													+ [WatermarkColName] + ' > ' + ''''+CONVERT(VARCHAR,[LastDeltaNumber])+'''' + ' AND ' + [WatermarkColName] + ' <= ' + ''''+CONVERT(VARCHAR,([LastDeltaNumber] + [MaxIntervalNumber]))+''''
 							ELSE NULL
 					 END
 
@@ -154,7 +154,7 @@ UNION
 				,[StreamName]
 				,[Backend]
 				,[EntityName]
-				,[DeltaName]
+				,[WatermarkColName]
 				,[LastDeltaDate]
 				,II.[DataFromTimestamp]
 				,II.[DataToTimestamp]
@@ -182,16 +182,16 @@ UNION
 						-- Customized for simple Purview ATLAS API
 					    WHEN Backend IN ('ATLAS REST API','AZURE REST API') THEN EntityName 
 						--DEFAULT ANSI SQL for Delta Table
-						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL 
+						WHEN [EntityName] IS NOT NULL AND [WatermarkColName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL 
 							THEN 'SELECT * FROM ' + [EntityName] + ' WHERE ' 
-									+ [DeltaName] + ' > ' + ''''+ CONVERT(varchar(30),II.[DataFromTimestamp],121)+''''+ ' AND ' + [DeltaName] + ' <= ' + ''''+ CONVERT(varchar(30),II.[DataToTimestamp],121)+''''
+									+ [WatermarkColName] + ' > ' + ''''+ CONVERT(varchar(30),II.[DataFromTimestamp],121)+''''+ ' AND ' + [WatermarkColName] + ' <= ' + ''''+ CONVERT(varchar(30),II.[DataToTimestamp],121)+''''
 						--Common No Delta
-						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NULL
+						WHEN [EntityName] IS NOT NULL AND [WatermarkColName] IS NULL
 							THEN 'SELECT * FROM ' + [EntityName]
 						--Running Number
-						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaNumber] IS NOT NULL
+						WHEN [EntityName] IS NOT NULL AND [WatermarkColName] IS NOT NULL AND [LastDeltaNumber] IS NOT NULL
 								THEN 'SELECT * FROM ' + [EntityName] + ' WHERE ' 
-												+ [DeltaName] + ' > ' + ''''+CONVERT(VARCHAR,II.[DataFromNumber])+'''' + ' AND ' + [DeltaName] + ' <= ' + ''''+CONVERT(VARCHAR,II.[DataToNumber])+''''
+												+ [WatermarkColName] + ' > ' + ''''+CONVERT(VARCHAR,II.[DataFromNumber])+'''' + ' AND ' + [WatermarkColName] + ' <= ' + ''''+CONVERT(VARCHAR,II.[DataToNumber])+''''
 						
 						ELSE NULL
 					END
@@ -202,19 +202,19 @@ UNION
 					   WHEN Backend IN ('ATLAS REST API','AZURE REST API') THEN EntityName 
 
 					--DEFAULT ANSI SQL for Delta Table
-						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL THEN
-									'SELECT MIN('+[DeltaName]+') AS DataFromTimestamp, MAX('+[DeltaName]+') AS DataToTimestamp, count(1) as SourceCount FROM ' 
-									+ [EntityName] + ' WHERE ' + [DeltaName] + '>' + ''''+CONVERT(varchar(30),II.DataFromTimestamp,121)+''''+ ' AND ' + [DeltaName] + '<='+ ''''+CONVERT(varchar(30),II.[DataToTimestamp],121)+''''
+						WHEN [EntityName] IS NOT NULL AND [WatermarkColName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL THEN
+									'SELECT MIN('+[WatermarkColName]+') AS DataFromTimestamp, MAX('+[WatermarkColName]+') AS DataToTimestamp, count(1) as SourceCount FROM ' 
+									+ [EntityName] + ' WHERE ' + [WatermarkColName] + '>' + ''''+CONVERT(varchar(30),II.DataFromTimestamp,121)+''''+ ' AND ' + [WatermarkColName] + '<='+ ''''+CONVERT(varchar(30),II.[DataToTimestamp],121)+''''
 					--Common No Delta
-						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NULL AND [LastDeltaDate] IS NOT NULL 
-							THEN 'SELECT MIN('+[DeltaName]+') AS DataFromTimestamp,' + ' MAX('+[DeltaName]+') AS DataToTimestamp,'+ 'COUNT(*) AS SourceCount FROM ' + [EntityName]
+						WHEN [EntityName] IS NOT NULL AND [WatermarkColName] IS NULL AND [LastDeltaDate] IS NOT NULL 
+							THEN 'SELECT MIN('+[WatermarkColName]+') AS DataFromTimestamp,' + ' MAX('+[WatermarkColName]+') AS DataToTimestamp,'+ 'COUNT(*) AS SourceCount FROM ' + [EntityName]
 					--Common No Delta
-						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NULL
+						WHEN [EntityName] IS NOT NULL AND [WatermarkColName] IS NULL
 							THEN 'SELECT SELECT ''1900-01-01 00:00:00'' AS DataFromTimestamp, '''+CONVERT(VARCHAR(30),ELT.uf_GetAestDateTime(),120)+''' AS DataToTimestamp, COUNT(*) AS SourceCount FROM ' + [EntityName]
 					--Running Number
-						WHEN [EntityName] IS NOT NULL AND [DeltaName] IS NOT NULL AND [LastDeltaNumber] IS NOT NULL
-								THEN 'SELECT MIN('+[DeltaName]+') AS DataFromTimestamp,' + ' MAX('+[DeltaName]+') AS DataToTimestamp,'+ 'COUNT(*) AS SourceCount FROM ' + [EntityName]
-												+ [DeltaName] + ' > ' + ''''+CONVERT(VARCHAR,II.[DataFromNumber]) +'''' + ' AND ' + [DeltaName] + ' <= ' + ''''+CONVERT(VARCHAR,II.[DataToNumber])+''''
+						WHEN [EntityName] IS NOT NULL AND [WatermarkColName] IS NOT NULL AND [LastDeltaNumber] IS NOT NULL
+								THEN 'SELECT MIN('+[WatermarkColName]+') AS DataFromTimestamp,' + ' MAX('+[WatermarkColName]+') AS DataToTimestamp,'+ 'COUNT(*) AS SourceCount FROM ' + [EntityName]
+												+ [WatermarkColName] + ' > ' + ''''+CONVERT(VARCHAR,II.[DataFromNumber]) +'''' + ' AND ' + [WatermarkColName] + ' <= ' + ''''+CONVERT(VARCHAR,II.[DataToNumber])+''''
 						ELSE NULL 	
 					END
 
