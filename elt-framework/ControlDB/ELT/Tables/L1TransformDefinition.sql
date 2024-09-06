@@ -2,8 +2,8 @@
 (
 	[L1TransformID] int not null identity,
 	[IngestID] int not null,
-	[NotebookPath] varchar(200) null,
-	[NotebookName] varchar(100) null,
+	[ComputePath] varchar(200) null,
+	[ComputeName] varchar(100) null,
 	[CustomParameters] varchar(max) null,
 	[InputRawFileSystem] varchar(50) not null,
 	[InputRawFileFolder] varchar(200) not null,

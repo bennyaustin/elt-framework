@@ -10,8 +10,8 @@ IF OBJECT_ID('tempdb..#CFRM_L1') IS NOT NULL DROP TABLE #CFRM_L1;
 CREATE TABLE #CFRM_L1
 (
 	[IngestID] int not null,
-	[NotebookPath] varchar(200) null,
-	[NotebookName] varchar(100) null,
+	[ComputePath] varchar(200) null,
+	[ComputeName] varchar(100) null,
 	[InputRawFileSystem] varchar(50) not null,
 	[InputRawFileFolder] varchar(200) not null,
 	[InputRawFile] varchar(200) not null,
@@ -30,8 +30,8 @@ CREATE TABLE #CFRM_L1
 --Insert Into Temp Table
 INSERT INTO #CFRM_L1
 	SELECT  [IngestID]
-	,'L1Transform' AS [NotebookPath]
-	,'L1Transform-ReStatement' AS [NotebookName]
+	,'L1Transform' AS [ComputePath]
+	,'L1Transform-ReStatement' AS [ComputeName]
 	,[DestinationRawFileSystem] AS [InputRawFileSystem]
 	,[DestinationRawFolder] AS [InputRawFileFolder]
 	,[DestinationRawFile] AS [InputRawFile]
@@ -51,8 +51,8 @@ INSERT INTO #CFRM_L1
 
 	UNION
 	SELECT  [IngestID]
-	,'L1Transform' AS [NotebookPath]
-	,'L1Transform-SEC-Form10Q' AS [NotebookName]
+	,'L1Transform' AS [ComputePath]
+	,'L1Transform-SEC-Form10Q' AS [ComputeName]
 	,[DestinationRawFileSystem] AS [InputRawFileSystem]
 	,[DestinationRawFolder] AS [InputRawFileFolder]
 	,[DestinationRawFile] AS [InputRawFile]
@@ -81,8 +81,8 @@ ON src.[InputRawFileSystem] = tgt.[InputRawFileSystem]
  AND src.[OutputL1CuratedFile] = tgt.[OutputL1CuratedFile]
 WHEN MATCHED THEN
     UPDATE SET tgt.[IngestID] =src.[IngestID],
-			tgt.[NotebookPath] =src.[NotebookPath],
-			tgt.[NotebookName] =src.[NotebookName],
+			tgt.[ComputePath] =src.[ComputePath],
+			tgt.[ComputeName] =src.[ComputeName],
 			tgt.[InputRawFileSystem] =src.[InputRawFileSystem],
 			tgt.[InputRawFileFolder] =src.[InputRawFileFolder],
 			tgt.[InputRawFile] =src.[InputRawFile],
@@ -100,8 +100,8 @@ WHEN MATCHED THEN
             tgt.[ModifiedTimestamp] = GetDate()
 WHEN NOT MATCHED BY TARGET THEN
     INSERT([IngestID],
-			[NotebookPath],
-			[NotebookName],
+			[ComputePath],
+			[ComputeName],
 			[InputRawFileSystem],
 			[InputRawFileFolder],
 			[InputRawFile],
@@ -114,8 +114,8 @@ WHEN NOT MATCHED BY TARGET THEN
             [CreatedBy],
 	        [CreatedTimestamp] )
     VALUES (src.[IngestID],
-			src.[NotebookPath],
-			src.[NotebookName],
+			src.[ComputePath],
+			src.[ComputeName],
 			src.[InputRawFileSystem],
 			src.[InputRawFileFolder],
 			src.[InputRawFile],

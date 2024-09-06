@@ -15,8 +15,8 @@ AS
 
 			
 			--Databricks
-			, TD.[NotebookName]
-			, TD.[NotebookPath]
+			, TD.[ComputeName]
+			, TD.[ComputePath]
 			
 			--Custom
 			, TD.[CustomParameters]
