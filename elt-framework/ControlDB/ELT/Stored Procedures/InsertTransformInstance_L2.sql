@@ -5,8 +5,8 @@
 	@L1TransformID int,
 
 	--Databricks Notebook
-	@NotebookName varchar(100) = null,
-	@NotebookPath varchar(200) = null,
+	@ComputeName varchar(100) = null,
+	@ComputePath varchar(200) = null,
 
 	--Custom
 	@CustomParameters varchar(max) = null,
@@ -80,8 +80,8 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 				 [L2TransformID]
 				,[IngestID]
 				,[L1TransformID]
-				,[NotebookPath]
-				,[NotebookName]
+				,[ComputePath]
+				,[ComputeName]
 				,[CustomParameters]
 				,[InputFileSystem]
 				,[InputFileFolder]
@@ -114,8 +114,8 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 				@L2TransformID,
 				@IngestID,
 				@L1TransformID,
-				@NotebookPath,
-				@NotebookName,
+				@ComputePath,
+				@ComputeName,
 				@CustomParameters,
 				@InputFileSystem,
 				@InputFileFolder,

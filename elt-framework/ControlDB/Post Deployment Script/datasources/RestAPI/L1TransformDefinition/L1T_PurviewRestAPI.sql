@@ -10,8 +10,8 @@ IF OBJECT_ID('tempdb..#PurviewRestAPI_L1') IS NOT NULL DROP TABLE #PurviewRestAP
 CREATE TABLE #PurviewRestAPI_L1
 (
 	[IngestID] int not null,
-	[NotebookPath] varchar(200) null,
-	[NotebookName] varchar(100) null,
+	[ComputePath] varchar(200) null,
+	[ComputeName] varchar(100) null,
 	[CustomParameters] varchar(max) null,
 	[InputRawFileSystem] varchar(50) not null,
 	[InputRawFileFolder] varchar(200) not null,
@@ -36,8 +36,8 @@ CREATE TABLE #PurviewRestAPI_L1
 --Insert Into Temp Table
 INSERT INTO #PurviewRestAPI_L1
 	SELECT  [IngestID]
-	,'L1Transform' AS [NotebookPath]
-	,'L1Transform-Generic-Synapse' AS [NotebookName]
+	,'L1Transform' AS [ComputePath]
+	,'L1Transform-Generic-Synapse' AS [ComputeName]
 	, NULL AS [CustomParameters]
 	,[DestinationRawFileSystem] AS [InputRawFileSystem]
 	,[DestinationRawFolder] AS [InputRawFileFolder]
@@ -78,8 +78,8 @@ ON src.[InputRawFileSystem] = tgt.[InputRawFileSystem]
  AND src.[OutputL1CuratedFile] = tgt.[OutputL1CuratedFile]
 WHEN MATCHED THEN
     UPDATE SET tgt.[IngestID] =src.[IngestID],
-			tgt.[NotebookPath] =src.[NotebookPath],
-			tgt.[NotebookName] =src.[NotebookName],
+			tgt.[ComputePath] =src.[ComputePath],
+			tgt.[ComputeName] =src.[ComputeName],
 			tgt.[CustomParameters] =src.[CustomParameters],
 			tgt.[InputRawFileSystem] =src.[InputRawFileSystem],
 			tgt.[InputRawFileFolder] =src.[InputRawFileFolder],
@@ -103,8 +103,8 @@ WHEN MATCHED THEN
             tgt.[ModifiedTimestamp] = GetDate()
 WHEN NOT MATCHED BY TARGET THEN
     INSERT([IngestID],
-			[NotebookPath],
-			[NotebookName],
+			[ComputePath],
+			[ComputeName],
 			[CustomParameters],
 			[InputRawFileSystem],
 			[InputRawFileFolder],
@@ -127,8 +127,8 @@ WHEN NOT MATCHED BY TARGET THEN
             [CreatedBy],
 	        [CreatedTimestamp] )
     VALUES (src.[IngestID],
-			src.[NotebookPath],
-			src.[NotebookName],
+			src.[ComputePath],
+			src.[ComputeName],
 			src.[CustomParameters],
 			src.[InputRawFileSystem],
 			src.[InputRawFileFolder],
