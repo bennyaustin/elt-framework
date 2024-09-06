@@ -149,7 +149,9 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 			UPDATE TOP (1) [ELT].[L2TransformInstance]
 		SET 
 			[InputCount] = null
-			,[L2TransformCount] = null
+			,[L2TransformInsertCount] = null
+			,[L2TransformUpdateCount] = null
+			,[L2TransformDeleteCount] = null
 			,[L2TransformStartTimestamp] = null
 			,[L2TransformEndTimestamp] = null
 			,[L2TransformStatus] = null

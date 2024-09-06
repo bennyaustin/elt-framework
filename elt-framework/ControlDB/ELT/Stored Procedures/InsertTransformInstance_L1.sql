@@ -133,7 +133,9 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 			SET 
 				
 				[IngestCount] = null
-				,[L1TransformCount] = null
+				,[L1TransformInsertCount] = null
+				,[L1TransformUpdateCount] = null
+				,[L1TransformDeleteCount] = null
 				,L1TransformStartTimestamp = null
 				,[L1TransformEndTimestamp] = null
 				,[L1TransformStatus] = null

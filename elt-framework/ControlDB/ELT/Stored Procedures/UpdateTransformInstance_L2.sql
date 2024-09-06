@@ -3,7 +3,9 @@
    ,@L2TransformStatus VARCHAR(20)
    ,@L2TransformADFPipelineRunID UNIQUEIDENTIFIER
    ,@InputCount INT = NULL
-   ,@L2TransformCount INT = NULL
+   ,@L2TransformInsertCount INT = NULL
+   ,@L2TransformUpdateCount INT NULL
+   ,@L2TransformDeleteCount INT = NULL
    ,@DataFromTimestamp Datetime2 = null
    ,@DataToTimestamp Datetime2 = null
    ,@DataFromNumber int = null
@@ -67,7 +69,9 @@ BEGIN
 			, [ModifiedTimestamp]=@localdate
 			, [L2TransformADFPipelineRunID] = @L2TransformADFPipelineRunID
 			, [InputCount] = ISNULL(@InputCount,[InputCount])
-			, [L2TransformCount] = ISNULL(@L2TransformCount,[L2TransformCount])
+			, [L2TransformInsertCount] = ISNULL(@L2TransformInsertCount,[L2TransformInsertCount])
+			, [L2TransformUpdateCount] = ISNULL(@L2TransformUpdateCount,[L2TransformUpdateCount])
+			, [L2TransformDeleteCount] = ISNULL(@L2TransformDeleteCount,[L2TransformDeleteCount])
 		WHERE 
 			[L2TransformInstanceID] = @L2TransformInstanceId
 END

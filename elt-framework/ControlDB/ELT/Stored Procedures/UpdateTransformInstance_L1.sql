@@ -3,7 +3,9 @@
    , @L1TransformStatus VARCHAR(20)
    , @L1TransformADFPipelineRunID UNIQUEIDENTIFIER
    , @IngestCount INT = NULL
-   , @L1TransformCount INT = NULL
+   , @L1TransformInsertCount INT = NULL
+   , @L1TransformUpdateCount INT = NULL
+   , @L1TransformDeleteCount INT = NULL
    , @MaxRetries int = null
 AS
 BEGIN
@@ -60,7 +62,9 @@ BEGIN
 			, [ModifiedTimestamp]=@localdate
 			, [L1TransformADFPipelineRunID] = @L1TransformADFPipelineRunID
 			, [IngestCount] = ISNULL(@IngestCount,[IngestCount])
-			, [L1TransformCount] = ISNULL(@L1TransformCount,[L1TransformCount])
+			, [L1TransformInsertCount] = ISNULL(@L1TransformInsertCount,[L1TransformInsertCount])
+			, [L1TransformUpdateCount] = ISNULL(@L1TransformUpdateCount,[L1TransformUpdateCount])
+			, [L1TransformDeleteCount] = ISNULL(@L1TransformDeleteCount,[L1TransformDeleteCount])
 	WHERE 
 		[L1TransformInstanceID] = @L1TransformInstanceId
 END
