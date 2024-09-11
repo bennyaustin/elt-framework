@@ -3,16 +3,16 @@ Extract Load Transform (ELT) framework is a metadata-driven orchestration framew
 
 The ELT Framework supports the following features:
 * Configurable.
-* Data Source Agnostic. Can ingest from databases, REST API, flat files, JSON, XML etc
+* Data Source Agnostic. Can ingest from databases, Delta Lake, REST API, flat files, JSON, XML etc
 * Delta Load and Full Loads.
-* Re-run and Retry capability.
+* Re-run and Retry capability without manual intervention.
 * Audit Tracking.
 * Removes the need for manual data patching.
 * Data Lineage.
 * One to many Level1 Transformations.
 * Many to many Level2 Transformations.
-* Switch on, switch off pipelines and transformations on demand.
+* Enable/Disable pipelines and transformations on demand.
 * Extendable.
-* Capability to integrate with Azure PaaS services like Diagnostic Logging.
+* Audit capability with Azure PaaS services like Diagnostic Logging.
 
 An extensive documentation of the ELT Framewwork is available in **[Wiki](https://github.com/bennyaustin/elt-framework/wiki)**
