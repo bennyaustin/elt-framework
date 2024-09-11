@@ -16,3 +16,8 @@ The Extract Load Transform (ELT) framework is a metadata-driven orchestration fr
 The framework includes several reusable artifacts such as data source-specific Data Factory pipelines, Spark notebooks, and Logic apps, which can be readily used or extended for custom use cases.
   
 For extensive documentation, visit our **[Wiki](https://github.com/bennyaustin/elt-framework/wiki)**
+
+### Implementation References
+* **[Microsoft Fabric dataplatform using ELT Framework](https://github.com/bennyaustin/fabric-dataplatform)** 
+* **[Azure Databricks data platform using ELT Framework](https://github.com/bennyaustin/synapse-dataplatform)**
+* **[Azure Synapse data platform using ELT Framework](https://github.com/bennyaustin/synapse-dataplatform)**
