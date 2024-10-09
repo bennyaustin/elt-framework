@@ -4,7 +4,7 @@
    ,@L2TransformADFPipelineRunID UNIQUEIDENTIFIER
    ,@InputCount INT = NULL
    ,@L2TransformInsertCount INT = NULL
-   ,@L2TransformUpdateCount INT NULL
+   ,@L2TransformUpdateCount INT = NULL
    ,@L2TransformDeleteCount INT = NULL
    ,@DataFromTimestamp Datetime2 = null
    ,@DataToTimestamp Datetime2 = null
