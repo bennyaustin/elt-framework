@@ -13,8 +13,8 @@ The Extract Load Transform (ELT) framework is a metadata-driven orchestration fr
 * **Level1 and Level2 Transformations:** Support for one-to-many and many-to-many transformations.
 * **On-demand Pipeline and Transformation Management:** Enable or disable pipelines and transformations as needed.
 
-## Wiki  
-Detailed documentation available at **[Wiki](https://github.com/bennyaustin/elt-framework/wiki)**
+## Documentation  
+Key concepts and configuration metadata explained in detail at **[Wiki](https://github.com/bennyaustin/elt-framework/wiki)**
 
 ## Getting Started
 To get started follow these steps: 
