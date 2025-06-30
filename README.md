@@ -47,7 +47,7 @@ Now, hit the Run Workflow on GitHub action [ControlDB-deployment.yml](https://gi
 
 ## Implementation References
 * **[Microsoft Fabric data platform using ELT Framework](https://github.com/bennyaustin/fabric-dataplatform)** 
-* **[Azure Databricks data platform using ELT Framework](https://github.com/bennyaustin/synapse-dataplatform)**
+* **[Azure Databricks data platform using ELT Framework](https://github.com/rorymcmanus87/databricks-dataplatform)**
 * **[Azure Synapse data platform using ELT Framework](https://github.com/bennyaustin/synapse-dataplatform)**
 
 ## Collaborate
