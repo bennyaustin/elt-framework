@@ -18,7 +18,15 @@ jobs:
             connection-string: ${{secrets.CONTROLDB_CONNECTIONSTRING}}
             path: ${{github.workspace}}\elt-framework\ControlDB\ELT\Database.sqlproj
             action: 'Publish'
-            arguments: '/p:DropPermissionsNotInSource=false /p:BlockOnPossibleDataLoss=false /p:DropRoleMembersNotInSource=false /p:DropObjectsNotInSource=false /p:IgnoreColumnOrder=true /p:IgnorePermissions=true /p:AllowIncompatiblePlatform=true /p:ExcludeObjectTypes=Logins;Users'
+            arguments: >
+              /p:DropPermissionsNotInSource=false
+              /p:BlockOnPossibleDataLoss=false
+              /p:DropRoleMembersNotInSource=false
+              /p:DropObjectsNotInSource=false
+              /p:IgnoreColumnOrder=true
+              /p:IgnorePermissions=true
+              /p:AllowIncompatiblePlatform=true
+              /p:ExcludeObjectTypes=Logins;Users
         - name: Azure Logout
           run: |
             az logout
