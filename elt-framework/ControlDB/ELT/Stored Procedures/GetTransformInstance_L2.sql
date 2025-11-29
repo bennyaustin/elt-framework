@@ -59,5 +59,6 @@ begin
 			    AND ID.[DelayL2TransformationFlag] = COALESCE(@DelayL2TransformationFlag,ID.[DelayL2TransformationFlag])
 				AND ISNULL(L2TI.RetryCount,0) <= L2TD.MaxRetries
 				AND L2TD.[InputType] like COALESCE(@InputType,L2TD.[InputType])				
+				AND  L2TI.[L2TransformID] = COALESCE(@L2TransformID,L2TI.[L2TransformID])
 			ORDER BY L2TD.RunSequence ASC, L2TI.[L2TransformInstanceID] ASC
 END
