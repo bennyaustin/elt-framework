@@ -56,9 +56,6 @@ begin
 				AND (L2TI.[ActiveFlag]=1 OR L2TI.[ReRunL2TransformFlag]=1)
 				AND L2TI.[L2TransformInstanceID] = COALESCE(@L2TransformInstanceId, L2TI.[L2TransformInstanceID])
 				AND (L2TI.[L2TransformStatus] IS NULL OR L2TI.[L2TransformStatus] NOT IN ('Running','DWUpload'))  --Fetch new instances and ignore instances that are currently running
-				AND ID.[DelayL2TransformationFlag] = COALESCE(@DelayL2TransformationFlag,ID.[DelayL2TransformationFlag])
-				AND L2TD.[InputType] like COALESCE(@InputType,L2TD.[InputType])
-				--AND ISNULL(L2TI.RetryCount,0) <= L2TD.MaxRetries
-				AND  L2TI.[L2TransformID]= (CASE WHEN @L2TransformID=0 then  L2TI.[L2TransformID] ELSE  @L2TransformID END)
+				AND L2TD.[InputType] like COALESCE(@InputType,L2TD.[InputType])				
 			ORDER BY L2TD.RunSequence ASC, L2TI.[L2TransformInstanceID] ASC
 END
