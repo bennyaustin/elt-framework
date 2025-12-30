@@ -5,7 +5,7 @@
 	@L2TransformInstanceId INT = NULL, --To fetch all transform instances set Parameter as NULL otherwise provide a specific instance id
 	@DelayL2TransformationFlag INT= NULL, --Pass @DelayL2TransformationFlag=0 to fetch all instances that needs to be transformed in the current pipeline (usually the ingestion pipeline). Pass =1 to fetch @DelayL2TransformationFlagh all transformations that are scheduled for a later time.
 	@InputType varchar(15)	= '%',
-	@L2TransformID INT=0 --To Fetch all transformations for a specific stream pass 0 otherwise provide TransformId prersent in L2Transsformdefinition
+	@L2TransformID INT=NULL --To Fetch all transformations for a specific stream pass NULL otherwise provide TransformId prersent in L2Transsformdefinition
 AS
 begin
 	--Limit Number of Transform Instances to prevent queuing at DWH
