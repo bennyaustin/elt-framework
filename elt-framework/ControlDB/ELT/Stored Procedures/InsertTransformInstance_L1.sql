@@ -59,12 +59,12 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 				WHERE 
 					[IngestID] = @IngestID
 					AND L1TransformID = @L1TransformID
-					AND (@InputRawFileSystem IS NULL OR InputRawFileSystem = @InputRawFileSystem)
-					AND (@InputRawFileFolder IS NULL OR InputRawFileFolder = @InputRawFileFolder)
-					AND (@InputRawFile IS NULL OR InputRawFile = @InputRawFile)
-					AND (@InputRawTable IS NULL OR InputRawTable =@InputRawTable)
-					AND (@DataFromTimestamp IS NULL OR DataFromTimestamp = @DataFromTimestamp)
-					AND (@DataToTimestamp IS NULL OR DataToTimestamp = @DataToTimestamp)
+					AND (InputRawFileSystem = @InputRawFileSystem OR (InputRawFileSystem IS NULL AND @InputRawFileSystem IS NULL))
+					AND (InputRawFileFolder = @InputRawFileFolder OR (InputRawFileFolder IS NULL AND @InputRawFileFolder IS NULL))
+					AND (InputRawFile = @InputRawFile OR (InputRawFile IS NULL AND @InputRawFile IS NULL))
+					AND (InputRawTable = @InputRawTable OR (InputRawTable IS NULL AND @InputRawTable IS NULL))
+					AND (DataFromTimestamp = @DataFromTimestamp OR (DataFromTimestamp IS NULL AND @DataFromTimestamp IS NULL))
+					AND (DataToTimestamp = @DataToTimestamp OR (DataToTimestamp IS NULL AND @DataToTimestamp IS NULL))
 	
 			)
 
