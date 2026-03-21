@@ -76,7 +76,9 @@ as
 					,'DD',Right('0'+Cast(Day(COALESCE([LastDeltaDate],@localdate)) as varchar(2)),2))
 					,'HH',Right('0'+ CAST(DatePart(hh,COALESCE([LastDeltaDate],@localdate)) AS varchar(2)),2))
 					,'MI',Right('0'+ CAST(DatePart(mi,COALESCE([LastDeltaDate],@localdate)) AS varchar(2)),2))
-					,'SS',Right('0'+ CAST(DatePart(ss,COALESCE([LastDeltaDate],@localdate)) AS varchar(2)),2))			
+					,'SS',Right('0'+ CAST(DatePart(ss,COALESCE([LastDeltaDate],@localdate)) AS varchar(2)),2))
+				
+				,[DestinationRawTable]
 
 
 			--Query
@@ -174,7 +176,8 @@ UNION
 				,[DelayL2TransformationFlag]
 				,II.[DestinationRawFileSystem]
 				,II.[DestinationRawFolder]
-				,II.[DestinationRawFile] 		
+				,II.[DestinationRawFile] 	
+				,II.[DestinationRawTable]
 			
 				--Derived Fields
 				,SourceSQL = 
