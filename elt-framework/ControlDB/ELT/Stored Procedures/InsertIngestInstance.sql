@@ -6,6 +6,7 @@
 	,@DestinationRawFileSystem varchar(50)=null 
 	,@DestinationRawFolder varchar(200)=null
 	,@DestinationRawFile varchar(200)=null
+	,@DestinationRawTable varchar(200)=null
 	,@ReloadFlag bit =0
 	,@ADFPipelineRunID UniqueIdentifier=null
 AS
@@ -24,9 +25,10 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 	IF (@ReloadFlag=0 AND NOT EXISTS (
 										SELECT 1 
 										FROM [ELT].[IngestInstance] 
-										WHERE [DestinationRawFileSystem] = @DestinationRawFileSystem
-										AND [DestinationRawFolder] = @DestinationRawFolder
-										AND [DestinationRawFile] = @DestinationRawFile
+										WHERE (@DestinationRawFileSystem IS NULL OR [DestinationRawFileSystem] = @DestinationRawFileSystem)
+										AND (@DestinationRawFolder IS NULL OR [DestinationRawFolder] = @DestinationRawFolder)
+										AND (@DestinationRawFile IS NULL OR [DestinationRawFile] = @DestinationRawFile)
+										AND (@DestinationRawTable IS NULL OR [DestinationRawTable] = @DestinationRawTable)
 									)
 		)
 	BEGIN
@@ -38,6 +40,7 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 				   ,[DestinationRawFileSystem]
 				   ,[DestinationRawFolder]
 				   ,[DestinationRawFile]
+				   ,[DestinationRawTable]
 				   ,[IngestStartTimestamp]
 				   ,[IngestEndTimestamp]
 				   ,[IngestStatus]
@@ -56,6 +59,7 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 				   ,@DestinationRawFileSystem
 				   ,@DestinationRawFolder
 				   ,@DestinationRawFile
+				   ,@DestinationRawTable
 				   ,@localdate
 				   ,NULL
 				   ,'Running'
@@ -69,11 +73,13 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 	END
 
 	--Re-load
-	IF (@ReloadFlag=1 
-		OR EXISTS (SELECT 1 FROM [ELT].[IngestInstance] 
-					WHERE [DestinationRawFileSystem] = @DestinationRawFileSystem
-						AND [DestinationRawFolder] = @DestinationRawFolder
-						AND [DestinationRawFile] = @DestinationRawFile)
+	IF (@ReloadFlag=1 OR EXISTS (
+									SELECT 1 FROM [ELT].[IngestInstance] 
+									WHERE ( @DestinationRawFileSystem IS NULL OR [DestinationRawFileSystem] = @DestinationRawFileSystem)
+										AND (@DestinationRawFolder IS NULL OR [DestinationRawFolder] = @DestinationRawFolder)
+										AND (@DestinationRawFile IS NULL OR [DestinationRawFile] = @DestinationRawFile)
+										AND (@DestinationRawTable IS NULL OR [DestinationRawTable] = @DestinationRawTable)
+								)
 		)
 	BEGIN
 		Update [ELT].[IngestInstance]
@@ -86,9 +92,11 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 			,[ModifiedTimestamp] = @localdate
 			,ADFIngestPipelineRunID = @ADFPipelineRunID
 		--Unique Keys
-		WHERE [DestinationRawFileSystem] = @DestinationRawFileSystem
-		AND [DestinationRawFolder] = @DestinationRawFolder
-		AND [DestinationRawFile] = @DestinationRawFile
+		WHERE (@DestinationRawFileSystem IS NULL OR [DestinationRawFileSystem] = @DestinationRawFileSystem)
+			AND (@DestinationRawFolder IS NULL OR [DestinationRawFolder] = @DestinationRawFolder)
+			AND (@DestinationRawFile IS NULL OR [DestinationRawFile] = @DestinationRawFile)
+			AND (@DestinationRawTable IS NULL OR [DestinationRawTable] = @DestinationRawTable)
+						
 	END
 END
 

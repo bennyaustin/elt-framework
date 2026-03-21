@@ -24,6 +24,7 @@
 	[DestinationRawFileSystem] varchar(50) null,
 	[DestinationRawFolder] varchar(200) null,
 	[DestinationRawFile] varchar(200) null,
+	[DestinationRawTable] varchar(200) null,
 	[RunSequence] int null,
 	[MaxRetries] int null,
 	[ActiveFlag] bit not null,
