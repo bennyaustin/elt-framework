@@ -17,6 +17,11 @@
     @InputRawFile varchar(200) = null,
     @InputRawFileDelimiter char(1) = null,
 	@InputFileHeaderFlag bit = null,
+
+	--Input Table
+	@InputRawTable varchar(200) = null,
+	@DataFromTimestamp dateTime2 = null,
+	@DataToTimestamp datetime2 = null,
 	
 	--Curated File 
 	@OutputL1CurateFileSystem varchar(50) = null,
@@ -54,9 +59,12 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 				WHERE 
 					[IngestID] = @IngestID
 					AND L1TransformID = @L1TransformID
-					AND InputRawFileSystem = @InputRawFileSystem
-					AND InputRawFileFolder = @InputRawFileFolder
-					AND InputRawFile = @InputRawFile
+					AND (@InputRawFileSystem IS NULL OR InputRawFileSystem = @InputRawFileSystem)
+					AND (@InputRawFileFolder IS NULL OR InputRawFileFolder = @InputRawFileFolder)
+					AND (@InputRawFile IS NULL OR InputRawFile = @InputRawFile)
+					AND (@InputRawTable IS NULL OR InputRawTable =@InputRawTable)
+					AND (@DataFromTimestamp IS NULL OR DataFromTimestamp = @DataFromTimestamp)
+					AND (@DataToTimestamp IS NULL OR DataToTimestamp = @DataToTimestamp)
 	
 			)
 
@@ -76,6 +84,9 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 				,[InputRawFile]
 				,[InputRawFileDelimiter]
 				,[InputFileHeaderFlag]
+				,[InputRawTable]
+				,[DataFromTimestamp]
+				,[DataToTimestamp]
 				,[OutputL1CurateFileSystem]
 				,[OutputL1CuratedFolder]
 				,[OutputL1CuratedFile]
@@ -107,6 +118,9 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 				,@InputRawFile
 				,@InputRawFileDelimiter
 				,@InputFileHeaderFlag
+				,@InputRawTable
+				,@DataFromTimestamp
+				,@DataToTimestamp
 				,@OutputL1CurateFileSystem
 				,@OutputL1CuratedFolder
 				,@OutputL1CuratedFile
@@ -150,9 +164,12 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 		WHERE 
 			[IngestID] = @IngestID
 			AND L1TransformID = @L1TransformID
-			AND InputRawFileSystem = @InputRawFileSystem
-			AND InputRawFileFolder = @InputRawFileFolder
-			AND InputRawFile = @InputRawFile
+			AND (@InputRawFileSystem IS NULL OR InputRawFileSystem = @InputRawFileSystem)
+			AND (@InputRawFileFolder IS NULL OR InputRawFileFolder = @InputRawFileFolder)
+			AND (@InputRawFile IS NULL OR InputRawFile = @InputRawFile)
+			AND (@InputRawTable IS NULL OR InputRawTable =@InputRawTable)
+			AND (@DataFromTimestamp IS NULL OR DataFromTimestamp = @DataFromTimestamp)
+			AND (@DataToTimestamp IS NULL OR DataToTimestamp = @DataToTimestamp)
 		END
 END
 
