@@ -172,38 +172,16 @@ DECLARE @ExistsCount int = 0;
 				,[L1TransformADFPipelineRunID] = null
 				,[ModifiedBy] = suser_sname()
 				,[ModifiedTimestamp] = @localdate
-			WHERE
-				[IngestID] = @IngestID
-				AND L1TransformID = @L1TransformID
-				AND InputRawFileSystem = @InputRawFileSystem
-				AND InputRawFileFolder = @InputRawFileFolder
-				AND InputRawFile = @InputRawFile
-		END
-		ELSE IF @InputRawTable IS NOT NULL
-		BEGIN
-			--Table-based input path (e.g. Fabric Mirroring ELT pattern)
-			UPDATE TOP (1) [ELT].[L1TransformInstance]
-			SET 
-				[IngestCount] = null
-				,[L1TransformInsertCount] = null
-				,[L1TransformUpdateCount] = null
-				,[L1TransformDeleteCount] = null
-				,L1TransformStartTimestamp = null
-				,[L1TransformEndTimestamp] = null
-				,[L1TransformStatus] = null
-				,[RetryCount] = 0
-				,[ActiveFlag] = 1
-				,[ReRunL1TransformFlag] = 1
-				,[IngestADFPipelineRunID] = @IngestADFPipelineRunID
-				,[L1TransformADFPipelineRunID] = null
-				,[ModifiedBy] = suser_sname()
-				,[ModifiedTimestamp] = @localdate
-			WHERE
-				[IngestID] = @IngestID
-				AND L1TransformID = @L1TransformID
-				AND InputRawTable = @InputRawTable
-				AND DataFromTimestamp = @DataFromTimestamp
-				AND DataToTimestamp = @DataToTimestamp
+				
+		WHERE 
+			[IngestID] = @IngestID
+			AND L1TransformID = @L1TransformID
+			AND (InputRawFileSystem = @InputRawFileSystem OR (InputRawFileSystem IS NULL AND @InputRawFileSystem IS NULL))
+			AND (InputRawFileFolder = @InputRawFileFolder OR (InputRawFileFolder IS NULL AND @InputRawFileFolder IS NULL))
+			AND (InputRawFile = @InputRawFile OR (InputRawFile IS NULL AND @InputRawFile IS NULL))
+			AND (InputRawTable = @InputRawTable OR (InputRawTable IS NULL AND @InputRawTable IS NULL))
+			AND (DataFromTimestamp = @DataFromTimestamp OR (DataFromTimestamp IS NULL AND @DataFromTimestamp IS NULL))
+			AND (DataToTimestamp = @DataToTimestamp OR (DataToTimestamp IS NULL AND @DataToTimestamp IS NULL))
 		END
 	END
 END
