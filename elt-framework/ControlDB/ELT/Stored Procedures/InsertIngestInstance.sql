@@ -25,10 +25,10 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 	IF (@ReloadFlag=0 AND NOT EXISTS (
 										SELECT 1 
 										FROM [ELT].[IngestInstance] 
-										WHERE (@DestinationRawFileSystem IS NULL OR [DestinationRawFileSystem] = @DestinationRawFileSystem)
-										AND (@DestinationRawFolder IS NULL OR [DestinationRawFolder] = @DestinationRawFolder)
-										AND (@DestinationRawFile IS NULL OR [DestinationRawFile] = @DestinationRawFile)
-										AND (@DestinationRawTable IS NULL OR [DestinationRawTable] = @DestinationRawTable)
+										WHERE ([DestinationRawFileSystem] = @DestinationRawFileSystem OR ([DestinationRawFileSystem] IS NULL AND @DestinationRawFileSystem IS NULL))
+										AND ([DestinationRawFolder] = @DestinationRawFolder OR ([DestinationRawFolder] IS NULL AND @DestinationRawFolder IS NULL))
+										AND ([DestinationRawFile] = @DestinationRawFile OR ([DestinationRawFile] IS NULL AND @DestinationRawFile IS NULL))
+										AND ([DestinationRawTable] = @DestinationRawTable OR ([DestinationRawTable] IS NULL AND @DestinationRawTable IS NULL))
 									)
 		)
 	BEGIN
@@ -75,10 +75,10 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 	--Re-load
 	IF (@ReloadFlag=1 OR EXISTS (
 									SELECT 1 FROM [ELT].[IngestInstance] 
-									WHERE ( @DestinationRawFileSystem IS NULL OR [DestinationRawFileSystem] = @DestinationRawFileSystem)
-										AND (@DestinationRawFolder IS NULL OR [DestinationRawFolder] = @DestinationRawFolder)
-										AND (@DestinationRawFile IS NULL OR [DestinationRawFile] = @DestinationRawFile)
-										AND (@DestinationRawTable IS NULL OR [DestinationRawTable] = @DestinationRawTable)
+									WHERE ([DestinationRawFileSystem] = @DestinationRawFileSystem OR ([DestinationRawFileSystem] IS NULL AND @DestinationRawFileSystem IS NULL))
+										AND ([DestinationRawFolder] = @DestinationRawFolder OR ([DestinationRawFolder] IS NULL AND @DestinationRawFolder IS NULL))
+										AND ([DestinationRawFile] = @DestinationRawFile OR ([DestinationRawFile] IS NULL AND @DestinationRawFile IS NULL))
+										AND ([DestinationRawTable] = @DestinationRawTable OR ([DestinationRawTable] IS NULL AND @DestinationRawTable IS NULL))
 								)
 		)
 	BEGIN
@@ -92,10 +92,10 @@ DECLARE @localdate as datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdat
 			,[ModifiedTimestamp] = @localdate
 			,ADFIngestPipelineRunID = @ADFPipelineRunID
 		--Unique Keys
-		WHERE (@DestinationRawFileSystem IS NULL OR [DestinationRawFileSystem] = @DestinationRawFileSystem)
-			AND (@DestinationRawFolder IS NULL OR [DestinationRawFolder] = @DestinationRawFolder)
-			AND (@DestinationRawFile IS NULL OR [DestinationRawFile] = @DestinationRawFile)
-			AND (@DestinationRawTable IS NULL OR [DestinationRawTable] = @DestinationRawTable)
+		WHERE ([DestinationRawFileSystem] = @DestinationRawFileSystem OR ([DestinationRawFileSystem] IS NULL AND @DestinationRawFileSystem IS NULL))
+			AND ([DestinationRawFolder] = @DestinationRawFolder OR ([DestinationRawFolder] IS NULL AND @DestinationRawFolder IS NULL))
+			AND ([DestinationRawFile] = @DestinationRawFile OR ([DestinationRawFile] IS NULL AND @DestinationRawFile IS NULL))
+			AND ([DestinationRawTable] = @DestinationRawTable OR ([DestinationRawTable] IS NULL AND @DestinationRawTable IS NULL))
 						
 	END
 END
