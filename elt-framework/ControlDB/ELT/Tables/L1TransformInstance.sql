@@ -13,7 +13,7 @@
 	[InputRawFileDelimiter] char(1) null,
 	[InputFileHeaderFlag] bit null,
 	[InputRawTable] varchar(200) null,
-	[DataFromTimestamp] dateTime2 null,
+	[DataFromTimestamp] datetime2 null,
 	[DataToTimestamp] datetime2 null,
 	[OutputL1CurateFileSystem] varchar(50) not null,
 	[OutputL1CuratedFolder] varchar(200) not null,
