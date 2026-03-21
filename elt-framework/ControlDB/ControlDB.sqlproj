@@ -186,6 +186,7 @@
     <Build Include="ELT\Functions\uf_GetSalesforceQuery.sql" />
     <Build Include="ELT\Functions\uf_GetIngestionColumnList.sql" />
     <Build Include="ELT\Functions\uf_GetColumnMapping.sql" />
+    <Build Include="ELT\Constraints\CC_L1TransformInstance_InputSource.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Pre Deployment Script\DBRoles.PreDeployment.sql" />
