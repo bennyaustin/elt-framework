@@ -6,18 +6,34 @@ jobs:
       steps:
         - name: Checkout code 
           uses: actions/checkout@v3
+
         - name: Display checkout files and folders
           run: Get-ChildItem ${{github.workspace}} -Recurse
+
         - name: Azure Login
           uses: Azure/login@v1
           with:
            creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
-        - name: Build and Deploy SQL Database
+
+        # Ensure MSBuild is available on PATH
+        - name: Setup MSBuild 
+          uses: microsoft/setup-msbuild@v2
+
+        # Build the SQL project into a .dacpac using MSBuild (SSDT)
+        - name: Build ControlDB dacpac
+          shell: pwsh
+          run: |
+            msbuild "${{ github.workspace }}\elt-framework\ControlDB\ControlDB.sqlproj" `
+              /p:Configuration=Release `
+              /p:Platform="Any CPU"
+
+        # Deploy using the dacpac from previous step
+        - name: Deploy ControlDB
           uses: Azure/sql-action@v2.3
           with:
-            connection-string: ${{secrets.CONTROLDB_CONNECTIONSTRING}}
-            path: ${{github.workspace}}\elt-framework\ControlDB\ControlDB.sqlproj
-            action: 'Publish'
+            connection-string: ${{ secrets.CONTROLDB_CONNECTIONSTRING }}
+            path: ${{ github.workspace }}\elt-framework\ControlDB\bin\Release\ControlDB.dacpac
+            action: Publish
             arguments: >
               /p:DropPermissionsNotInSource=false
               /p:BlockOnPossibleDataLoss=false
@@ -28,6 +44,24 @@ jobs:
               /p:IgnorePostDeployScript=false
               /p:AllowIncompatiblePlatform=true
               /p:ExcludeObjectTypes=Logins;Users
+
+        # - name: Build and Deploy SQL Database
+        #   uses: Azure/sql-action@v2.3
+        #   with:
+        #     connection-string: ${{secrets.CONTROLDB_CONNECTIONSTRING}}
+        #     path: ${{github.workspace}}\elt-framework\ControlDB\ControlDB.sqlproj
+        #     action: 'Publish'
+        #     arguments: >
+        #       /p:DropPermissionsNotInSource=false
+        #       /p:BlockOnPossibleDataLoss=false
+        #       /p:DropRoleMembersNotInSource=false
+        #       /p:DropObjectsNotInSource=false
+        #       /p:IgnoreColumnOrder=true
+        #       /p:IgnorePermissions=true
+        #       /p:IgnorePostDeployScript=false
+        #       /p:AllowIncompatiblePlatform=true
+        #       /p:ExcludeObjectTypes=Logins;Users
+
         - name: Azure Logout
           run: |
             az logout
