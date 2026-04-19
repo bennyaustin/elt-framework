@@ -45,23 +45,6 @@ jobs:
               /p:AllowIncompatiblePlatform=true
               /p:ExcludeObjectTypes=Logins;Users
 
-        # - name: Build and Deploy SQL Database
-        #   uses: Azure/sql-action@v2.3
-        #   with:
-        #     connection-string: ${{secrets.CONTROLDB_CONNECTIONSTRING}}
-        #     path: ${{github.workspace}}\elt-framework\ControlDB\ControlDB.sqlproj
-        #     action: 'Publish'
-        #     arguments: >
-        #       /p:DropPermissionsNotInSource=false
-        #       /p:BlockOnPossibleDataLoss=false
-        #       /p:DropRoleMembersNotInSource=false
-        #       /p:DropObjectsNotInSource=false
-        #       /p:IgnoreColumnOrder=true
-        #       /p:IgnorePermissions=true
-        #       /p:IgnorePostDeployScript=false
-        #       /p:AllowIncompatiblePlatform=true
-        #       /p:ExcludeObjectTypes=Logins;Users
-
         - name: Azure Logout
           run: |
             az logout
