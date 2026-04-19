@@ -80,6 +80,7 @@
     <Folder Include="Post Deployment Script\datasources\UploadFiles" />
     <Folder Include="Post Deployment Script\datasources\UploadFiles\IngestDefinition" />
     <Folder Include="Post Deployment Script\datasources\UploadFiles\L1TransformDefinition" />
+    <Folder Include="Post Deployment Script\datasources\ASQLMirror" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="ELT\ELT.sql" />
@@ -198,6 +199,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Post Deployment Script\datasources\UploadFiles\L1TransformDefinition\L1T_CustomFormRecognizerModel.sql" />
+    <None Include="Post Deployment Script\datasources\ASQLMirror\ASQLMirror_IngestDefinition.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Post Deployment Script\datasources\ASQLMirror\ASQLMirror_L1TransformDefinition.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Post Deployment Script\datasources\ASQLMirror\ASQLMirror_L2TransformDefinition.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Post Deployment Script\Script.PostDeployment.sql">
