@@ -36,8 +36,8 @@ CREATE TABLE #AzureRestAPI_L1
 --Insert Into Temp Table
 INSERT INTO #AzureRestAPI_L1
 	SELECT  [IngestID]
-	,'L1Transform' AS [ComputePath]
-	,'L1Transform-Generic-Synapse' AS [ComputeName]
+	, NULL AS [ComputePath]
+	,'L1Transform-Generic-Fabric' AS [ComputeName]
 	, NULL AS [CustomParameters]
 	,[DestinationRawFileSystem] AS [InputRawFileSystem]
 	,[DestinationRawFolder] AS [InputRawFileFolder]
