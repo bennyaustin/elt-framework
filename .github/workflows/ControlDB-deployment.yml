@@ -16,7 +16,7 @@ jobs:
           uses: Azure/sql-action@v2.3
           with:
             connection-string: ${{secrets.CONTROLDB_CONNECTIONSTRING}}
-            path: ${{github.workspace}}\ControlDB\ELT\Database.sqlproj
+            path: ${{github.workspace}}\ControlDB\ControlDB.sqlproj
             action: 'Publish'
             arguments: >
               /p:DropPermissionsNotInSource=false
