@@ -13,7 +13,7 @@ jobs:
           with:
            creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
         - name: Build and Deploy SQL Database
-          uses: Azure/sql-action@v2
+          uses: Azure/sql-action@v2.3
           with:
             connection-string: ${{secrets.CONTROLDB_CONNECTIONSTRING}}
             path: ${{github.workspace}}\elt-framework\ControlDB\ELT\Database.sqlproj
@@ -25,6 +25,7 @@ jobs:
               /p:DropObjectsNotInSource=false
               /p:IgnoreColumnOrder=true
               /p:IgnorePermissions=true
+              /p:IgnorePostDeployScript=false
               /p:AllowIncompatiblePlatform=true
               /p:ExcludeObjectTypes=Logins;Users
         - name: Azure Logout
