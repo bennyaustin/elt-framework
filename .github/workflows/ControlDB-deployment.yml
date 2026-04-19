@@ -32,7 +32,7 @@ jobs:
           uses: Azure/sql-action@v2.3
           with:
             connection-string: ${{ secrets.CONTROLDB_CONNECTIONSTRING }}
-            path: ${{ github.workspace }}\elt-framework\ControlDB\bin\Release\ControlDB.dacpac
+            path: ${{ github.workspace }}\elt-framework\ControlDB\bin\Output\ControlDB.dacpac
             action: Publish
             arguments: >
               /p:DropPermissionsNotInSource=false
