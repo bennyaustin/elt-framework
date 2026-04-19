@@ -30,7 +30,7 @@ CREATE TABLE #CFRM_L1
 --Insert Into Temp Table
 INSERT INTO #CFRM_L1
 	SELECT  [IngestID]
-	,'L1Transform' AS [ComputePath]
+	,NULL AS [ComputePath]
 	,'L1Transform-ReStatement' AS [ComputeName]
 	,[DestinationRawFileSystem] AS [InputRawFileSystem]
 	,[DestinationRawFolder] AS [InputRawFileFolder]
