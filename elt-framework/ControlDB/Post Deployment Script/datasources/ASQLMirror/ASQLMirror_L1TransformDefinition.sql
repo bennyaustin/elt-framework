@@ -17,7 +17,7 @@ CREATE TABLE #ASQLMirror_L1TransformDefinition(
 
 INSERT INTO #ASQLMirror_L1TransformDefinition
     SELECT  [IngestID]
-    ,'L1Transform-Generic-Fabric' AS [ComputeName]
+    ,'3e035f81-2c25-416b-9009-b7ba22e444ab' AS [ComputeName] --Replace this with the ID of Spark Notebook L1Transform-Generic-Fabric in your workspace
     ,[DestinationRawTable] AS [InputRawTable]
     , (CASE [EntityName]
 			WHEN 'Purchasing.PurchaseOrders' THEN 'PurchaseOrderID' 
