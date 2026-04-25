@@ -29,7 +29,7 @@ INSERT INTO #ASQLMirror_L1TransformDefinition
     , 'silver.Mirror_'+ Replace([EntityName],'.','_')  [OutputDWTable]
     ,(CASE WHEN [WatermarkColName] IS NOT NULL THEN 'append' ELSE 'overwrite' END) AS [OutputDWTableWriteMode]
     ,'Tables' AS [OutputL1CurateFileSystem]
-    ,SUBSTRING([EntityName],1,CHARINDEX('.', [EntityName])) AS [OutputL1CuratedFolder]
+    ,SUBSTRING([EntityName],1,(CHARINDEX('.', [EntityName])-1)) AS [OutputL1CuratedFolder]
     ,SUBSTRING([EntityName], (CHARINDEX('.',[EntityName])+1)) AS [OutputL1CuratedFile]    
     , [WatermarkColName]
     , 1 AS [ActiveFlag]
