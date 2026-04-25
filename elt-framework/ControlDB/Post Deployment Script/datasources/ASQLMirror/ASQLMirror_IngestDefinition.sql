@@ -148,7 +148,7 @@ WHEN MATCHED THEN
                tgt.[Backend] = src.[Backend],
                tgt.[EntityName] = src.[EntityName],
                tgt.[WatermarkColName] = src.[WatermarkColName],
-               tgt.[LastDeltaDate] = src.[LastDeltaDate],
+               --tgt.[LastDeltaDate] = src.[LastDeltaDate], --Commenting out LastDeltaDate update to avoid overwriting the value in case of re-run. This column should be updated by the pipeline based on the max value in the source system. 
                tgt.[MaxIntervalMinutes] = src.[MaxIntervalMinutes],
                tgt.[DestinationRawTable] = src.[DestinationRawTable],
                tgt.[ActiveFlag] = src.[ActiveFlag],
