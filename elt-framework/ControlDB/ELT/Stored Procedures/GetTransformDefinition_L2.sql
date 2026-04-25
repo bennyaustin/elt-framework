@@ -85,7 +85,7 @@ AS
 			TD.[ActiveFlag] = 1
 			and ID.[ActiveFlag] = 1
 			and ID.[L2TransformationReqdFlag] =1
-			and (TD.[InputType] IS NULL OR TD.[InputType] = @InputType)
+			and TD.[InputType] = COALESCE(@InputType,TD.[InputType])
 
 GO
 			
