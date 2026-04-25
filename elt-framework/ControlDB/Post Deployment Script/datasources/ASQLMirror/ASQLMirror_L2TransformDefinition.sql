@@ -4,7 +4,8 @@ CREATE TABLE #ASQLMirror_L2TransformDefinition(
 	[IngestID] [int] NULL,
 	[L1TransformID] [int] NULL,
 	[ComputeName] [varchar](100) NULL,
-	[InputFileSystem] [varchar](50) NULL,
+    [InputType] [varchar](50) NULL,
+	[InputFileSystem] [varchar](15) NULL,
 	[InputFileFolder] [varchar](200) NULL,
 	[InputFile] [varchar](200) NULL,
 	[InputDWTable] [varchar](200) NULL,
@@ -18,6 +19,7 @@ SELECT
     L1.[IngestID]
     ,L1.[L1TransformID]
     ,'gold.mirror_create_'+ Trim(Lower(I.StreamName)) + '_monthly_snapshot'  AS [ComputeName]
+    ,'Curated' AS [InputType]
     ,L1.[OutputL1CurateFileSystem] AS [InputFileSystem]
     ,L1.[OutputL1CuratedFolder] AS [InputFileFolder]
     ,L1.[OutputL1CuratedFile] AS [InputFile]
@@ -41,6 +43,7 @@ WHEN MATCHED THEN
         TARGET.IngestID = SOURCE.IngestID,
         TARGET.L1TransformID = SOURCE.L1TransformID,
         TARGET.ComputeName = SOURCE.ComputeName,
+        TARGET.InputType = SOURCE.InputType,
         TARGET.InputFileSystem = SOURCE.InputFileSystem,
         TARGET.InputFileFolder = SOURCE.InputFileFolder,
         TARGET.InputFile = SOURCE.InputFile,
@@ -52,6 +55,7 @@ WHEN NOT MATCHED BY TARGET THEN
     INSERT (IngestID, 
             L1TransformID, 
             ComputeName, 
+            InputType,
             InputFileSystem, 
             InputFileFolder, 
             InputFile, 
@@ -62,6 +66,7 @@ WHEN NOT MATCHED BY TARGET THEN
     VALUES (IngestID, 
             L1TransformID, 
             ComputeName, 
+            InputType,
             InputFileSystem, 
             InputFileFolder, 
             InputFile, 
