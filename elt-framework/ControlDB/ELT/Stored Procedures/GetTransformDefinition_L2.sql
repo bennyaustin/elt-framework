@@ -1,9 +1,8 @@
 ﻿CREATE PROCEDURE [ELT].[GetTransformDefinition_L2] 
 		@IngestID int, 
-		@DeltaDate datetime = null,
-		@InputType varchar(15) = '%'
+		@DeltaDate datetime = NULL,
+		@InputType varchar(15) = NULL
 AS
-	--declare @IngestID int
 	DECLARE @localdate datetime	= CONVERT(datetime,CONVERT(datetimeoffset, getdate()) at time zone 'AUS Eastern Standard Time')
 
 	--Should be using L2DeltaTransformDate, if null then LocalDate
@@ -86,7 +85,7 @@ AS
 			TD.[ActiveFlag] = 1
 			and ID.[ActiveFlag] = 1
 			and ID.[L2TransformationReqdFlag] =1
-			and TD.[InputType] like COALESCE(@InputType,TD.[InputType])
+			and (TD.[InputType] IS NULL OR TD.[InputType] = @InputType)
 
 GO
 			
