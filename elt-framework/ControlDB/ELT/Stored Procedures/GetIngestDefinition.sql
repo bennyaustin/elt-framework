@@ -123,10 +123,10 @@ as
 									CASE 
 										WHEN datediff_big(minute,[LastDeltaDate],@localdate) > [MaxIntervalMinutes] 
 											THEN 
-												'SELECT MIN('+[WatermarkColName]+') AS DataFromTimestamp, MAX('+[WatermarkColName]+') AS DataToTimestamp, count(1) as SourceCount FROM ' + [EntityName] + ' WHERE ' 
+												'SELECT COALESCE(MIN('+[WatermarkColName]+'),'''+CONVERT(varchar(30),LastDeltaDate,121)+''') AS DataFromTimestamp, COALESCE(MAX('+[WatermarkColName]+'),'''+CONVERT(varchar(30), DATEADD(minute,[MaxIntervalMinutes],[LastDeltaDate]),121)+''') AS DataToTimestamp, count(1) as SourceCount FROM ' + [EntityName] + ' WHERE ' 
 												+ [WatermarkColName] + ' > ' + ''''+CONVERT(varchar(30),LastDeltaDate,121)+''''+ ' AND ' + [WatermarkColName] + ' <= ' + ''''+CONVERT(varchar(30), DATEADD(minute,[MaxIntervalMinutes],[LastDeltaDate]),121)+''''
 										ELSE 
-											'SELECT MIN('+[WatermarkColName]+') AS DataFromTimestamp, MAX('+[WatermarkColName]+') AS DataToTimestamp, count(1) as SourceCount FROM ' + [EntityName] + ' WHERE ' 
+										'SELECT COALESCE(MIN('+[WatermarkColName]+'),'''+CONVERT(varchar(30),[LastDeltaDate],121)+''') AS DataFromTimestamp, COALESCE(MAX('+[WatermarkColName]+'),'''+CONVERT(varchar(30),(@localdate),120)+''') AS DataToTimestamp, count(1) as SourceCount FROM ' + [EntityName] + ' WHERE ' 
 											+ [WatermarkColName] + ' > ' + ''''+CONVERT(varchar(30),[LastDeltaDate],121) +''''+ ' AND ' + [WatermarkColName] + ' <= ' + ''''+ CONVERT(varchar(30),(@localdate),120)+''''
 										END
 						--Common No Delta
@@ -134,7 +134,7 @@ as
 								THEN 'SELECT ''1900-01-01 00:00:00'' AS DataFromTimestamp, '''+CONVERT(VARCHAR(30),ELT.uf_GetAestDateTime(),120)+''' AS DataToTimestamp,  COUNT(*) AS SourceCount FROM ' + [EntityName]
 						--Running Number
 							WHEN [EntityName] IS NOT NULL AND [WatermarkColName] IS NOT NULL AND [LastDeltaNumber] IS NOT NULL
-									THEN 'SELECT MIN('+[WatermarkColName]+') AS DataFromTimestamp,' + ' MAX('+[WatermarkColName]+') AS DataToTimestamp,'+ 'COUNT(*) AS SourceCount FROM ' + [EntityName]
+								THEN 'SELECT COALESCE(MIN('+[WatermarkColName]+'),'+CONVERT(VARCHAR,[LastDeltaNumber])+') AS DataFromTimestamp,' + ' COALESCE(MAX('+[WatermarkColName]+'),'+CONVERT(VARCHAR,([LastDeltaNumber] + [MaxIntervalNumber]))+') AS DataToTimestamp,'+ 'COUNT(*) AS SourceCount FROM ' + [EntityName]
 													+ [WatermarkColName] + ' > ' + ''''+CONVERT(VARCHAR,[LastDeltaNumber])+'''' + ' AND ' + [WatermarkColName] + ' <= ' + ''''+CONVERT(VARCHAR,([LastDeltaNumber] + [MaxIntervalNumber]))+''''
 							ELSE NULL
 					 END
@@ -206,7 +206,7 @@ UNION
 
 					--DEFAULT ANSI SQL for Delta Table
 						WHEN [EntityName] IS NOT NULL AND [WatermarkColName] IS NOT NULL AND [LastDeltaDate] IS NOT NULL THEN
-									'SELECT MIN('+[WatermarkColName]+') AS DataFromTimestamp, MAX('+[WatermarkColName]+') AS DataToTimestamp, count(1) as SourceCount FROM ' 
+				'SELECT COALESCE(MIN('+[WatermarkColName]+'),'''+CONVERT(varchar(30),II.DataFromTimestamp,121)+''') AS DataFromTimestamp, COALESCE(MAX('+[WatermarkColName]+'),'''+CONVERT(varchar(30),II.[DataToTimestamp],121)+''') AS DataToTimestamp, count(1) as SourceCount FROM ' 
 									+ [EntityName] + ' WHERE ' + [WatermarkColName] + '>' + ''''+CONVERT(varchar(30),II.DataFromTimestamp,121)+''''+ ' AND ' + [WatermarkColName] + '<='+ ''''+CONVERT(varchar(30),II.[DataToTimestamp],121)+''''
 					--Common No Delta
 						WHEN [EntityName] IS NOT NULL AND [WatermarkColName] IS NULL AND [LastDeltaDate] IS NOT NULL 
@@ -216,12 +216,9 @@ UNION
 							THEN 'SELECT SELECT ''1900-01-01 00:00:00'' AS DataFromTimestamp, '''+CONVERT(VARCHAR(30),ELT.uf_GetAestDateTime(),120)+''' AS DataToTimestamp, COUNT(*) AS SourceCount FROM ' + [EntityName]
 					--Running Number
 						WHEN [EntityName] IS NOT NULL AND [WatermarkColName] IS NOT NULL AND [LastDeltaNumber] IS NOT NULL
-								THEN 'SELECT MIN('+[WatermarkColName]+') AS DataFromTimestamp,' + ' MAX('+[WatermarkColName]+') AS DataToTimestamp,'+ 'COUNT(*) AS SourceCount FROM ' + [EntityName]
-												+ [WatermarkColName] + ' > ' + ''''+CONVERT(VARCHAR,II.[DataFromNumber]) +'''' + ' AND ' + [WatermarkColName] + ' <= ' + ''''+CONVERT(VARCHAR,II.[DataToNumber])+''''
-						ELSE NULL 	
+							THEN 'SELECT COALESCE(MIN('+[WatermarkColName]+'),'+CONVERT(VARCHAR,II.[DataFromNumber])+') AS DataFromTimestamp,' + ' COALESCE(MAX('+[WatermarkColName]+'),'+CONVERT(VARCHAR,II.[DataToNumber])+') AS DataToTimestamp,'+ 'COUNT(*) AS SourceCount FROM ' + [EntityName]
 					END
-
-				,II.[ReloadFlag]
+				, II.[ReloadFlag]
 				, II.[ADFIngestPipelineRunID]
 			FROM 
 				[ELT].[IngestDefinition] ID
