@@ -23,7 +23,7 @@ To get started follow these steps:
 2. **Deploy ControlDB**: The GitHub Action [workflows/ControlDB-deployment.yml](https://github.com/bennyaustin/elt-framework/blob/main/.github/workflows/ControlDB-deployment.yml) executes the workflow to deploy controlDB objects.
 
 **Pre-Requisites** 
-* controlDB is already provisioned by IaC process like [07-IaC-Bicep](https://github.com/bennyaustin/fabric-accelerator/wiki/07-IaC-Bicep) or [iac-synapse-dataplatform](https://github.com/bennyaustin/iac-synapse-dataplatform)
+* controlDB is already provisioned by IaC process like [Set‐up Fabric Accelerator](https://github.com/bennyaustin/fabric-accelerator/wiki/01-Set%E2%80%90up-Fabric-Accelerator) or [iac-synapse-dataplatform](https://github.com/bennyaustin/iac-synapse-dataplatform)
 * Create <sup>[1](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal)</sup> or reuse an existing Service Principal. Take note of the Application (client) ID and the secret, they will be required later.
 * Grant _db_owner_ permission to the Service Principal
 ```sql
