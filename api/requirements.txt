@@ -1,0 +1,8 @@
+fastapi>=0.115.6
+uvicorn[standard]>=0.32.1
+pyodbc>=5.1
+pydantic>=2.10
+pydantic-settings>=2.6
+python-jose[cryptography]==3.3.0
+azure-identity>=1.17.1
+httpx>=0.27.2
